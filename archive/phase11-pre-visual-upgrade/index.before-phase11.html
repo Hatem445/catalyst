@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#070b14">
+<title>⚗️ كيمياء — خرائط ذهنية</title>
+<meta name="description" content="تطبيق كيمياء تفاعلي بخرائط ذهنية ومراجعة ذكية">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="assets/images/catalyst_logo_reference.png" type="image/png">
+<link rel="apple-touch-icon" href="assets/images/catalyst_logo_reference.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/app.css">
+</head>
+<body data-theme="dark">
+<div id="app">
+  <!-- TOPBAR -->
+  <div id="topbar">
+    <button class="topbar-btn" id="btn-back" data-action="back" style="display:none" aria-label="رجوع">←</button>
+    <div id="topbar-logo">⚗️ Chemistry MindMap Pro</div>
+    <button class="topbar-btn" id="btn-install" data-action="install-app" style="display:none" aria-label="تثبيت التطبيق">⬇️</button>
+    <button class="topbar-btn" id="btn-theme" data-action="toggle-theme" aria-label="تغيير الوضع">🌙</button>
+  </div>
+
+  <!-- MAIN VIEW -->
+  <div id="view" class="scroll-y"></div>
+
+  <!-- BOTTOM NAV -->
+  <nav id="bottomnav">
+    <button class="nav-item active" id="nav-home" data-action="tab" data-tab="home"><span class="nav-icon">🏠</span><span>الرئيسية</span></button>
+    <button class="nav-item" id="nav-organic" data-action="tab" data-tab="organic"><span class="nav-icon">🧪</span><span>عضوي</span></button>
+    <button class="nav-item" id="nav-search" data-action="tab" data-tab="search"><span class="nav-icon">🔍</span><span>بحث</span></button>
+    <button class="nav-item" id="nav-quiz" data-action="tab" data-tab="quiz"><span class="nav-icon">🧠</span><span>اختبار</span></button>
+    <button class="nav-item" id="nav-flash" data-action="tab" data-tab="flash"><span class="nav-icon">🃏</span><span>بطاقات</span></button>
+  </nav>
+</div>
+<div id="toast"></div>
+
+<script type="module" src="assets/js/main.js"></script>
+</body>
+</html>
+
+

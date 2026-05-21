@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>🧪 كيمياء الثانوية — خرائط ذهنية</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap');
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{
+  --bg:#0a0e1a;--bg2:#111827;--card:#1a2035;--border:#2a3550;
+  --text:#e2e8f0;--muted:#64748b;--accent:#6366f1;--accent2:#8b5cf6;
+  --green:#10b981;--red:#ef4444;--yellow:#f59e0b;--cyan:#06b6d4;
+  --orange:#f97316;--pink:#ec4899;
+  --law:#fbbf24;--eq:#34d399;--obs:#f472b6;--mem:#a78bfa;
+  --radius:12px;--shadow:0 4px 24px rgba(0,0,0,.4);
+}
+[data-theme="light"]{
+  --bg:#f0f4ff;--bg2:#e8ecf8;--card:#fff;--border:#d1d9ef;
+  --text:#1e293b;--muted:#94a3b8;--shadow:0 4px 24px rgba(0,0,0,.1);
+}
+html,body{height:100%;overflow:hidden;font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text)}
+
+/* LAYOUT */
+#app{display:flex;flex-direction:column;height:100vh;overflow:hidden}
+#topbar{
+  background:rgba(10,14,26,.85);backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);padding:10px 14px;
+  display:flex;align-items:center;gap:8px;flex-shrink:0;position:relative;z-index:100;
+}
+[data-theme="light"] #topbar{background:rgba(240,244,255,.9)}
+#topbar-title{flex:1;font-size:15px;font-weight:900;text-align:center;
+  background:linear-gradient(90deg,#818cf8,#c084fc,#fb7185);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.icon-btn{background:rgba(255,255,255,.08);border:none;border-radius:8px;
+  padding:7px 9px;color:var(--text);cursor:pointer;font-size:16px;flex-shrink:0;
+  transition:background .2s}
+.icon-btn:active{background:rgba(255,255,255,.18)}
+[data-theme="light"] .icon-btn{background:rgba(0,0,0,.06)}
+
+#content{flex:1;overflow-y:auto;overflow-x:hidden;padding:14px;padding-bottom:80px}
+#content::-webkit-scrollbar{width:4px}
+#content::-webkit-scrollbar-track{background:transparent}
+#content::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
+
+/* BOTTOM NAV */
+#bottomnav{
+  position:fixed;bottom:0;left:0;right:0;
+  background:rgba(10,14,26,.92);backdrop-filter:blur(16px);
+  border-top:1px solid var(--border);
+  display:flex;z-index:200;padding-bottom:env(safe-area-inset-bottom,0);
+}
+[data-theme="light"] #bottomnav{background:rgba(240,244,255,.95)}
+.nav-btn{flex:1;border:none;background:none;color:var(--muted);
+  padding:10px 4px 8px;cursor:pointer;display:flex;flex-direction:column;
+  align-items:center;gap:3px;font-size:10px;font-family:'Cairo',sans-serif;
+  transition:color .2s}
+.nav-btn.active{color:var(--accent)}
+.nav-btn span:first-child{font-size:20px}
+
+/* SEARCH */
+#search-wrap{position:relative;margin-bottom:14px}
+#search-input{
+  width:100%;background:var(--card);border:1px solid var(--border);
+  border-radius:var(--radius);padding:11px 44px 11px 14px;
+  color:var(--text);font-family:'Cairo',sans-serif;font-size:14px;outline:none;
+  transition:border .2s}
+#search-input:focus{border-color:var(--accent)}
+#search-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);opacity:.4;font-size:16px}
+#search-results{display:none}
+#search-results.show{display:block}
+.search-item{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  padding:12px;margin-bottom:8px;cursor:pointer;transition:border .2s;
+}
+.search-item:active{border-color:var(--accent)}
+.search-item-title{font-weight:700;font-size:14px;margin-bottom:4px}
+.search-item-path{color:var(--muted);font-size:11px}
+.search-item-preview{color:var(--muted);font-size:12px;margin-top:4px;line-height:1.6}
+
+/* HOME CARDS */
+.unit-card{
+  background:var(--card);border-radius:16px;padding:22px 18px;
+  margin-bottom:14px;cursor:pointer;border:1px solid var(--border);
+  transition:transform .15s,box-shadow .15s;display:flex;align-items:center;gap:16px;
+  box-shadow:var(--shadow);
+}
+.unit-card:active{transform:scale(.97)}
+.unit-icon{font-size:36px;flex-shrink:0}
+.unit-info{flex:1;text-align:right}
+.unit-title{font-size:16px;font-weight:900;margin-bottom:4px}
+.unit-meta{color:var(--muted);font-size:12px}
+.unit-arrow{color:var(--muted);font-size:18px;flex-shrink:0}
+.progress-bar{height:4px;background:var(--border);border-radius:99px;margin-top:8px;overflow:hidden}
+.progress-fill{height:100%;border-radius:99px;transition:width .5s}
+
+/* SECTIONS */
+.section-btn{
+  background:var(--card);border-radius:var(--radius);padding:14px 16px;
+  margin-bottom:10px;cursor:pointer;border:1px solid var(--border);
+  display:flex;justify-content:space-between;align-items:center;
+  transition:transform .15s;box-shadow:var(--shadow);
+}
+.section-btn:active{transform:scale(.97)}
+.section-title-text{font-size:15px;font-weight:700}
+.section-meta{color:var(--muted);font-size:12px;margin-top:3px}
+
+/* NODES */
+.node-card{margin-bottom:8px;border-radius:var(--radius);overflow:hidden}
+.node-header{
+  padding:12px 14px;cursor:pointer;display:flex;
+  justify-content:space-between;align-items:center;
+  border-radius:var(--radius);border:1px solid transparent;transition:all .2s;
+}
+.node-header.open{border-radius:var(--radius) var(--radius) 0 0}
+.node-title-text{font-size:14px;font-weight:700}
+.node-arrow{font-size:12px;opacity:.7;transition:transform .2s}
+.node-header.open .node-arrow{transform:rotate(180deg)}
+.node-body{
+  display:none;padding:12px 14px;border:1px solid transparent;
+  border-top:none;border-radius:0 0 var(--radius) var(--radius);
+}
+.node-body.open{display:block}
+.node-item{
+  display:flex;align-items:flex-start;gap:8px;margin-bottom:7px;
+  padding:6px 10px;border-radius:8px;line-height:1.7;font-size:13px;
+}
+.node-item-bullet{flex-shrink:0;margin-top:2px;font-size:13px}
+.badge{
+  display:inline-block;font-size:10px;padding:2px 7px;border-radius:99px;
+  font-weight:700;margin-left:6px;vertical-align:middle;
+}
+.badge-law{background:#fbbf2422;color:#fbbf24;border:1px solid #fbbf2444}
+.badge-eq{background:#34d39922;color:#34d399;border:1px solid #34d39944}
+.badge-obs{background:#f472b822;color:#f472b8;border:1px solid #f472b844}
+.badge-mem{background:#a78bfa22;color:#a78bfa;border:1px solid #a78bfa44}
+
+/* TABLES */
+.compare-table{width:100%;border-collapse:collapse;margin:12px 0;font-size:12px}
+.compare-table th{background:var(--border);padding:8px;text-align:center;font-weight:700}
+.compare-table td{padding:8px;text-align:center;border-bottom:1px solid var(--border)}
+.compare-table tr:last-child td{border:none}
+.compare-section{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:12px}
+.compare-section h4{font-size:14px;font-weight:800;margin-bottom:10px;text-align:center}
+
+/* QUIZ */
+.quiz-question{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px;margin-bottom:14px;box-shadow:var(--shadow)}
+.quiz-q-text{font-size:15px;font-weight:700;margin-bottom:16px;line-height:1.7}
+.quiz-options{display:flex;flex-direction:column;gap:8px}
+.quiz-opt{
+  background:rgba(255,255,255,.05);border:1px solid var(--border);
+  border-radius:10px;padding:11px 14px;cursor:pointer;
+  font-family:'Cairo',sans-serif;font-size:13px;color:var(--text);
+  text-align:right;transition:all .2s;
+}
+.quiz-opt:active{transform:scale(.98)}
+.quiz-opt.correct{background:#10b98122;border-color:#10b981;color:#10b981}
+.quiz-opt.wrong{background:#ef444422;border-color:#ef4444;color:#ef4444}
+.quiz-opt.reveal{background:#fbbf2422;border-color:#fbbf24;color:#fbbf24}
+.quiz-score{text-align:center;padding:20px;font-size:24px;font-weight:900}
+.quiz-score small{display:block;font-size:14px;color:var(--muted);margin-top:6px}
+.quiz-progress{height:6px;background:var(--border);border-radius:99px;margin-bottom:16px;overflow:hidden}
+.quiz-progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:99px;transition:width .4s}
+
+/* FLASHCARDS */
+.flashcard-wrap{perspective:1000px;margin-bottom:20px;cursor:pointer}
+.flashcard{
+  background:var(--card);border:1px solid var(--border);border-radius:20px;
+  padding:28px 20px;min-height:180px;display:flex;flex-direction:column;
+  justify-content:center;align-items:center;text-align:center;
+  box-shadow:var(--shadow);transition:transform .6s;transform-style:preserve-3d;
+  position:relative;
+}
+.flashcard.flipped{transform:rotateY(180deg)}
+.flashcard-front,.flashcard-back{
+  position:absolute;top:0;left:0;right:0;bottom:0;
+  display:flex;flex-direction:column;justify-content:center;align-items:center;
+  padding:20px;backface-visibility:hidden;border-radius:20px;
+}
+.flashcard-back{transform:rotateY(180deg);background:var(--card)}
+.fc-label{font-size:10px;font-weight:700;letter-spacing:1px;margin-bottom:10px;opacity:.5}
+.fc-text{font-size:15px;font-weight:700;line-height:1.7}
+.fc-nav{display:flex;justify-content:space-between;align-items:center;margin-top:10px}
+.fc-nav-btn{background:var(--card);border:1px solid var(--border);border-radius:10px;
+  padding:8px 16px;color:var(--text);cursor:pointer;font-family:'Cairo',sans-serif;font-size:13px}
+.fc-counter{color:var(--muted);font-size:13px}
+
+/* EMPTY STATES */
+.empty{text-align:center;padding:40px 20px;color:var(--muted)}
+.empty .e-icon{font-size:40px;margin-bottom:12px}
+
+/* MISC */
+.btn{
+  background:var(--accent);border:none;border-radius:10px;padding:11px 20px;
+  color:#fff;font-family:'Cairo',sans-serif;font-size:14px;font-weight:700;
+  cursor:pointer;transition:opacity .2s;width:100%;margin-top:10px;
+}
+.btn:active{opacity:.8}
+.btn-outline{background:none;border:1px solid var(--border);color:var(--text)}
+.section-header-bar{
+  padding:12px 14px;border-radius:var(--radius);margin-bottom:14px;
+}
+.section-header-bar h3{font-size:17px;font-weight:900;margin-bottom:2px}
+.section-header-bar p{font-size:12px;opacity:.6}
+.expected-q{
+  background:var(--card);border-right:3px solid var(--yellow);
+  border-radius:0 var(--radius) var(--radius) 0;
+  padding:12px 14px;margin-bottom:8px;font-size:13px;line-height:1.7;
+}
+.expected-q .q-num{color:var(--yellow);font-weight:800;margin-left:6px}
+.tag{display:inline-flex;align-items:center;gap:4px;font-size:11px;padding:3px 9px;
+  border-radius:99px;font-weight:700;margin:2px}
+.link-arrow{
+  display:flex;align-items:center;gap:8px;padding:10px 12px;
+  background:var(--card);border:1px solid var(--border);border-radius:10px;
+  margin-bottom:6px;font-size:13px;cursor:pointer;transition:border .2s;
+}
+.link-arrow:active{border-color:var(--accent)}
+.link-arrow .la-from{flex:1;color:var(--text)}
+.link-arrow .la-arrow{color:var(--muted)}
+.link-arrow .la-to{color:var(--accent)}
+
+/* REACTION CARDS */
+.reaction-card{
+  background:var(--card);border-radius:var(--radius);padding:14px;
+  margin-bottom:8px;border:1px solid var(--border);
+}
+.reaction-eq{
+  font-family:monospace;font-size:13px;background:rgba(0,0,0,.3);
+  padding:8px 12px;border-radius:8px;margin:6px 0;line-height:1.8;
+  word-break:break-all;
+}
+[data-theme="light"] .reaction-eq{background:rgba(0,0,0,.05)}
+.reaction-obs{font-size:12px;color:var(--pink);margin-top:6px}
+.reaction-color{
+  display:inline-flex;align-items:center;gap:5px;font-size:12px;
+  padding:3px 10px;border-radius:99px;border:1px solid;margin:3px 2px;
+}
+.color-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+
+/* TOAST */
+#toast{
+  position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(20px);
+  background:#1e293b;border:1px solid var(--border);border-radius:10px;
+  padding:10px 18px;font-size:13px;z-index:999;opacity:0;transition:all .3s;
+  pointer-events:none;white-space:nowrap;
+}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* ANIMATIONS */
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.fade-in{animation:fadeIn .25s ease forwards}
+</style>
+</head>
+<body data-theme="dark">
+<div id="app">
+  <div id="topbar">
+    <button class="icon-btn" id="btn-back" onclick="goBack()" style="display:none">→</button>
+    <div id="topbar-title">🧪 كيمياء الثانوية</div>
+    <button class="icon-btn" id="btn-theme" onclick="toggleTheme()" title="وضع النهار/الليل">🌙</button>
+  </div>
+  <div id="content"></div>
+  <div id="bottomnav">
+    <button class="nav-btn active" id="nav-home" onclick="switchTab('home')"><span>🏠</span><span>الرئيسية</span></button>
+    <button class="nav-btn" id="nav-search" onclick="switchTab('search')"><span>🔍</span><span>بحث</span></button>
+    <button class="nav-btn" id="nav-compare" onclick="switchTab('compare')"><span>⚖️</span><span>مقارنة</span></button>
+    <button class="nav-btn" id="nav-quiz" onclick="switchTab('quiz')"><span>🧠</span><span>اختبار</span></button>
+    <button class="nav-btn" id="nav-flash" onclick="switchTab('flash')"><span>🃏</span><span>بطاقات</span></button>
+  </div>
+</div>
+<div id="toast"></div>
+<script>
+// ============================================================
+// DATA
+// ============================================================
+const COLORS = {
+  law:'#fbbf24',eq:'#34d399',obs:'#f472b8',mem:'#a78bfa'
+};
+
+function tag(text,type){
+  const labels={law:'⚖️ قانون',eq:'⚗️ معادلة',obs:'👁️ ملاحظة',mem:'🔴 حفظ صعب'};
+  return `<span class="badge badge-${type}">${labels[type]}</span>`;
+}
+function colorBadge(label,color){
+  return `<span class="reaction-color" style="color:${color};border-color:${color}44"><span class="color-dot" style="background:${color}"></span>${label}</span>`;
+}
+
+// TYPE LEGEND for items
+// [Q] = قانون  [E] = معادلة  [O] = ملاحظة عملية  [M] = حفظ صعب
+function renderItem(item){
+  let badge='';let bg='';
+  if(item.startsWith('[Q]')){badge=tag('','law');item=item.slice(3).trim();bg='rgba(251,191,36,.06)'}
+  else if(item.startsWith('[E]')){badge=tag('','eq');item=item.slice(3).trim();bg='rgba(52,211,153,.06)'}
+  else if(item.startsWith('[O]')){badge=tag('','obs');item=item.slice(3).trim();bg='rgba(244,114,184,.06)'}
+  else if(item.startsWith('[M]')){badge=tag('','mem');item=item.slice(3).trim();bg='rgba(167,139,250,.06)'}
+  const bullet = badge ? '📌' : '•';
+  return `<div class="node-item" style="background:${bg}">\
+<span class="node-item-bullet">${bullet}</span>\
+<span>${badge}${item}</span></div>`;
+}
+
+const DATA = {
+units:[
+{id:'transition',title:'السلسلة الانتقالية الأولى',icon:'⚛️',color:'#0ea5e9',
+ sections:[
+  {id:'general_props',title:'الخصائص العامة',
+   nodes:[
+    {title:'الكثافة الذرية',color:'#0ea5e9',items:[
+      '[Q] تزداد تدريجياً بزيادة العدد الذري',
+      '[M] الكثافة عند النيكل متوقعة لوجود 5 إلكترونات مستقرة في أوربيتالاتها',
+      '[Q] المتوسط الحسابي = 58.7',
+    ]},
+    {title:'نصف القطر الذري',color:'#06b6d4',items:[
+      '[Q] يتناقص من الكروم إلى التيتانيوم ثم يتعاكس',
+      '[M] السكانديوم هو أكبر عناصر السلسلة (أكبر حجم ذري)',
+      '[M] النيكل له أصغر نصف قطر',
+      '[Q] زيادة الإلكترونات في مستوى d → تزيد قوى التنافر → تكبُر المدارات',
+    ]},
+    {title:'الخواص المغناطيسية',color:'#7c3aed',items:[
+      '[Q] الجاذبية البارامغناطيسية: تظهر في المواد التي تحتوي على إلكترونات مفردة',
+      '[Q] الجاذبية الدايامغناطيسية: تظهر في المواد التي لا تحتوي على إلكترونات مفردة',
+      '[O] معظم الفلزات الانتقالية مواد بارامغناطيسية',
+    ]},
+    {title:'الألوان المميزة',color:'#db2777',items:[
+      '[Q] معظم أيونات الانتقالية ملونة — اللون ينشأ لامتصاص فوتونات الضوء المرئي',
+      '[O] وجود إلكترونات مفردة في المستوى الفرعي d → سبب اللون',
+      '[O] TiO₂ أبيض (لا إلكترونات مفردة)',
+    ]},
+    {title:'النشاط الحفازي',color:'#16a34a',items:[
+      '[Q] لاشتراك الإلكترونات المشتركة بين المستويين 4s و3d في تكوين روابط',
+      'ثاني أكسيد المنجنيز: عامل حفاز في تفاعل اختزال H₂O₂',
+      'النيكل المحرأ: في عمليات الهدرجة',
+      'الحديد: في صناعة الأمونيا (هابر-بوش)',
+      'خامس أكسيد الفاناديوم V₂O₅: في صناعة H₂SO₄ بالتلامس',
+    ]},
+  ]},
+  {id:'electron_config',title:'التركيب الإلكتروني وحالات التأكسد',
+   nodes:[
+    {title:'Sc السكانديوم (21)',color:'#6366f1',items:[
+      '[E] [Ar], 4s², 3d¹',
+      '[M] حالات التأكسد: +3 فقط — لا يعطي +2 (يختلف عن باقي السلسلة)',
+      '[Q] جهد تأينه الرابع مرتفع جداً',
+    ]},
+    {title:'Ti التيتانيوم (22)',color:'#8b5cf6',items:[
+      '[E] [Ar], 4s², 3d²',
+      'حالات التأكسد: +2، +3، +4',
+      '[Q] جهد تأينه الخامس مرتفع',
+    ]},
+    {title:'V الفاناديوم (23)',color:'#7c3aed',items:[
+      '[E] [Ar], 4s², 3d³',
+      'حالات التأكسد: +2، +3، +4، +5',
+      '[M] العنصر الوحيد في السلسلة الأولى الذي يعطي حالة التأكسد الشائعة (+5)',
+    ]},
+    {title:'Cr الكروم (24)',color:'#db2777',items:[
+      '[E] [Ar], 4s¹, 3d⁵ ← يشذ التركيب الإلكتروني',
+      'حالات التأكسد: +2، +3، +6',
+      '[M] يحتوي على 6 إلكترونات مفردة — الأكثر في السلسلة',
+    ]},
+    {title:'Mn المنجنيز (25)',color:'#dc2626',items:[
+      '[E] [Ar], 4s², 3d⁵',
+      '[M] حالات التأكسد: +2، +3، +4، +6، +7 — الأكثر تعدداً',
+      '[Q] يعطي أعلى حالة تأكسد (+7) في عناصر السلسلة الأولى',
+    ]},
+    {title:'Fe الحديد (26)',color:'#ea580c',items:[
+      '[E] [Ar], 4s², 3d⁶',
+      'حالات التأكسد: +2، +3',
+      '[Q] يبدأ به حدوث الازدواج في أوربيتالات 3d',
+    ]},
+    {title:'Co الكوبلت (27)',color:'#ca8a04',items:[
+      '[E] [Ar], 4s², 3d⁷',
+      'حالات التأكسد: +2، +3',
+      '[O] الكوبلت-60: يستخدم في علاج الأورام والكشف عن جودة المنتجات',
+    ]},
+    {title:'Ni النيكل (28)',color:'#16a34a',items:[
+      '[E] [Ar], 4s², 3d⁸',
+      'حالات التأكسد: +2، +3',
+      '[O] النيكل المحرأ: حفاز في تفاعلات الهدرجة',
+    ]},
+    {title:'Cu النحاس (29)',color:'#0891b2',items:[
+      '[E] [Ar], 4s¹, 3d¹⁰ ← يشذ التركيب الإلكتروني',
+      '[M] حالات التأكسد: +1، +2 — العنصر الوحيد الذي يعطي +1 شائعاً',
+      'أول فلز عرفه الإنسان',
+    ]},
+    {title:'Zn الخارصين (30)',color:'#6d28d9',items:[
+      '[E] [Ar], 4s², 3d¹⁰',
+      '[M] حالات التأكسد: +2 فقط — لا إلكترونات مفردة',
+      '[M] لا يُعد عنصراً انتقالياً حقيقياً — لا يحتوي على إلكترونات d جزئية',
+    ]},
+  ]},
+  {id:'economic',title:'الأهمية الاقتصادية',
+   nodes:[
+    {title:'الاستخدامات الصناعية',color:'#34d399',items:[
+      'Sc: سبيكة Sc-Al في صناعة طائرات الميج المقاتلة',
+      'Ti: سبيكة Ti-Al في صناعة الطائرات والمركبات الفضائية',
+      'V: خامس أكسيد الفاناديوم V₂O₅ — حفاز في صناعة H₂SO₄',
+      'Cr: طلاء المعادن، دباغة الجلود، صناعة الفولاذ المقاوم للصدأ',
+      'Mn: سبيكة Mn-Fe — أصلب من الصلب لخطوط السكك الحديدية',
+      'Fe: عامل محفاز في تفاعل هابر-بوش لصناعة الأمونيا',
+      'Co: يستخدم في صناعة المغناطيسيات والبطاريات',
+      'Ni: سبيكة Ni-Cr تقاوم التآكل حتى 900°C — ملفات التسخين',
+      'Cu: الكابلات الكهربائية، العملات المعدنية، البرونز (Cu-Sn)',
+      'Zn: ZnO في الدهانات ومستحضرات التجميل والطلاءات',
+    ]},
+  ]},
+  {id:'expected_transition',title:'الأسئلة المتوقعة',
+   nodes:[
+    {title:'أسئلة متوقعة — السلسلة الانتقالية',color:'#fbbf24',isExpected:true,items:[
+      'لماذا يشذ الكروم والنحاس في تركيبهما الإلكتروني؟',
+      'ما الفرق بين البارامغناطيسية والدايامغناطيسية؟',
+      'لماذا معظم أيونات الفلزات الانتقالية ملونة؟',
+      'ما العنصر الذي يعطي أعلى حالة تأكسد في السلسلة الأولى؟ ولماذا؟',
+      'لماذا لا يعتبر الزنك فلزاً انتقالياً حقيقياً؟',
+      'ما العلاقة بين وجود إلكترونات مفردة والنشاط الحفازي؟',
+      'قارن بين حالات تأكسد الكروم والمنجنيز والحديد',
+    ]},
+  ]},
+ ]
+},
+
+{id:'iron',title:'الحديد (Fe) — معادلات',icon:'🔩',color:'#f97316',
+ sections:[
+  {id:'fe_equations',title:'معادلات الحديد الأساسية',
+   nodes:[
+    {title:'Fe مع الأكسجين والماء',color:'#ea580c',items:[
+      '[E] 3Fe + 2O₂ →(Δ) Fe₃O₄ (يحترق في O₂)',
+      '[E] 3Fe + 4H₂O →(500°C) Fe₃O₄ + 4H₂↑',
+      '[O] الحديد لا يتفاعل مع الماء البارد',
+    ]},
+    {title:'Fe مع الأحماض المخففة',color:'#b45309',items:[
+      '[E] Fe + 2HCl →(مخفف) FeCl₂ + H₂↑ — ينتج ملح حديد II',
+      '[E] Fe + H₂SO₄ →(مخفف) FeSO₄ + H₂↑',
+      '[E] Fe + 4HNO₃ →(مخفف) Fe(NO₃)₂ + 2H₂O + NO↑',
+      '[O] الأحماض المخففة دائماً تعطي Fe²⁺ (حديد II)',
+    ]},
+    {title:'Fe مع الأحماض المركزة',color:'#92400e',items:[
+      '[M] Fe + HNO₃ مركز → خمول كيميائي (يكون Fe₂O₃ غير مسامية)',
+      '[M] Fe + H₂SO₄ مركز → خمول كيميائي',
+      '[O] طبقة الأكسيد غير المسامية تمنع استمرار التفاعل',
+    ]},
+    {title:'Fe مع الهالوجينات',color:'#451a03',items:[
+      '[E] 2Fe + 3Cl₂ →(Δ) 2FeCl₃ — ينتج ملح حديد III',
+      '[E] Fe + S →(Δ) FeS — كبريتيد الحديد II',
+      '[M] الهالوجينات تعطي Fe³⁺ أما الأحماض المخففة تعطي Fe²⁺',
+    ]},
+  ]},
+  {id:'fe_oxides',title:'أكاسيد الحديد',
+   nodes:[
+    {title:'FeO — أكسيد الحديد II',color:'#dc2626',items:[
+      '[E] تحضيره: 2Fe(OH)₂ →(Δ) FeO + H₂O',
+      '[E] FeCO₃ →(Δ) FeO + CO₂',
+      '[E] تفاعلاته: FeO + 2HCl →(مخفف) FeCl₂ + H₂O',
+      '[O] اللون: أسود',
+    ]},
+    {title:'Fe₂O₃ — أكسيد الحديد III',color:'#b91c1c',items:[
+      '[E] تحضيره: 2Fe(OH)₃ →(فوق 200°) Fe₂O₃ + 3H₂O',
+      '[E] 3Fe₂O₃ + H₂ →(230°-300°) 2Fe₃O₄ + H₂O',
+      '[E] Fe₂O₃ + 3H₂ →(700°-900°) 2Fe + 3H₂O',
+      '[E] Fe₂O₃ + 6HCl →(مركز) 2FeCl₃ + 3H₂O',
+      '[O] اللون: أحمر-بني (الهيماتيت)',
+    ]},
+    {title:'Fe₃O₄ — الأكسيد المختلط',color:'#991b1b',items:[
+      '[E] تحضيره: 3Fe + 4H₂O →(500°) Fe₃O₄ + 4H₂↑',
+      '[E] Fe₃O₄ + 8HCl →(مركز) FeCl₂ + 2FeCl₃ + 4H₂O',
+      '[Q] يحتوي على Fe²⁺ و Fe³⁺ معاً (أكسيد مختلط)',
+      '[O] اللون: أسود — مغناطيسي (المجنتيت)',
+    ]},
+  ]},
+  {id:'fe_comparison',title:'مقارنة أملاح الحديد',
+   nodes:[
+    {title:'Fe²⁺ مقابل Fe³⁺',color:'#fbbf24',isTable:true,tableData:{
+      headers:['الخاصية','Fe²⁺ (حديد II)','Fe³⁺ (حديد III)'],
+      rows:[
+        ['اللون مع NaOH','أخضر Fe(OH)₂↓','بني-أحمر Fe(OH)₃↓'],
+        ['مع NH₄OH','أخضر مبلل','بني محمر'],
+        ['مع K₄[Fe(CN)₆]','أبيض','أزرق برلين'],
+        ['مع KSCN','لا لون','أحمر دموي'],
+        ['ينتج من','Fe + حمض مخفف','Fe + هالوجين'],
+        ['درجة الثبات','أقل استقراراً','أكثر استقراراً'],
+      ]
+    },items:[]},
+  ]},
+  {id:'expected_iron',title:'الأسئلة المتوقعة',
+   nodes:[
+    {title:'أسئلة متوقعة — الحديد',color:'#fbbf24',isExpected:true,items:[
+      'لماذا تعطي الأحماض المخففة Fe²⁺ وليس Fe³⁺؟',
+      'ما الفرق بين الخمول الكيميائي للحديد والألومنيوم؟',
+      'اكتب معادلة تحضير Fe₃O₄ من الحديد والماء',
+      'كيف تحول FeCl₂ إلى FeCl₃ والعكس؟',
+      'ما الكاشف الكيميائي للتفريق بين Fe²⁺ و Fe³⁺؟',
+    ]},
+  ]},
+ ]
+},
+
+{id:'organic_hydrocarbons',title:'الهيدروكربونات العضوية',icon:'🧪',color:'#8b5cf6',
+ sections:[
+  {id:'hydro_comparison',title:'مقارنة الهيدروكربونات',
+   nodes:[
+    {title:'الكانات vs الكينات vs الكاينات',color:'#a78bfa',isTable:true,tableData:{
+      headers:['الخاصية','الكانات','الكينات','الكاينات'],
+      rows:[
+        ['الصيغة العامة','CₙH₂ₙ₊₂','CₙH₂ₙ','CₙH₂ₙ₋₂'],
+        ['نوع الرابطة','واحدة σ','ثنائية σ+π','ثلاثية σ+2π'],
+        ['النشاط الكيميائي','أقل نشاطاً','متوسط','الأكثر نشاطاً'],
+        ['نوع التفاعل','إحلال','إضافة','إضافة'],
+        ['مثال','CH₄ ميثان','C₂H₄ إيثين','C₂H₂ أسيتيلين'],
+        ['ذوبان Br₂/CCl₄','لا (بدون UV)','نعم (فوري)','نعم (فوري)'],
+      ]
+    },items:[]},
+  ]},
+  {id:'alkanes',title:'الكانات — Alkanes',
+   nodes:[
+    {title:'الميثان CH₄ — التفاعلات',color:'#7c3aed',items:[
+      '[E] CH₄ + 2O₂ →(Δ) CO₂ + 2H₂O + E — احتراق كامل',
+      '[E] 2CH₄ + 3O₂ →(هواء محدود) 2CO + 4H₂O — احتراق ناقص',
+      '[E] UV: CH₄ + Cl₂ → CH₃Cl + HCl — كلورو ميثان',
+      '[E] UV: CH₃Cl + Cl₂ → CH₂Cl₂ + HCl — ثنائي كلورو ميثان',
+      '[E] UV: CH₂Cl₂ + Cl₂ → CHCl₃ + HCl — كلوروفورم',
+      '[E] UV: CHCl₃ + Cl₂ → CCl₄ + HCl — رابع كلوريد الكربون',
+      '[E] CH₄ →(1000°C, بدون هواء) C + 2H₂ — أسود الكربون',
+      '[O] الكانات لا تفاعل مع Br₂/CCl₄ بدون UV (كاشف سلبي)',
+    ]},
+  ]},
+  {id:'alkenes',title:'الكينات — Alkenes',
+   nodes:[
+    {title:'الإيثين C₂H₄ — التفاعلات',color:'#db2777',items:[
+      '[E] C₂H₄ + 3O₂ →(Δ) 2CO₂ + 2H₂O — احتراق',
+      '[E] C₂H₄ + H₂ →(Ni/Pt, 150°-300°) C₂H₆ — هدرجة',
+      '[E] C₂H₄ + Br₂ →(CCl₄) CH₂Br-CH₂Br — هلجنة (يزيل لون البروم: كشف)',
+      '[E] C₂H₄ + HBr → CH₃-CH₂Br — برومو إيثان',
+      '[E] C₂H₄ + H₂O →(H₂SO₄, 110°) C₂H₅OH — هدرة',
+      '[E] C₂H₄ + KMnO₄ →(قلوي) HOCH₂-CH₂OH — إيثيلين جلايكول',
+      '[E] nC₂H₄ →(Δ, CAT) (CH₂-CH₂)n — بلمرة PE',
+      '[O] الكينات تزيل لون برومايد في CCl₄ بدون ضوء (يفرقها عن الكانات)',
+    ]},
+    {title:'بوليمرات الإيثين',color:'#9d174d',items:[
+      'بولي إيثيلين PE: أكياس وزجاجات بلاستيكية',
+      'بولي بروبين: سجاد ومفارش',
+      'PVC: مواسير الصرف وعوازل الأسلاك',
+      'تفلون: تبطين أواني الطهي (لا يلتصق، يتحمل الحرارة)',
+    ]},
+  ]},
+  {id:'alkynes',title:'الكاينات — Alkynes',
+   nodes:[
+    {title:'الإيثاين C₂H₂ — التفاعلات',color:'#0891b2',items:[
+      '[E] 2C₂H₂ + 5O₂ →(Δ) 4CO₂ + 2H₂O — احتراق كامل (لهب 3500°)',
+      '[E] C₂H₂ + H₂ →(Ni/Pt) C₂H₄ — هدرجة مرحلة 1',
+      '[E] C₂H₂ + Br₂ →(CCl₄) CHBr=CHBr ثم +Br₂ → CHBr₂-CHBr₂',
+      '[E] C₂H₂ + H₂O →(HgSO₄, H₂SO₄) CH₃CHO — أسيتالدهيد',
+      '[E] 3C₂H₂ →(Ni, 200°) C₆H₆ — بنزين (بلمرة)',
+      '[E] CaC₂ + 2H₂O → C₂H₂ + Ca(OH)₂ — تحضير من كربيد الكالسيوم',
+      '[O] لهب أكسي-أسيتيلين يصل 3500°C — لحام المعادن',
+    ]},
+  ]},
+  {id:'benzene',title:'البنزين C₆H₆',
+   nodes:[
+    {title:'البنزين — التفاعلات',color:'#059669',items:[
+      '[E] C₆H₆ + HNO₃ →(H₂SO₄ مركز) نيترو بنزين + H₂O — نترة',
+      '[E] C₆H₆ + Cl₂ →(FeCl₃) كلورو بنزين + HCl — كلورة',
+      '[E] C₆H₆ + 3H₂ →(Ni/Pt, Δ) C₆H₁₂ — سيكلو هكسان',
+      '[E] C₆H₆ + 3Cl₂ →(UV) C₆H₆Cl₆ — سداسي كلوروهكسان (سم فئران)',
+      '[O] البنزين يتفاعل بالإحلال لا الإضافة (يختلف عن الكينات)',
+      '[O] البنزين لا يزيل لون برومايد في CCl₄ بدون عامل',
+    ]},
+    {title:'الفينول C₆H₅OH',color:'#047857',items:[
+      '[E] C₆H₅OH + Na → C₆H₅ONa + ½H₂',
+      '[E] C₆H₅OH + NaOH → C₆H₅ONa + H₂O',
+      '[E] C₆H₅OH + 3Br₂ →(ماء) 3HBr + راسب أبيض — كشف عن الفينول',
+      '[O] كاشف FeCl₃ يعطي لون بنفسجي مع الفينول',
+      '[O] الفينول أحمض من الكحولات',
+    ]},
+  ]},
+  {id:'conversion_paths',title:'مسارات التحويل العضوي',
+   nodes:[
+    {title:'سلسلة تحويلات C₂',color:'#10b981',items:[
+      'CaC₂ → C₂H₂ (إيثاين) → C₂H₄ (إيثين) → C₂H₆ (إيثان)',
+      'C₂H₂ → CH₃CHO (أسيتالدهيد) → CH₃COOH (حمض الأسيتيك)',
+      'C₂H₄ → C₂H₅OH (إيثانول) → CH₃CHO → CH₃COOH',
+      'C₂H₅OH → CH₃COOC₂H₅ (أسيتات إيثيل) + H₂O (استرة)',
+      '[M] CaC₂ → هو نقطة البداية لأغلب سلاسل C₂',
+    ]},
+    {title:'سلسلة تحويلات البنزين',color:'#0ea5e9',items:[
+      '3C₂H₂ → C₆H₆ (بنزين)',
+      'C₆H₆ + CH₃Cl →(AlCl₃) C₆H₅CH₃ (تولوين)',
+      'C₆H₅CH₃ + 3HNO₃ →(H₂SO₄) TNT',
+      'C₆H₅CH₃ + O₂ →(V₂O₅) C₆H₅COOH (حمض البنزويك)',
+      'C₆H₅COOH + C₂H₅OH → C₆H₅COOC₂H₅ (بنزوات إيثيل)',
+    ]},
+  ]},
+  {id:'expected_organic',title:'الأسئلة المتوقعة',
+   nodes:[
+    {title:'أسئلة متوقعة — الهيدروكربونات',color:'#fbbf24',isExpected:true,items:[
+      'لماذا يتفاعل البنزين بالإحلال لا الإضافة؟',
+      'كيف تفرق بين الكانات والكينات كيميائياً؟',
+      'اكتب سلسلة التحويلات: CaC₂ → حمض الأسيتيك',
+      'ما المنتج من تفاعل الإيثين مع KMnO₄ القلوي؟',
+      'لماذا لهب الأسيتيلين أشد حرارة من الميثان؟',
+      'ما الفرق بين تفاعل الإحلال والإضافة؟',
+    ]},
+  ]},
+ ]
+},
+
+{id:'organic_derivatives',title:'مشتقات الهيدروكربونات',icon:'⚗️',color:'#ec4899',
+ sections:[
+  {id:'alcohol_phenol_compare',title:'مقارنة الكحول والفينول',
+   nodes:[
+    {title:'الكحول vs الفينول',color:'#f472b8',isTable:true,tableData:{
+      headers:['الخاصية','الكحول R-OH','الفينول Ar-OH'],
+      rows:[
+        ['المجموعة','OH على كربون ألفاتي','OH على حلقة بنزين'],
+        ['التفاعل مع NaOH','لا يتفاعل','يتفاعل → فينوكسيد'],
+        ['التفاعل مع Na₂CO₃','لا يتفاعل','يتفاعل'],
+        ['مع Br₂/ماء','لا راسب','راسب أبيض (كشف)'],
+        ['كاشف FeCl₃','لا لون','بنفسجي (كشف)'],
+        ['الحموضة','ضعيفة جداً','أقوى من الكحول'],
+        ['مع HCl','يعطي هاليد الكيل','لا يتفاعل'],
+      ]
+    },items:[]},
+  ]},
+  {id:'functional_groups',title:'المجموعات الوظيفية',
+   nodes:[
+    {title:'جدول المجموعات الوظيفية',color:'#db2777',isTable:true,tableData:{
+      headers:['المجموعة','الصيغة','النهاية','مثال'],
+      rows:[
+        ['هيدروكسيل','-OH','ول','C₂H₅OH إيثانول'],
+        ['ألدهيد','-CHO','ال','CH₃CHO إيثانال'],
+        ['كيتون','-CO-','ون','CH₃COCH₃ بروبانون'],
+        ['كربوكسيل','-COOH','ويك','CH₃COOH إيثانويك'],
+        ['استر','-COO-','وات','CH₃COOC₂H₅ إيثانوات إيثيل'],
+        ['أمين','-NH₂','أمين','C₆H₅NH₂ فينيل أمين'],
+      ]
+    },items:[]},
+  ]},
+  {id:'alcohols',title:'الكحولات — التفاعلات',
+   nodes:[
+    {title:'الإيثانول C₂H₅OH — التفاعلات',color:'#0891b2',items:[
+      '[E] C₂H₅OH + Na → C₂H₅ONa + ½H₂',
+      '[E] C₂H₅OH + HBr → C₂H₅Br + H₂O',
+      '[E] C₂H₅OH →(H₂SO₄ 110°) C₂H₄=CH₂ — نزع ماء → إيثين',
+      '[E] 2C₂H₅OH →(H₂SO₄ 140°) C₂H₅-O-C₂H₅ + H₂O — إيثر ثنائي إيثيل',
+      '[E] C₂H₅OH →(K₂Cr₂O₇/H₂SO₄) CH₃CHO → CH₃COOH — أكسدة',
+      '[Q] 110° → إيثين / 140° → إيثر — فرق درجة الحرارة مهم',
+      '[O] الكحولات لا تتفاعل مع القواعد (NaOH)',
+    ]},
+  ]},
+  {id:'acids_esters',title:'الأحماض والاسترات',
+   nodes:[
+    {title:'حمض الأسيتيك CH₃COOH — التفاعلات',color:'#d97706',items:[
+      '[E] CH₃COOH + NaOH → CH₃COONa + H₂O',
+      '[E] 2CH₃COOH + Na₂CO₃ → 2CH₃COONa + H₂O + CO₂↑',
+      '[E] CH₃COOH + NaHCO₃ → CH₃COONa + H₂O + CO₂↑',
+      '[E] CH₃COOH + C₂H₅OH →(H₂SO₄) CH₃COOC₂H₅ + H₂O — استرة',
+      '[O] الأحماض العضوية تتفاعل مع Na₂CO₃ و NaHCO₃ (يفرقها عن الفينول)',
+    ]},
+    {title:'الاسترات — التحلل',color:'#b45309',items:[
+      '[E] CH₃COOC₂H₅ + H₂O →(Δ) CH₃COOH + C₂H₅OH — تحلل مائي',
+      '[E] CH₃COOC₂H₅ + NaOH → CH₃COONa + C₂H₅OH — صابرة',
+      '[E] CH₃COOC₂H₅ + NH₃ → CH₃CONH₂ + C₂H₅OH — تحلل بالأمونيا',
+      '[M] الصابرة = تحلل قلوي = لا رجعة (عكس الاسترة)',
+    ]},
+  ]},
+  {id:'links_organic',title:'روابط: المجموعة الوظيفية ← نوع التفاعل',
+   nodes:[
+    {title:'مسار التحويل: الخاصية ← الاستخدام',color:'#22d3ee',items:[
+      'رابطة π → نشاط كيميائي عالٍ → تفاعلات إضافة',
+      'مجموعة COOH → حموضة → تفاعل مع القواعد والكربونات',
+      'مجموعة OH (كحول) → يتفاعل مع Na وليس NaOH',
+      'مجموعة OH (فينول) → يتفاعل مع Na و NaOH و Br₂',
+      'مجموعة CHO → أكسدة → COOH / اختزال → CH₂OH',
+      'استر + ماء → تحلل مائي → حمض + كحول',
+    ]},
+  ]},
+  {id:'expected_derivatives',title:'الأسئلة المتوقعة',
+   nodes:[
+    {title:'أسئلة متوقعة — المشتقات',color:'#fbbf24',isExpected:true,items:[
+      'كيف تفرق بين الكحول والفينول كيميائياً؟',
+      'ما الفرق بين الاسترة والتحلل المائي؟',
+      'ما الناتج من أكسدة الإيثانول بـ K₂Cr₂O₇؟',
+      'لماذا يتفاعل الفينول مع NaOH بينما لا يتفاعل الكحول؟',
+      'اكتب معادلة الصابرة لاستر CH₃COOC₂H₅',
+      'كيف تحضر حمض الأسيتيك من الإيثانول؟',
+    ]},
+  ]},
+ ]
+},
+
+{id:'qualitative',title:'التحليل النوعي',icon:'🔬',color:'#10b981',
+ sections:[
+  {id:'anions',title:'الكشف عن الأنيونات',
+   nodes:[
+    {title:'الأنيونات — الكواشف والنواتج',color:'#34d399',isTable:true,tableData:{
+      headers:['الأيون','الكاشف','الناتج','الملاحظة'],
+      rows:[
+        ['Cl⁻','AgNO₃','AgCl↓ أبيض','يذوب ببطء في NH₃'],
+        ['Br⁻','AgNO₃','AgBr↓ أصفر فاتح','يذوب ببطء جداً في NH₃'],
+        ['I⁻','AgNO₃','AgI↓ أصفر غامق','لا يذوب في NH₃'],
+        ['NO₃⁻','H₂SO₄ مركز + FeSO₄','حلقة بنية','اختبار الحلقة البنية'],
+        ['CO₃²⁻','HCl مخفف','CO₂ يعكر ماء الجير','الراسب يذوب في الحمض'],
+        ['SO₄²⁻','BaCl₂ + HCl','BaSO₄↓ أبيض','لا يذوب في الحمض'],
+      ]
+    },items:[]},
+  ]},
+  {id:'cations1',title:'الكاتيونات — المجموعات',
+   nodes:[
+    {title:'المجموعة 1: Ag⁺, Hg⁺, Pb²⁺',color:'#059669',items:[
+      '[O] الكاشف: HCl مخفف → تترسب كلوريدات بيضاء',
+      '[E] Ag⁺ + Cl⁻ → AgCl↓ أبيض — يذوب في NH₃',
+      '[O] PbCl₂ يذوب في الماء الساخن — تأكيد Pb²⁺',
+    ]},
+    {title:'المجموعة 2: Cu²⁺, Bi³⁺, As³⁺',color:'#047857',items:[
+      '[O] الكاشف: H₂S في وسط HCl مخفف',
+      '[E] Cu²⁺ + H₂S → CuS↓ بني-أسود + 2H⁺',
+      '[O] Cu(OH)₂ أزرق → يتحول عند التسخين إلى CuO أسود',
+      '[O] تأكيد Cu²⁺: محلول أزرق مميز',
+    ]},
+    {title:'المجموعة 3: Fe²⁺, Fe³⁺, Al³⁺',color:'#065f46',items:[
+      '[E] Fe²⁺ + 2NH₄OH → Fe(OH)₂↓ أخضر مبلل',
+      '[E] Fe³⁺ + 3NH₄OH → Fe(OH)₃↓ بني-أحمر',
+      '[E] Al³⁺ + 3NH₄OH → Al(OH)₃↓ أبيض جيلاتيني (يذوب في NaOH الزائد)',
+      '[O] KSCN: يعطي لون أحمر دموي مع Fe³⁺ (كاشف مميز)',
+    ]},
+    {title:'المجموعة 4: Zn²⁺, Mn²⁺, Co²⁺, Ni²⁺',color:'#134e4a',items:[
+      '[O] الكاشف: (NH₄)₂S في وسط NH₄OH',
+      '[E] Zn²⁺ + S²⁻ → ZnS↓ أبيض (يذوب في HCl)',
+      '[E] Mn²⁺ + S²⁻ → MnS↓ لحمي (وردي فاتح)',
+      '[E] Co²⁺ + S²⁻ → CoS↓ أسود',
+      '[E] Ni²⁺ + S²⁻ → NiS↓ أسود',
+    ]},
+    {title:'المجموعة 5: Ca²⁺, Ba²⁺, Sr²⁺',color:'#1e3a5f',items:[
+      '[O] الكاشف: (NH₄)₂CO₃',
+      '[E] Ca²⁺ + CO₃²⁻ → CaCO₃↓ أبيض (يذوب في CO₂ الزائد)',
+      '[O] اختبار اللهب: Ca²⁺ → أحمر آجور / Ba²⁺ → أخضر / Sr²⁺ → أحمر قرمزي',
+    ]},
+  ]},
+  {id:'solubility_rules',title:'قواعد الذوبان',
+   nodes:[
+    {title:'قواعد الذوبان الأساسية',color:'#10b981',items:[
+      '[M] كل أملاح Na⁺, K⁺, NH₄⁺ → ذائبة دائماً',
+      '[M] كل أملاح NO₃⁻ → ذائبة دائماً',
+      '[Q] الكلوريدات: ذائبة ما عدا AgCl, PbCl₂, Hg₂Cl₂',
+      '[Q] الكبريتات: ذائبة ما عدا BaSO₄, CaSO₄, PbSO₄, Ag₂SO₄',
+      '[Q] الكربونات: غير ذائبة ما عدا Na₂CO₃, K₂CO₃, (NH₄)₂CO₃',
+      '[M] BaSO₄ لا يذوب في الأحماض — كاشف تأكيدي قوي لـ SO₄²⁻',
+    ]},
+  ]},
+  {id:'expected_qualitative',title:'الأسئلة المتوقعة',
+   nodes:[
+    {title:'أسئلة متوقعة — التحليل النوعي',color:'#fbbf24',isExpected:true,items:[
+      'كيف تفرق بين Cl⁻ و Br⁻ و I⁻ ؟',
+      'ما الكاشف المميز لـ Fe³⁺؟ وما الناتج؟',
+      'لماذا Al(OH)₃ يذوب في NaOH الزائد؟',
+      'كيف تثبت وجود SO₄²⁻ في محلول؟',
+      'ما الفرق في لون لهب Ca²⁺ و Ba²⁺ و Sr²⁺؟',
+      'ما الأملاح التي لا تذوب في الأحماض؟',
+    ]},
+  ]},
+ ]
+},
+]};
+
+// ============================================================
+// QUIZ DATA
+// ============================================================
+const QUIZ_QUESTIONS = [
+  {q:'لماذا يشذ الكروم في تركيبه الإلكتروني؟',opts:['لأن 4s² أكثر استقراراً من 4s¹','لأن نصف امتلاء 3d⁵ أكثر استقراراً مع 4s¹','خطأ في الجدول الدوري','لأن عدده الذري 24'],ans:1},
+  {q:'ما الكاشف المميز لـ Fe³⁺؟',opts:['NaOH','KSCN (يعطي أحمر دموي)','H₂S','BaCl₂'],ans:1},
+  {q:'ما الصيغة العامة للكينات؟',opts:['CₙH₂ₙ₊₂','CₙH₂ₙ₋₂','CₙH₂ₙ','CₙHₙ'],ans:2},
+  {q:'لماذا لا يتفاعل الحديد مع HNO₃ المركز؟',opts:['لأنه فلز نبيل','لأنه يكوّن طبقة أكسيد غير مسامية','لأن الحمض ضعيف','لأن درجة الحرارة منخفضة'],ans:1},
+  {q:'ما الناتج من تفاعل إيثين مع KMnO₄ القلوي؟',opts:['إيثانول','ثاني أكسيد الكربون','إيثيلين جلايكول','حمض الأسيتيك'],ans:2},
+  {q:'ما لون راسب Fe(OH)₂ ؟',opts:['بني-أحمر','أبيض','أخضر مبلل','أصفر'],ans:2},
+  {q:'أي الهيدروكربونات الأكثر نشاطاً كيميائياً؟',opts:['الكانات','الكينات','الكاينات','البنزين'],ans:2},
+  {q:'من أين يستخلص الإيثاين صناعياً؟',opts:['البترول فقط','كربيد الكالسيوم CaC₂','الغاز الطبيعي فقط','الكحول الإيثيلي'],ans:1},
+  {q:'ما الفرق بين الكحول والفينول تجاه NaOH؟',opts:['كلاهما يتفاعل','كلاهما لا يتفاعل','الفينول يتفاعل فقط','الكحول يتفاعل فقط'],ans:2},
+  {q:'ما العنصر الانتقالي الذي يعطي أعلى حالة تأكسد (+7)؟',opts:['الكروم','الفاناديوم','المنجنيز','الحديد'],ans:2},
+  {q:'ما ناتج احتراق الميثان الكامل؟',opts:['CO + H₂O','CO₂ + H₂','CO₂ + H₂O','C + H₂O'],ans:2},
+  {q:'ما كاشف الكشف عن الفينول؟',opts:['AgNO₃','BaCl₂','FeCl₃ (لون بنفسجي)','KSCN'],ans:2},
+  {q:'أي الأملاح يذوب في الأحماض؟',opts:['BaSO₄','AgCl','CaCO₃','جميعها لا تذوب'],ans:2},
+  {q:'ما الصيغة العامة للكاينات؟',opts:['CₙH₂ₙ₊₂','CₙH₂ₙ','CₙH₂ₙ₋₂','CₙH₂ₙ₊₁'],ans:2},
+  {q:'ما اللون الناتج في اختبار لهب Ca²⁺؟',opts:['أخضر','أحمر آجور','أزرق','بنفسجي'],ans:1},
+];
+
+// ============================================================
+// FLASHCARDS
+// ============================================================
+const FLASHCARDS = [
+  {front:'ما التركيب الإلكتروني للكروم (24)؟',back:'[Ar], 4s¹, 3d⁵\nيشذ لأن نصف امتلاء 3d⁵ أكثر استقراراً'},
+  {front:'ما الفرق بين البارامغناطيسية والدايامغناطيسية؟',back:'بارامغناطيسية: إلكترونات مفردة → تنجذب للمغناطيس\nدايامغناطيسية: لا إلكترونات مفردة → تنبعد'},
+  {front:'معادلة الحديد مع الماء (500°C)',back:'3Fe + 4H₂O → Fe₃O₄ + 4H₂↑'},
+  {front:'ما الصيغة العامة للكانات والكينات والكاينات؟',back:'الكانات: CₙH₂ₙ₊₂\nالكينات: CₙH₂ₙ\nالكاينات: CₙH₂ₙ₋₂'},
+  {front:'كيف تكشف عن Fe³⁺ في محلول؟',back:'أضف KSCN → اللون الأحمر الدموي يثبت وجود Fe³⁺'},
+  {front:'ما ناتج تسخين الإيثانول مع H₂SO₄ عند 110°؟',back:'نزع الماء → الإيثين CH₂=CH₂\n(عند 140° → إيثر ثنائي إيثيل)'},
+  {front:'لماذا لا يعتبر الزنك فلزاً انتقالياً حقيقياً؟',back:'لأن أيونه Zn²⁺ له 3d¹⁰ مكتمل\nلا إلكترونات مفردة في أي حالة'},
+  {front:'ما كاشف التفريق بين Cl⁻ و Br⁻ و I⁻؟',back:'AgNO₃:\nCl⁻ → أبيض (يذوب في NH₃)\nBr⁻ → أصفر فاتح\nI⁻ → أصفر غامق (لا يذوب)'},
+  {front:'معادلة تحضير البنزين من الأسيتيلين',back:'3C₂H₂ → (Ni, 200°) → C₆H₆\nبلمرة ثلاثة جزيئات أسيتيلين'},
+  {front:'ما الفرق بين الاسترة والصابرة؟',back:'الاسترة: RCOOH + ROH → RCOOR + H₂O (عكسية)\nالصابرة: RCOOR + NaOH → RCOONa + ROH (لا رجعة)'},
+  {front:'ما العناصر الانتقالية الشاذة في تركيبها الإلكتروني؟',back:'الكروم: [Ar] 4s¹ 3d⁵\nالنحاس: [Ar] 4s¹ 3d¹⁰\n(سبب: استقرار نصف الامتلاء والامتلاء الكامل)'},
+  {front:'ما الكاتيونات التي تترسب مع HCl المخفف؟',back:'Ag⁺ → AgCl أبيض\nHg₂²⁺ → Hg₂Cl₂ أبيض\nPb²⁺ → PbCl₂ أبيض (يذوب ساخناً)'},
+];
+
+// ============================================================
+// STATE
+// ============================================================
+let state = {
+  tab:'home',
+  path:[],  // [{type:'unit'|'section',id}]
+  quizIdx:0, quizScore:0, quizAnswered:false, quizDone:false,
+  fcIdx:0, fcFlipped:false,
+  progress:{},  // unitId: Set of seen nodeIds
+};
+
+// Load progress
+try{
+  const saved = localStorage.getItem('chem_progress');
+  if(saved) state.progress = JSON.parse(saved, (k,v)=>Array.isArray(v)?new Set(v):v);
+}catch(e){}
+
+function saveProgress(){
+  try{
+    const toSave = {};
+    for(const k in state.progress) toSave[k]=[...state.progress[k]];
+    localStorage.setItem('chem_progress', JSON.stringify(toSave));
+  }catch(e){}
+}
+
+// ============================================================
+// RENDER
+// ============================================================
+function render(){
+  const c = document.getElementById('content');
+  const back = document.getElementById('btn-back');
+  const title = document.getElementById('topbar-title');
+
+  // Update bottom nav
+  ['home','search','compare','quiz','flash'].forEach(t=>{
+    document.getElementById('nav-'+t).classList.toggle('active', state.tab===t);
+  });
+
+  if(state.tab==='home'){
+    back.style.display = state.path.length>0?'':'none';
+    if(state.path.length===0){
+      title.textContent='🧪 كيمياء الثانوية';
+      c.innerHTML = renderHome();
+    } else if(state.path.length===1){
+      const unit = DATA.units.find(u=>u.id===state.path[0].id);
+      title.textContent = unit.title;
+      c.innerHTML = renderUnit(unit);
+    } else if(state.path.length===2){
+      const unit = DATA.units.find(u=>u.id===state.path[0].id);
+      const sec = unit.sections.find(s=>s.id===state.path[1].id);
+      title.textContent = sec.title;
+      c.innerHTML = renderSection(unit,sec);
+    }
+  } else if(state.tab==='search'){
+    back.style.display='none';
+    title.textContent='🔍 بحث';
+    c.innerHTML = renderSearch();
+  } else if(state.tab==='compare'){
+    back.style.display='none';
+    title.textContent='⚖️ جداول المقارنة';
+    c.innerHTML = renderCompare();
+  } else if(state.tab==='quiz'){
+    back.style.display='none';
+    title.textContent='🧠 اختبار سريع';
+    c.innerHTML = renderQuiz();
+  } else if(state.tab==='flash'){
+    back.style.display='none';
+    title.textContent='🃏 بطاقات التذكر';
+    c.innerHTML = renderFlash();
+  }
+
+  c.classList.remove('fade-in');
+  void c.offsetWidth;
+  c.classList.add('fade-in');
+}
+
+function renderHome(){
+  return DATA.units.map(u=>{
+    const total = u.sections.reduce((a,s)=>a+s.nodes.length,0);
+    const seen = state.progress[u.id] ? state.progress[u.id].size : 0;
+    const pct = total>0?Math.round(seen/total*100):0;
+    return `<div class="unit-card" onclick="openUnit('${u.id}')" style="border-color:${u.color}33">
+      <div class="unit-icon">${u.icon}</div>
+      <div class="unit-info">
+        <div class="unit-title" style="color:${u.color}">${u.title}</div>
+        <div class="unit-meta">${u.sections.length} أقسام • ${total} موضوع • ${pct}% تمت</div>
+        <div class="progress-bar"><div class="progress-fill" style="width:${pct}%;background:${u.color}"></div></div>
+      </div>
+      <div class="unit-arrow">←</div>
+    </div>`;
+  }).join('');
+}
+
+function renderUnit(unit){
+  return unit.sections.map(s=>`
+    <div class="section-btn" onclick="openSection('${unit.id}','${s.id}')" style="border-color:${unit.color}33">
+      <div>
+        <div class="section-title-text" style="color:${unit.color}">📘 ${s.title}</div>
+        <div class="section-meta">${s.nodes.length} موضوع</div>
+      </div>
+      <div style="color:var(--muted)">←</div>
+    </div>`).join('');
+}
+
+function renderSection(unit,sec){
+  // Mark progress
+  if(!state.progress[unit.id]) state.progress[unit.id]=new Set();
+
+  return sec.nodes.map((node,i)=>{
+    const nodeId = sec.id+'_'+i;
+
+    if(node.isTable && node.tableData){
+      const td = node.tableData;
+      return `<div class="compare-section fade-in">
+        <h4 style="color:${node.color}">${node.title}</h4>
+        <div style="overflow-x:auto">
+        <table class="compare-table">
+          <tr>${td.headers.map(h=>`<th style="color:${node.color}">${h}</th>`).join('')}</tr>
+          ${td.rows.map(r=>`<tr>${r.map(c=>`<td>${c}</td>`).join('')}</tr>`).join('')}
+        </table></div></div>`;
+    }
+
+    if(node.isExpected){
+      return `<div class="compare-section fade-in" style="border:1px solid #fbbf2444">
+        <h4 style="color:#fbbf24">❓ ${node.title}</h4>
+        ${node.items.map((q,qi)=>`<div class="expected-q"><span class="q-num">س${qi+1}</span>${q}</div>`).join('')}
+      </div>`;
+    }
+
+    return `<div class="node-card fade-in" id="node_${nodeId}">
+      <div class="node-header" id="nh_${nodeId}" style="background:rgba(0,0,0,.2);border-color:${node.color}44"
+        onclick="toggleNode('${nodeId}','${unit.id}')">
+        <span class="node-arrow" id="na_${nodeId}">▼</span>
+        <span class="node-title-text" style="color:${node.color}">${node.title}</span>
+      </div>
+      <div class="node-body" id="nb_${nodeId}" style="background:${node.color}0d;border-color:${node.color}33">
+        ${node.items.map(item=>renderItem(item)).join('')}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function toggleNode(id, unitId){
+  const h=document.getElementById('nh_'+id);
+  const b=document.getElementById('nb_'+id);
+  if(!h||!b) return;
+  const isOpen = b.classList.contains('open');
+  h.classList.toggle('open',!isOpen);
+  b.classList.toggle('open',!isOpen);
+  if(!isOpen && unitId){
+    if(!state.progress[unitId]) state.progress[unitId]=new Set();
+    state.progress[unitId].add(id);
+    saveProgress();
+  }
+}
+
+function renderSearch(){
+  return `<div id="search-wrap">
+    <input id="search-input" type="search" placeholder="ابحث: معادلة، عنصر، تفاعل..." 
+      oninput="doSearch(this.value)" autocomplete="off"/>
+    <span id="search-icon">🔍</span>
+  </div>
+  <div id="search-results"></div>
+  <div class="empty" id="search-empty">
+    <div class="e-icon">🔍</div>
+    <div>اكتب للبحث في كل المحتوى</div>
+  </div>`;
+}
+
+function doSearch(q){
+  const res = document.getElementById('search-results');
+  const emp = document.getElementById('search-empty');
+  if(!q||q.length<2){res.classList.remove('show');emp.style.display='block';return;}
+  emp.style.display='none';
+  const ql = q.toLowerCase();
+  const hits=[];
+  DATA.units.forEach(u=>{
+    u.sections.forEach(s=>{
+      s.nodes.forEach(n=>{
+        if(n.title.includes(q)||n.title.toLowerCase().includes(ql)){
+          hits.push({unit:u,sec:s,node:n,match:n.title,items:[]});
+        }
+        const matchItems = (n.items||[]).filter(it=>it.includes(q)||it.toLowerCase().includes(ql));
+        if(matchItems.length){
+          hits.push({unit:u,sec:s,node:n,match:n.title,items:matchItems.slice(0,2)});
+        }
+      });
+    });
+  });
+  const unique=[];const seen=new Set();
+  hits.forEach(h=>{const k=h.unit.id+h.sec.id+h.node.title;if(!seen.has(k)){seen.add(k);unique.push(h);}});
+  if(!unique.length){res.innerHTML='<div class="empty"><div class="e-icon">😕</div><div>لا نتائج</div></div>';res.classList.add('show');return;}
+  res.innerHTML=unique.slice(0,20).map(h=>`
+    <div class="search-item" onclick="jumpToNode('${h.unit.id}','${h.sec.id}')">
+      <div class="search-item-title" style="color:${h.unit.color}">${h.node.title}</div>
+      <div class="search-item-path">${h.unit.title} ← ${h.sec.title}</div>
+      ${h.items.map(it=>`<div class="search-item-preview">${it.replace(q,'<mark>'+q+'</mark>')}</div>`).join('')}
+    </div>`).join('');
+  res.classList.add('show');
+}
+
+function jumpToNode(unitId,secId){
+  state.tab='home';
+  state.path=[{id:unitId},{id:secId}];
+  render();
+}
+
+function renderCompare(){
+  const tables = [];
+  DATA.units.forEach(u=>u.sections.forEach(s=>s.nodes.forEach(n=>{
+    if(n.isTable&&n.tableData) tables.push({unit:u,node:n});
+  })));
+  return tables.map(({unit,node})=>{
+    const td=node.tableData;
+    return `<div class="compare-section fade-in">
+      <h4 style="color:${unit.color}">${node.title}</h4>
+      <div style="overflow-x:auto">
+      <table class="compare-table">
+        <tr>${td.headers.map(h=>`<th style="color:${unit.color}">${h}</th>`).join('')}</tr>
+        ${td.rows.map(r=>`<tr>${r.map(c=>`<td>${c}</td>`).join('')}</tr>`).join('')}
+      </table></div></div>`;
+  }).join('');
+}
+
+function renderQuiz(){
+  if(state.quizDone){
+    const pct=Math.round(state.quizScore/QUIZ_QUESTIONS.length*100);
+    const emoji=pct>=80?'🏆':pct>=60?'👍':'📚';
+    return `<div class="quiz-score">${emoji} ${state.quizScore} / ${QUIZ_QUESTIONS.length}
+      <small>${pct}% صحيح</small>
+      <small style="font-size:12px;margin-top:4px">${pct>=80?'ممتاز! أنت جاهز للامتحان':pct>=60?'جيد، راجع المحتوى مرة أخرى':'راجع المحتوى ثم أعد المحاولة'}</small>
+    </div>
+    <button class="btn" onclick="restartQuiz()">🔄 إعادة الاختبار</button>`;
+  }
+  const q=QUIZ_QUESTIONS[state.quizIdx];
+  const pct=Math.round(state.quizIdx/QUIZ_QUESTIONS.length*100);
+  return `<div class="quiz-progress"><div class="quiz-progress-fill" style="width:${pct}%"></div></div>
+    <div style="color:var(--muted);font-size:12px;margin-bottom:12px;text-align:center">السؤال ${state.quizIdx+1} من ${QUIZ_QUESTIONS.length}</div>
+    <div class="quiz-question">
+      <div class="quiz-q-text">${q.q}</div>
+      <div class="quiz-options">
+        ${q.opts.map((o,i)=>`<button class="quiz-opt" id="qopt_${i}" onclick="answerQuiz(${i})">${o}</button>`).join('')}
+      </div>
+      ${state.quizAnswered?`<button class="btn" style="margin-top:14px" onclick="nextQuestion()">التالي ←</button>`:''}
+    </div>`;
+}
+
+function answerQuiz(i){
+  if(state.quizAnswered) return;
+  state.quizAnswered=true;
+  const q=QUIZ_QUESTIONS[state.quizIdx];
+  const opts=document.querySelectorAll('.quiz-opt');
+  opts.forEach((o,idx)=>{
+    if(idx===q.ans) o.classList.add('correct');
+    else if(idx===i&&i!==q.ans) o.classList.add('wrong');
+    else o.classList.add('reveal');
+    o.disabled=true;
+  });
+  if(i===q.ans) state.quizScore++;
+  render(); // re-render to show Next button
+}
+
+function nextQuestion(){
+  state.quizIdx++;
+  state.quizAnswered=false;
+  if(state.quizIdx>=QUIZ_QUESTIONS.length) state.quizDone=true;
+  render();
+}
+
+function restartQuiz(){
+  state.quizIdx=0;state.quizScore=0;state.quizAnswered=false;state.quizDone=false;
+  render();
+}
+
+function renderFlash(){
+  const fc=FLASHCARDS[state.fcIdx];
+  return `<div style="margin-bottom:12px;text-align:center;color:var(--muted);font-size:13px">
+    ${state.fcIdx+1} / ${FLASHCARDS.length}
+  </div>
+  <div class="flashcard-wrap" onclick="flipCard()">
+    <div class="flashcard ${state.fcFlipped?'flipped':''}">
+      <div class="flashcard-front">
+        <div class="fc-label">السؤال — انقر للإجابة</div>
+        <div class="fc-text">${fc.front}</div>
+      </div>
+      <div class="flashcard-back">
+        <div class="fc-label">الإجابة ✓</div>
+        <div class="fc-text" style="white-space:pre-line">${fc.back}</div>
+      </div>
+    </div>
+  </div>
+  <div class="fc-nav">
+    <button class="fc-nav-btn" onclick="prevCard()">← السابق</button>
+    <span class="fc-counter">${state.fcFlipped?'✓ اطلعت':'انقر للقلب'}</span>
+    <button class="fc-nav-btn" onclick="nextCard()">التالي →</button>
+  </div>`;
+}
+
+function flipCard(){state.fcFlipped=!state.fcFlipped;render();}
+function nextCard(){state.fcIdx=(state.fcIdx+1)%FLASHCARDS.length;state.fcFlipped=false;render();}
+function prevCard(){state.fcIdx=(state.fcIdx-1+FLASHCARDS.length)%FLASHCARDS.length;state.fcFlipped=false;render();}
+
+function openUnit(id){state.path=[{id}];render();}
+function openSection(uid,sid){state.path=[{id:uid},{id:sid}];render();}
+function goBack(){
+  if(state.path.length>0){state.path.pop();render();}
+}
+function switchTab(t){
+  state.tab=t;
+  if(t==='home') state.path=[];
+  render();
+}
+function toggleTheme(){
+  const body=document.body;
+  const isDark=body.getAttribute('data-theme')==='dark';
+  body.setAttribute('data-theme',isDark?'light':'dark');
+  document.getElementById('btn-theme').textContent=isDark?'🌙':'☀️';
+}
+
+// INITIAL
+render();
+
+// Handle back gesture
+window.addEventListener('popstate',()=>{if(state.path.length>0){goBack();}});
+</script>
+</body>
+</html>
