@@ -1,0 +1,212 @@
+{
+  "version": "phase17.1-v1",
+  "examples": [
+    {
+      "id": "we_ksp_2026_01",
+      "title": "Ksp (ملح 1:1)",
+      "topic": "Ksp_pH_hydrolysis",
+      "question": "احسب الذوبانية المولارية x لملح يتفكك 1:1 إذا Ksp=9×10^-10.",
+      "given": [
+        "Ksp=9×10^-10",
+        "التفكك: AB ⇌ A+ + B-"
+      ],
+      "lawRefs": [
+        "ksp"
+      ],
+      "steps": [
+        "للتفكك 1:1: Ksp=x²",
+        "x=√Ksp=3×10^-5 mol/L"
+      ],
+      "finalAnswer": "x = 3×10^-5 mol/L",
+      "sanityCheck": "الوحدة mol/L وقيمة صغيرة مناسبة لملح قليل الذوبان.",
+      "commonMistake": "نسيان أخذ الجذر التربيعي.",
+      "relatedQuestionIds": []
+    },
+    {
+      "id": "we_ph_2026_01",
+      "title": "pH لحمض قوي",
+      "topic": "Ksp_pH_hydrolysis",
+      "question": "احسب pH لمحلول HCl تركيزه 10^-3 M.",
+      "given": [
+        "[H+]=10^-3 M"
+      ],
+      "lawRefs": [
+        "ph"
+      ],
+      "steps": [
+        "pH=-log[H+]",
+        "pH=3"
+      ],
+      "finalAnswer": "pH = 3",
+      "sanityCheck": "أقل من 7 إذن المحلول حمضي.",
+      "commonMistake": "استخدام pOH بدل pH.",
+      "relatedQuestionIds": []
+    },
+    {
+      "id": "we_ka_2026_01",
+      "title": "حمض ضعيف وثابت التأين Ka",
+      "topic": "Ksp_pH_hydrolysis",
+      "question": "إذا كان Ka=1×10^-5 وCa=0.1 M، احسب [H3O+].",
+      "given": [
+        "Ka=1×10^-5",
+        "Ca=0.1 M"
+      ],
+      "lawRefs": [
+        "ka"
+      ],
+      "steps": [
+        "[H3O+]=√(Ka×Ca)",
+        "[H3O+]=√(10^-6)=10^-3 M"
+      ],
+      "finalAnswer": "[H3O+] = 1×10^-3 M",
+      "sanityCheck": "تركيز H3O+ أصغر من التركيز الابتدائي كما هو متوقع للحمض الضعيف.",
+      "commonMistake": "الخلط بين Ka وKb.",
+      "relatedQuestionIds": []
+    },
+    {
+      "id": "we_titration_2026_01",
+      "title": "معايرة حمض/قاعدة",
+      "topic": "titration_qualitative_analysis",
+      "question": "احسب Mb إذا Ma=0.2M, Va=25mL, Vb=20mL لحمض وقاعدة أحاديين.",
+      "given": [
+        "Ma=0.2",
+        "Va=25",
+        "Vb=20"
+      ],
+      "lawRefs": [
+        "titration"
+      ],
+      "steps": [
+        "MaVa=MbVb",
+        "Mb=(0.2×25)/20=0.25 M"
+      ],
+      "finalAnswer": "Mb = 0.25 M",
+      "sanityCheck": "المعادلة متسقة بعد توحيد وحدات الحجم.",
+      "commonMistake": "نسيان توحيد وحدات الأحجام.",
+      "relatedQuestionIds": []
+    },
+    {
+      "id": "we_faraday_2026_01",
+      "title": "قانون فاراداي",
+      "topic": "Faraday_E_cell_batteries_corrosion",
+      "question": "إذا I=3A وt=400s احسب Q.",
+      "given": [
+        "I=3A",
+        "t=400s"
+      ],
+      "lawRefs": [
+        "faraday"
+      ],
+      "steps": [
+        "Q=I×t",
+        "Q=1200 C"
+      ],
+      "finalAnswer": "Q = 1200 C",
+      "sanityCheck": "الوحدة C صحيحة.",
+      "commonMistake": "إدخال الزمن بالدقائق دون تحويل.",
+      "relatedQuestionIds": []
+    },
+    {
+      "id": "we_ecell_2026_01",
+      "title": "القوة الدافعة الكهربية",
+      "topic": "Faraday_E_cell_batteries_corrosion",
+      "question": "إذا E°red(cathode)=0.34 وE°red(anode)=-0.76 احسب E_cell.",
+      "given": [
+        "0.34 V",
+        "-0.76 V"
+      ],
+      "lawRefs": [
+        "ecell"
+      ],
+      "steps": [
+        "E_cell=E°red(cathode)-E°red(anode)",
+        "E_cell=0.34-(-0.76)=1.10 V"
+      ],
+      "finalAnswer": "E_cell = 1.10 V",
+      "sanityCheck": "قيمة موجبة تعني خلية جلفانية تلقائية.",
+      "commonMistake": "عكس ترتيب القطبين.",
+      "relatedQuestionIds": []
+    },
+    {
+      "id": "we_org_2026_01",
+      "title": "تحويل عضوي أساسي",
+      "topic": "organic_conversions",
+      "question": "تحويل الإيثين إلى إيثانول.",
+      "given": [
+        "C2H4 متفاعل"
+      ],
+      "lawRefs": [
+        "moles"
+      ],
+      "steps": [
+        "تفاعل إضافة ماء في وسط حمضي",
+        "الناتج: C2H5OH"
+      ],
+      "finalAnswer": "C2H4 + H2O → C2H5OH",
+      "sanityCheck": "تمت إضافة H وOH على الرابطة المزدوجة.",
+      "commonMistake": "الخلط بين الهدرة والهدرجة.",
+      "relatedQuestionIds": []
+    },
+    {
+      "id": "we_qual_2026_01",
+      "title": "تحليل نوعي بسيط",
+      "topic": "titration_qualitative_analysis",
+      "question": "كيف تميز بين أيون الكلوريد وأيون الكبريتات؟",
+      "given": [
+        "محاليل أملاح مجهولة"
+      ],
+      "lawRefs": [
+        "titration"
+      ],
+      "steps": [
+        "أضف AgNO3 للكشف عن Cl-",
+        "أضف BaCl2 للكشف عن SO4^2-"
+      ],
+      "finalAnswer": "يتكوّن AgCl الأبيض للكلوريد وBaSO4 الأبيض غير الذائب للأيون الكبريتي.",
+      "sanityCheck": "اختر الوسط المناسب لتجنب التداخل.",
+      "commonMistake": "استخدام كاشف غير انتقائي قبل ضبط الوسط.",
+      "relatedQuestionIds": []
+    },
+    {
+      "id": "we_transition_2026_01",
+      "title": "حديد وانتقالية",
+      "topic": "transition_elements_iron_alloys",
+      "question": "اكتب معادلة أكسدة Fe2+ إلى Fe3+.",
+      "given": [
+        "أيون الحديدوز"
+      ],
+      "lawRefs": [
+        "moles"
+      ],
+      "steps": [
+        "Fe2+ يفقد إلكتروناً واحداً",
+        "المعادلة: Fe2+ → Fe3+ + e-"
+      ],
+      "finalAnswer": "Fe2+ → Fe3+ + e-",
+      "sanityCheck": "موازنة الشحنة صحيحة.",
+      "commonMistake": "إضافة إلكترون في الطرف الخاطئ.",
+      "relatedQuestionIds": []
+    },
+    {
+      "id": "we_moles_2026_01",
+      "title": "حساب عدد المولات",
+      "topic": "mixed_skills_graphs_tables",
+      "question": "احسب عدد المولات في 11.2 L من غاز عند STP.",
+      "given": [
+        "V=11.2 L",
+        "Vm=22.4 L/mol"
+      ],
+      "lawRefs": [
+        "moles"
+      ],
+      "steps": [
+        "n=V/22.4",
+        "n=11.2/22.4=0.5 mol"
+      ],
+      "finalAnswer": "n = 0.5 mol",
+      "sanityCheck": "نصف الحجم المولاري يعطي نصف مول.",
+      "commonMistake": "استخدام 24L بدلاً من 22.4L في STP.",
+      "relatedQuestionIds": []
+    }
+  ]
+}

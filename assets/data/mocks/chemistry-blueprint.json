@@ -1,0 +1,16 @@
+{
+  "version": "phase17-v1",
+  "description": "Mock blueprint foundation for chemistry exam training.",
+  "defaultQuestionCount": 15,
+  "chapters": [
+    { "id": "ionic-equilibrium", "label": "الاتزان الأيوني", "topics": ["Ksp", "pH"], "weight": 0.35 },
+    { "id": "electrochemistry", "label": "الكهربية", "topics": ["Faraday", "E_cell"], "weight": 0.3 },
+    { "id": "solutions", "label": "المحاليل", "topics": ["titration"], "weight": 0.15 },
+    { "id": "organic", "label": "الكيمياء العضوية", "topics": ["organic_conversions"], "weight": 0.2 }
+  ],
+  "difficultyDistribution": {
+    "سهل": 0.3,
+    "متوسط": 0.5,
+    "صعب": 0.2
+  }
+}

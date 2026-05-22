@@ -1,13 +1,21 @@
-﻿const CACHE_NAME = 'chemistry-mindmap-pro-v5';
+const CACHE_NAME = 'chemistry-mindmap-pro-v20';
 const APP_SHELL = [
   './',
   './index.html',
   './offline.html',
   './manifest.webmanifest',
   './assets/css/app.css',
+  './assets/css/exams.css',
   './assets/js/main.js',
   './assets/js/state.js',
   './assets/js/data.js',
+  './assets/js/db.js',
+  './assets/js/examCenter.js',
+  './assets/js/questionPlayer.js',
+  './assets/js/mockEngine.js',
+  './assets/js/analytics.js',
+  './assets/js/workedExamples.js',
+  './assets/js/laws.js',
   './assets/js/adaptive.js',
   './assets/js/reaction-player.js',
   './assets/js/render.js',
@@ -17,6 +25,13 @@ const APP_SHELL = [
   './assets/js/search.js',
   './assets/js/progress.js',
   './assets/js/periodic-table.js',
+  './assets/data/exams/official-2026-models.json',
+  './assets/data/exams/archive-2017-2025.json',
+  './assets/data/exams/source-map-2026.json',
+  './assets/data/exams/manual-review-needed.json',
+  './assets/data/mocks/chemistry-blueprint.json',
+  './assets/data/worked-examples.json',
+  './assets/data/micro-lessons.json',
   './assets/images/catalyst_logo_reference.png',
   './assets/images/chemistry_ui_reference.png'
 ];
@@ -39,6 +54,9 @@ self.addEventListener('activate', event => {
 
 self.addEventListener('fetch', event => {
   if (event.request.method !== 'GET') return;
+
+  const reqUrl = new URL(event.request.url);
+  if (reqUrl.pathname.toLowerCase().endsWith('.pdf')) return;
 
   const isNavigation = event.request.mode === 'navigate';
 
@@ -69,7 +87,3 @@ self.addEventListener('fetch', event => {
     })
   );
 });
-
-
-
-

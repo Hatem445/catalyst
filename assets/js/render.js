@@ -4,7 +4,8 @@ import { ItemParser, DB, QUIZ, CARDS } from './data.js';
 import { Search } from './search.js';
 import { Progress } from './progress.js';
 import { PeriodicTable } from './periodic-table.js';
-import { ReactionPlayer } from './reaction-player.js';
+import { LawsData } from './laws.js';
+import { ExamCenter } from './examCenter.js';
 
 const MindMap = {
   // Renders an organic conversion SVG pathway
@@ -189,144 +190,93 @@ const MindMap = {
   }
 };
 
+const ChemFormat = {
+  sub(v) { return `<sub class="chem-sub">${v}</sub>`; },
+  sup(v) { return `<sup class="chem-sup">${v}</sup>`; },
+  formula(raw) {
+    return String(raw || '').replace(/([A-Za-z\)])(\d+)/g, (_, p1, p2) => `${p1}<sub class="chem-sub">${p2}</sub>`);
+  },
+  charge(base, charge) {
+    return `${this.formula(base)}<sup class="chem-sup">${charge}</sup>`;
+  },
+  power(base, exp) {
+    return `${base}<sup class="chem-sup">${exp}</sup>`;
+  },
+  root(expr, order = 2) {
+    if (order === 2) return `√(<span class="chem-ltr">${expr}</span>)`;
+    return `<span class="chem-sup">${order}</span>√(<span class="chem-ltr">${expr}</span>)`;
+  },
+};
+
 
 const Renderer = {
 
   /* — HOME — */
   home(adaptiveHome = null) {
-    const totalSeen = Progress.totalSeen();
-    const totalNodes = Progress.totalNodes();
-    const pct = totalNodes > 0 ? Math.round(totalSeen / totalNodes * 100) : 0;
-
     const hero = `
       <div class="home-hero fade-in">
-        <svg class="hero-molecules" viewBox="0 0 300 120" preserveAspectRatio="xMidYMid slice">
-          <circle cx="20" cy="20" r="6" fill="#00ffb3" class="anim-float"/>
-          <circle cx="280" cy="90" r="8" fill="#3b9eff" class="anim-float" style="animation-delay:1s"/>
-          <circle cx="150" cy="10" r="5" fill="#b97aff" class="anim-float" style="animation-delay:0.5s"/>
-          <line x1="20" y1="20" x2="150" y2="10" stroke="#00ffb3" stroke-width="0.8" opacity="0.5"/>
-          <line x1="150" y1="10" x2="280" y2="90" stroke="#3b9eff" stroke-width="0.8" opacity="0.5"/>
-          <circle cx="60" cy="100" r="4" fill="#ffcc44" class="anim-float" style="animation-delay:1.5s"/>
-          <circle cx="240" cy="30" r="7" fill="#ff6eb4" class="anim-float" style="animation-delay:0.8s"/>
-          <line x1="60" y1="100" x2="240" y2="30" stroke="#ff6eb4" stroke-width="0.8" opacity="0.4"/>
-        </svg>
-        <div class="hero-title">⚗️ Chemistry<br>MindMap Pro</div>
-        <div class="hero-sub">كيمياء الثانوية — الطريقة الذكية</div>
-      </div>`;
-
-    const stats = `
-      <div class="stats-row fade-in fade-in-delay-1">
-        <div class="stat-chip">
-          <div class="stat-val" style="color:var(--neon-cyan)">${totalSeen}</div>
-          <div class="stat-label">موضوع تمت مراجعته</div>
-        </div>
-        <div class="stat-chip">
-          <div class="stat-val" style="color:var(--neon-green)">${pct}%</div>
-          <div class="stat-label">الإنجاز الكلي</div>
-        </div>
-        <div class="stat-chip">
-          <div class="stat-val" style="color:var(--neon-amber)">${CARDS.length}</div>
-          <div class="stat-label">بطاقات تذكر</div>
+        <div class="hero-brand-wrap">
+          <img src="assets/images/catalyst_logo_reference.png" alt="Catalyst" class="hero-brand-mark">
+          <div class="hero-title">CATALYST</div>
+          <div class="hero-tagline">Visualize • Understand • Transform</div>
         </div>
       </div>`;
 
-    const learningTracks = `
-      <div class="home-track-grid fade-in fade-in-delay-1">
-        <div class="glass-card home-track">
-          <div class="home-track-title">مسار الفهم</div>
-          <div class="home-track-desc">افتح الوحدة ثم ابدأ بالعقد الأساسية قبل التفاصيل.</div>
+    const studySection = `
+      <section class="glass-card home-path-card fade-in fade-in-delay-1">
+        <div class="home-path-title">ذاكر وافهم</div>
+        <div class="home-path-desc">ابدأ بمسار الفهم الأساسي من المحتوى الدراسي.</div>
+        <div class="home-path-actions">
+          <button class="home-quick-btn" data-action="tab" data-tab="organic">الكيمياء العضوية</button>
+          <button class="home-quick-btn" data-action="tab" data-tab="periodic">الجدول الدوري</button>
+          <button class="home-quick-btn" data-action="tab" data-tab="laws">القوانين</button>
         </div>
-        <div class="glass-card home-track">
-          <div class="home-track-title">مسار التطبيق</div>
-          <div class="home-track-desc">جرّب أسئلة الفهم ثم ارجع لنقاط الضعف مباشرة.</div>
-        </div>
-      </div>`;
+      </section>`;
 
-    const weeklyFocus = `
-      <div class="glass-card home-focus fade-in fade-in-delay-2">
-        <div class="home-focus-title">خطة مراجعة سريعة</div>
-        <div class="home-focus-list">
-          <span>1) الهيدروكربونات: أنماط التفاعل</span>
-          <span>2) المشتقات: التمييز بين المجموعات الوظيفية</span>
-          <span>3) الحديد والتحليل النوعي: الكواشف المهمة</span>
+    const exploreSection = `
+      <section class="glass-card home-path-card fade-in fade-in-delay-2">
+        <div class="home-path-title">استكشف وتدرّب</div>
+        <div class="home-path-desc">تدريب بصري وتفاعلي على المفاهيم المهمة.</div>
+        <div class="home-path-actions">
+          <button class="home-quick-btn" data-action="go-hash" data-hash="#exam-center">مركز الامتحانات</button>
+          <button class="home-quick-btn" data-action="tab" data-tab="periodic">التوزيع الإلكتروني</button>
+          <button class="home-quick-btn" data-action="tab" data-tab="organic">التفاعلات العضوية</button>
+          <button class="home-quick-btn" data-action="tab" data-tab="quiz">الاختبار السريع</button>
         </div>
-      </div>`;
+      </section>`;
 
-    const quickActions = `
-      <div class="home-quick-grid fade-in fade-in-delay-2">
-        <button class="glass-card home-quick-btn" data-action="tab" data-tab="search">بحث ذكي</button>
-        <button class="glass-card home-quick-btn" data-action="tab" data-tab="periodic">الجدول الدوري</button>
-        <button class="glass-card home-quick-btn" data-action="open-periodic-filter" data-filter="transition">السلسلة الانتقالية</button>
-        <button class="glass-card home-quick-btn" data-action="tab" data-tab="quiz">اختبار سريع</button>
-        <button class="glass-card home-quick-btn" data-action="tab" data-tab="flash">مراجعة بطاقات</button>
-        <button class="glass-card home-quick-btn" data-action="tab" data-tab="organic">رحلة العضوية</button>
-      </div>`;
-
-    const weakUnits = DB.units
-      .map(u => {
-        const totalN = u.sections.reduce((a, s) => a + s.nodes.length, 0);
-        const uPct = Progress.getPct(u.id, totalN);
-        return { id: u.id, title: u.title, pct: uPct, clr: u.clr };
-      })
-      .sort((a, b) => a.pct - b.pct)
-      .slice(0, 2);
-    const weakBox = `
-      <div class="glass-card home-weak fade-in fade-in-delay-3">
-        <div class="home-weak-title">نقاط تحتاج دعم</div>
-        ${weakUnits.map(w => `
-          <div class="home-weak-item" data-action="open-unit" data-unit-id="${w.id}">
-            <span>${w.title}</span>
-            <span style="color:${w.clr}">${w.pct}%</span>
-          </div>
-        `).join('')}
-      </div>`;
-
-    const plan = adaptiveHome?.plan || { dateKey: '', tasks: [], completedTaskIds: [] };
-    const completed = adaptiveHome?.completedCount || 0;
-    const totalTasks = adaptiveHome?.totalTasks || 0;
-    const dueFlashCount = adaptiveHome?.dueFlashCount || 0;
-    const retryCount = adaptiveHome?.retryCount || 0;
-    const weakTopics = adaptiveHome?.weakTopics || [];
-    const doneSet = new Set(plan.completedTaskIds || []);
-    const planHtml = `
-      <div class="glass-card today-plan fade-in fade-in-delay-2">
-        <div class="today-plan-head">
-          <div>
-            <div class="today-plan-title">خطة اليوم</div>
-            <div class="today-plan-date">${plan.dateKey || ''}</div>
-          </div>
-          <div class="today-plan-progress">${completed}/${totalTasks}</div>
+    const reviewSection = `
+      <section class="glass-card home-path-card fade-in fade-in-delay-3">
+        <div class="home-path-title">راجع بسرعة</div>
+        <div class="home-path-desc">مراجعة خفيفة قبل الاختبار أو بعد المذاكرة.</div>
+        <div class="home-path-actions">
+          <button class="home-quick-btn" data-action="tab" data-tab="flash">البطاقات التعليمية</button>
+          <button class="home-quick-btn" data-action="tab" data-tab="laws">مراجعة سريعة للقوانين</button>
+          <button class="home-quick-btn" data-action="open-periodic-filter" data-filter="transition">السلسلة الانتقالية</button>
         </div>
-        <div class="today-plan-meta">
-          <span>بطاقات مستحقة الآن: ${dueFlashCount}</span>
-          <div class="today-plan-actions">
-            ${retryCount > 0 ? `<button class="today-plan-weak-btn" data-action="start-retry-quiz">مراجعة أخطائي (${retryCount})</button>` : ''}
-            ${weakTopics[0] ? `<button class="today-plan-weak-btn" data-action="start-adaptive-topic" data-topic="${weakTopics[0].topic}">ابدأ أضعف موضوع</button>` : ''}
-          </div>
-        </div>
-        <div class="today-plan-list">
-          ${(plan.tasks || []).map(task => `
-            <div class="today-task ${doneSet.has(task.id) ? 'done' : ''}">
-              <button class="today-task-check" data-action="toggle-plan-task" data-task-id="${task.id}">${doneSet.has(task.id) ? '✓' : '○'}</button>
-              <div class="today-task-body">
-                <div class="today-task-title">${task.titleAr}</div>
-                <div class="today-task-desc">${task.descAr}</div>
-              </div>
-              <button class="today-task-start" data-action="start-plan-task" data-task-id="${task.id}">ابدأ</button>
-            </div>
-          `).join('')}
-        </div>
-      </div>`;
+      </section>`;
 
-    const unitsHtml = DB.units.map((u, i) => {
+    const curriculumOrder = ['transition', 'iron', 'qualitative', 'hydrocarbons', 'org_derivatives'];
+    const unitsSorted = [...DB.units].sort((a, b) => {
+      const ia = curriculumOrder.indexOf(a.id);
+      const ib = curriculumOrder.indexOf(b.id);
+      const va = ia === -1 ? 999 : ia;
+      const vb = ib === -1 ? 999 : ib;
+      return va - vb;
+    });
+
+    const unitsHtml = unitsSorted.map((u, i) => {
       const totalN = u.sections.reduce((a, s) => a + s.nodes.length, 0);
       const pct = Progress.getPct(u.id, totalN);
       const delay = i === 0 ? '' : `fade-in-delay-${Math.min(i, 3)}`;
+      const displayTitle = u.id === 'iron'
+        ? 'الحديد (Fe) وتفاعلاته'
+        : u.title;
       return `
         <div class="glass-card unit-card fade-in ${delay}" data-action="open-unit" data-unit-id="${u.id}" style="border-color:${u.clr}30">
           <div class="unit-card-icon" style="background:${u.clr}15">${u.icon}</div>
           <div class="unit-card-body">
-            <div class="unit-card-title" style="color:${u.clr}">${u.title}</div>
+            <div class="unit-card-title" style="color:${u.clr}">${displayTitle}</div>
             <div class="unit-card-meta">${u.description}</div>
             <div class="prog-bar"><div class="prog-fill" style="width:${pct}%;background:${u.clr}"></div></div>
           </div>
@@ -334,7 +284,23 @@ const Renderer = {
         </div>`;
     }).join('');
 
-    return hero + stats + learningTracks + weeklyFocus + quickActions + weakBox + planHtml + `<div class="section-label">الوحدات الدراسية</div><div class="units-grid">${unitsHtml}</div>`;
+    const unitsSection = `
+      <section class="home-section-block fade-in fade-in-delay-1">
+      <div class="section-label">ابدأ من الوحدات الرئيسية</div>
+      <div class="home-section-subtitle">اختر الباب الذي تريد فهمه أو مراجعته</div>
+      <div class="units-grid">${unitsHtml}</div>
+      </section>
+    `;
+
+    return `
+      <div class="home-stack">
+        ${hero}
+        ${unitsSection}
+        ${studySection}
+        ${exploreSection}
+        ${reviewSection}
+      </div>
+    `;
   },
 
   /* — UNIT — */
@@ -431,10 +397,7 @@ const Renderer = {
 
   _bondDemo(node) {
     if (node.id === 'ethene_rxns') {
-      return `<div class="bond-demo" style="margin-top:12px">
-        <div class="bond-demo-label">🔬 آلية تفاعل الإضافة</div>
-        ${MindMap.bondFormationSVG('alkene_addition')}
-      </div>`;
+      return '';
     }
     if (node.id === 'ethyne_rxns') {
       return `<div class="bond-demo" style="margin-top:12px">
@@ -447,129 +410,1067 @@ const Renderer = {
 
   /* — ORGANIC TAB (special visual) — */
   organic() {
-    const pw = DB.units[0].sections.find(s => s.id === 'alkynes')?.nodes.find(n => n.isPathway);
-    const w = document.getElementById('view')?.clientWidth || 320;
-    const pwSVG = pw ? MindMap.renderPathwaySVG(pw.pathway, w - 28) : '';
-    const mapSVG = MindMap.renderOrganicNetwork(w - 8);
-    const fgChips = [
-      { fg:'-OH', clr:'#b97aff', name:'كحول' },
-      { fg:'-CHO', clr:'#ffcc44', name:'ألدهيد' },
-      { fg:'>C=O', clr:'#ff7c35', name:'كيتون' },
-      { fg:'-COOH', clr:'#ff4d6d', name:'حمض كربوكسيلي' },
-      { fg:'-COO-', clr:'#00e5ff', name:'استر' },
-      { fg:'-NH₂', clr:'#59b894', name:'أمين' },
-    ].map(c => `<span class="fg-chip" style="color:${c.clr};border-color:${c.clr}55;background:${c.clr}10">${c.fg} ${c.name}</span>`).join('');
+    const C = ChemFormat;
+    const eqArrow = '<span class="chem-equation-arrow">→</span>';
+    const revArrow = '<span class="chem-equation-arrow">⇌</span>';
+    const shuffle = (arr) => {
+      const out = arr.slice();
+      for (let i = out.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        const t = out[i];
+        out[i] = out[j];
+        out[j] = t;
+      }
+      return out;
+    };
 
-    const relationRows = [
-      ['-OH (كحول)', 'أكسدة', 'K₂Cr₂O₇ / H₂SO₄', 'ألدهيد ثم حمض'],
-      ['C=C (كين)', 'إضافة', 'Br₂/CCl₄', 'هاليد ثنائي'],
-      ['-COOH + كحول', 'استرة', 'H₂SO₄ + تسخين', 'استر + ماء'],
-      ['ألكان', 'إحلال', 'UV + Cl₂', 'هاليد ألكيل'],
-      ['C≡C (كاين)', 'إضافة/هدرجة', 'Ni + H₂', 'كين ثم ألكان'],
+    const groups = [
+      { name:'الهيدروكربونات', formula:'C' + C.sub('n') + 'H' + C.sub('2n+2 / 2n / 2n-2'), example:C.formula('C2H4') + ' (إيثين)', key:'تفاعلات الإضافة/الإحلال', trap:'الخلط بين المشبع وغير المشبع.' },
+      { name:'هاليدات الألكيل', formula:'R-X', example:C.formula('C2H5Cl'), key:'إحلال نوكليوفيلي إلى كحولات', trap:'نسيان نوع الوسط NaOH(aq).' },
+      { name:'الكحولات', formula:'R-OH', example:C.formula('C2H5OH'), key:'أكسدة أو نزع ماء', trap:'الخلط بين أكسدة الكحول الأولي والثانوي.' },
+      { name:'الألدهيدات', formula:'R-CHO', example:C.formula('CH3CHO'), key:'أكسدة إلى أحماض كربوكسيلية', trap:'اعتبارها كيتونات في الاختبارات.' },
+      { name:'الكيتونات', formula:'R-CO-R', example:C.formula('CH3COCH3'), key:'تفاعلات إضافة على C=O', trap:'إعطاء اختبار تولنز موجب بالخطأ.' },
+      { name:'الأحماض الكربوكسيلية', formula:'R-COOH', example:C.formula('CH3COOH'), key:'أسترة مع الكحولات', trap:'نسيان أن الأسترة تفاعل عكسي.' },
+      { name:'الإسترات', formula:'R-COO-R', example:C.formula('CH3COOC2H5'), key:'تحلل مائي/تصبن', trap:'اعتبار الإستر حمضيًا مثل الحمض.' },
+      { name:'الأمينات', formula:'R-NH' + C.sub('2'), example:C.formula('C2H5NH2'), key:'خواص قاعدية وتكوين أملاح', trap:'الخلط بين الأمين والأميد.' },
     ];
 
-    const compareRows = [
-      ['الكانات', 'إحلال', 'مشبعة (σ فقط)', 'لا تزيل بروم بدون UV'],
-      ['الكينات', 'إضافة', 'رابطة π نشطة', 'تزيل لون البروم'],
-      ['الألدهيدات', 'أكسدة سهلة', 'طرف السلسلة', 'تولنز (+)'],
-      ['الكيتونات', 'أصعب في الأكسدة', 'وسط السلسلة', 'تولنز (-)'],
-      ['الأحماض', 'تعادل + استرة', 'حمضية أعلى', 'تتفاعل مع NaHCO₃'],
-      ['الاسترات', 'تحلل مائي/صابرة', 'رائحة فاكهية غالبًا', 'عكسية مع الماء'],
+    const conversions = [
+      { from:'Alkane', to:'Alkene', reagent:'حفز حراري / نزع H' + C.sub('2'), condition:'Δ + عامل حفاز مناسب', type:'حذف', trap:'اعتبارها إضافة.' },
+      { from:'Alkene', to:'Alcohol', reagent:C.formula('H2O / H2SO4'), condition:'وسط حمضي', type:'إضافة', trap:'نسيان شرط الحمض.' },
+      { from:'Alcohol', to:'Aldehyde', reagent:C.formula('K2Cr2O7 / H2SO4'), condition:'أكسدة أولية', type:'أكسدة', trap:'الاستمرار للأكسدة الثانية دون قصد.' },
+      { from:'Aldehyde', to:'Carboxylic acid', reagent:'[O]', condition:'تسخين أطول', type:'أكسدة', trap:'الخلط بين النواتج الوسيطة والنهائية.' },
+      { from:'Carboxylic acid + Alcohol', to:'Ester + H' + C.sub('2') + 'O', reagent:C.formula('H2SO4(conc)'), condition:'تسخين + سحب ماء', type:'أسترة', trap:'نسيان أنها عكسية (⇌).' },
+      { from:'Haloalkane', to:'Alcohol', reagent:'NaOH(aq)', condition:'تسخين معتدل', type:'إحلال', trap:'استخدام NaOH كحولي بالخطأ.' },
+      { from:C.formula('C2H4'), to:C.formula('C2H5OH'), reagent:C.formula('H2O / H2SO4'), condition:'Hydration', type:'إضافة ماء', trap:'الخلط مع الهدرجة.' },
+      { from:C.formula('C2H5OH'), to:C.formula('CH3COOH'), reagent:C.formula('K2Cr2O7 / H2SO4'), condition:'أكسدة متدرجة', type:'أكسدة', trap:'نسيان خطوة CH' + C.sub('3') + 'CHO الوسيطة.' },
+      { from:'Benzene', to:'مشتقات بنزين', reagent:'Cl' + C.sub('2') + ' / FeCl' + C.sub('3'), condition:'استبدال عطري', type:'إحلال', trap:'اعتبار البنزين يدخل إضافة مباشرة.' },
     ];
 
-    const commonMistakes = [
-      'اعتبار كل تسخين مع H₂SO₄ يعطي نفس الناتج: 110°C يختلف عن 140°C.',
-      'الخلط بين تفاعل الإضافة (على π) والإحلال (على σ).',
-      'نسيان أن اختبار تولنز يميز الألدهيد عن الكيتون.',
-      'اعتبار الاسترة غير عكسية: العكس صحيح إلا في الصابرة.',
-      'نسيان دور الشرط (Ni/H₂) في الهدرجة التدريجية.',
+    const c2Path = [
+      { formula:C.formula('CaC2'), name:'كربيد الكالسيوم', family:'مركب غير عضوي', note:'بداية سلسلة C2.' },
+      { formula:C.formula('C2H2'), name:'إيثاين', family:'ألكاين', note:'يتكون بإضافة الماء إلى الكربيد.' },
+      { formula:C.formula('C2H4'), name:'إيثين', family:'ألكين', note:'ناتج هدرجة أولى.' },
+      { formula:C.formula('C2H5OH'), name:'إيثانول', family:'كحول أولي', note:'ناتج إضافة الماء للإيثين.' },
+      { formula:C.formula('CH3CHO'), name:'إيثانال', family:'ألدهيد', note:'ناتج الأكسدة الأولى.' },
+      { formula:C.formula('CH3COOH'), name:'حمض إيثانويك', family:'حمض كربوكسيلي', note:'ناتج الأكسدة الثانية.' },
+      { formula:C.formula('CH3COOC2H5'), name:'إيثيل إيثانوات', family:'إستر', note:'ناتج الأسترة مع الإيثانول.' },
+    ];
+    const c2Arrows = [
+      { reagent:C.formula('H2O'), condition:'وسط مائي', type:'تحلل مائي للكربيد' },
+      { reagent:C.formula('H2 / Ni'), condition:'هدرجة', type:'اختزال جزئي' },
+      { reagent:C.formula('H2O / H2SO4'), condition:'إضافة ماء', type:'Hydration' },
+      { reagent:'[O]', condition:'أكسدة أولى', type:'إلى ألدهيد' },
+      { reagent:'[O]', condition:'أكسدة ثانية', type:'إلى حمض' },
+      { reagent:'+' + C.formula(' C2H5OH / H2SO4 conc'), condition:'تسخين', type:'أسترة عكسية' },
     ];
 
-    const quickQuestions = [
-      'لماذا تتفاعل الكينات أسرع من الكانات؟',
-      'كيف تفرّق بين ألدهيد وكيتون في تجربة بسيطة؟',
-      'لماذا نزيل الماء لتحسين ناتج الاسترة؟',
-      'ما أثر UV في إحلال الكلور بالميثان؟',
-      'في أي خطوة نستخدم قاعدة ماركوفنيكوف؟',
+    const reagents = [
+      { name:C.formula('H2 / Ni'), use:'هدرجة الروابط المزدوجة/الثلاثية', condition:'تسخين معتدل + حفاز نيكل', expected:'ألكين/ألكاين → ألكان', trap:'نسيان الحفاز Ni.' },
+      { name:C.formula('H2O / H2SO4'), use:'إضافة ماء للألكينات', condition:'وسط حمضي', expected:'ألكين → كحول', trap:'كتابة NaOH بدل الحمض.' },
+      { name:C.formula('Br2'), use:'اختبار/إضافة على C=C', condition:'وسط خامل', expected:'زوال لون البروم + ناتج إضافة', trap:'تطبيقه على الألكان بدون UV.' },
+      { name:C.formula('KMnO4'), use:'أكسدة لطيفة أو اختبار عدم التشبع', condition:'ظروف مناسبة للتفاعل', expected:'نواتج مؤكسدة / زوال لون', trap:'خلط النواتج مع الديكرومات.' },
+      { name:C.formula('K2Cr2O7'), use:'أكسدة كحولات أولية', condition:C.formula('H2SO4') + ' + تسخين', expected:'كحول → ألدهيد/حمض', trap:'عدم التفرقة بين الأكسدة الأولى والثانية.' },
+      { name:C.formula('H2SO4 conc'), use:'حفز الأسترة/نزع ماء', condition:'مركز + تسخين', expected:'تكوين إستر أو ألكين', trap:'نسيان دوره كساحب ماء.' },
+      { name:'NaOH(aq)', use:'إحلال هاليد الألكيل', condition:'وسط مائي', expected:'هاليد ألكيل → كحول', trap:'استخدام الوسط الكحولي بدل المائي.' },
+      { name:'Acidified dichromate', use:'أكسدة عضوية قياسية', condition:'وسط حمضي', expected:'نتائج أكسدة متوقعة', trap:'الخلط مع ' + C.formula('KMnO4') + ' في نفس المسألة.' },
     ];
 
-    const animations = ReactionPlayer.getLessons();
+    const comparisons = [
+      { title:'ألكان vs ألكين', diff:'الألكان مشبع (σ فقط) بينما الألكين يحتوي رابطة π.', test:'Br' + C.sub('2') + ' يزول لونه مع الألكين.', example:C.formula('C2H6') + ' مقابل ' + C.formula('C2H4'), trap:'توقع إضافة مباشرة للألكان.' },
+      { title:'كحول أولي vs كحول ثانوي', diff:'الأولي يتأكسد إلى ألدهيد ثم حمض، الثانوي إلى كيتون.', test:'ناتج الأكسدة يحدد النوع.', example:C.formula('C2H5OH') + ' مقابل ' + C.formula('CH3CHOHCH3'), trap:'اعتبار الناتج النهائي واحد.' },
+      { title:'ألدهيد vs كيتون', diff:'الألدهيد طرفي أسهل أكسدة.', test:'تولنز موجب للألدهيد غالبًا.', example:C.formula('CH3CHO') + ' مقابل ' + C.formula('CH3COCH3'), trap:'إعطاء الكيتون نفس اختبار الألدهيد.' },
+      { title:'حمض كربوكسيلي vs إستر', diff:'الحمض أكثر حمضية، الإستر أقل قطبية نسبيًا.', test:'الحمض يتفاعل مع البيكربونات.', example:C.formula('CH3COOH') + ' مقابل ' + C.formula('CH3COOC2H5'), trap:'الخلط في الرائحة والخواص.' },
+      { title:'إضافة vs إحلال', diff:'الإضافة تفتح π، الإحلال يستبدل مجموعة.', test:'نوع الركيزة يحدد النمط.', example:'ألكين + Br' + C.sub('2') + ' (إضافة) / ' + C.formula('CH4 + Cl2') + ' (إحلال)', trap:'تطبيق نفس القاعدة على جميع العائلات.' },
+      { title:'أكسدة vs اختزال', diff:'الأكسدة غالبًا زيادة O أو نقص H، الاختزال العكس.', test:'تتبع عدد روابط C-H/C-O.', example:C.formula('C2H5OH → CH3CHO') + ' (أكسدة)', trap:'عكس المصطلحين في الكتابة.' },
+    ];
+
+    const mistakes = [
+      'الخلط بين ' + C.formula('C2H2') + ' و ' + C.formula('C2H4') + ' في مسار C2.',
+      'نسيان شروط الهدرجة ' + C.formula('H2 / Ni') + '.',
+      'الخلط بين الأكسدة الأولى والثانية للكحولات الأولية.',
+      'نسيان أن الأسترة تفاعل عكسي ' + revArrow + '.',
+      'كتابة القوانين بدون صيغة صحيحة للشحنات مثل ' + C.charge('Fe', '3+') + '.',
+    ];
+
+    const lessons = [
+      {
+        title:'إضافة البروم إلى الإيثين',
+        equation:C.formula('C2H4') + ' + ' + C.formula('Br2') + ' ' + eqArrow + ' ' + C.formula('C2H4Br2'),
+        reagent:C.formula('Br2') + ' في وسط خامل',
+        steps:[
+          { t:'المتفاعلات', d:'إيثين + بروم', ch:'الرابطة المزدوجة هي الموقع النشط.' },
+          { t:'إبراز التغير', d:'كسر π وتكوين روابط C-Br', ch:'المنتج يصبح مشبعًا.' },
+          { t:'الخلاصة', d:'إضافة عبر الرابطة المزدوجة', ch:'اختبار زوال لون البروم.' },
+        ],
+        trap:'نسيان أن الألكانات لا تعطي نفس السلوك بدون شروط خاصة.',
+      },
+      {
+        title:'أكسدة الإيثانول إلى إيثانال ثم حمض إيثانويك',
+        equation:C.formula('C2H5OH') + ' ' + eqArrow + ' ' + C.formula('CH3CHO') + ' ' + eqArrow + ' ' + C.formula('CH3COOH'),
+        reagent:C.formula('K2Cr2O7 / H2SO4'),
+        steps:[
+          { t:'خطوة 1', d:'أكسدة الكحول الأولي', ch:'يتكوّن الإيثانال كوسيط.' },
+          { t:'خطوة 2', d:'أكسدة إضافية', ch:'الإيثانال يتحول إلى حمض.' },
+          { t:'فهم الشرط', d:'زمن التسخين يتحكم في النتيجة', ch:'تقطير مبكر للتوقف عند الألدهيد.' },
+        ],
+        trap:'الخلط بين الناتج الوسيط والنهائي.',
+      },
+      {
+        title:'الأسترة: حمض + كحول',
+        equation:C.formula('CH3COOH') + ' + ' + C.formula('C2H5OH') + ' ' + revArrow + ' ' + C.formula('CH3COOC2H5') + ' + ' + C.formula('H2O'),
+        reagent:C.formula('H2SO4 conc') + ' + تسخين',
+        steps:[
+          { t:'تجهيز المجموعات', d:'-COOH و -OH', ch:'التحام وظيفي لتكوين الإستر.' },
+          { t:'تكون الماء', d:C.formula('H2O') + ' يغادر', ch:'سحب الماء يوجه الاتزان للنواتج.' },
+          { t:'الخلاصة', d:'تفاعل عكسي محفز', ch:'يرمز له بسهم اتزان.' },
+        ],
+        trap:'اعتبار الأسترة تفاعلًا غير عكسي.',
+      },
+      {
+        title:'إضافة الماء إلى الإيثين',
+        equation:C.formula('C2H4') + ' + ' + C.formula('H2O') + ' ' + eqArrow + ' ' + C.formula('C2H5OH'),
+        reagent:C.formula('H2SO4') + ' (وسط حمضي)',
+        steps:[
+          { t:'المتفاعلات', d:'إيثين + ماء', ch:'الرابطة المزدوجة تستقبل الإضافة.' },
+          { t:'الشرط', d:'وجود حفز حمضي', ch:'بدونه لا يتم التحويل بكفاءة.' },
+          { t:'الناتج', d:'إيثانول', ch:'تطبيق أساسي في أسئلة التحويل.' },
+        ],
+        trap:'الخلط بينها وبين الهدرجة بـ ' + C.formula('H2 / Ni') + '.',
+      },
+    ];
+
+    const reagentChoices = shuffle([
+      { key: 'a', label: C.formula('H2/Ni') },
+      { key: 'b', label: C.formula('H2O/H2SO4') },
+      { key: 'c', label: C.formula('Br2') },
+      { key: 'd', label: 'NaOH(aq)' },
+    ]);
 
     return `
-      <div class="section-label">Organic Learning Window</div>
+      <div class="organic-page">
+        <section class="organic-section">
+          <h2 class="organic-section-title">مدخل سريع للعضوية</h2>
+          <p class="organic-section-sub">ركز على منطق التحويل: المجموعة الوظيفية + الكاشف + الشرط + اتجاه السهم.</p>
+          <div class="organic-grid-2">
+            <button class="organic-chip-btn" data-action="open-section" data-unit-id="hydrocarbons" data-section-id="alkenes">ابدأ من الكينات</button>
+            <button class="organic-chip-btn" data-action="open-section" data-unit-id="org_derivatives" data-section-id="alcohols_sec">راجع الكحولات</button>
+            <button class="organic-chip-btn" data-action="open-section" data-unit-id="org_derivatives" data-section-id="carbonyl_sec">تمييز ألدهيد/كيتون</button>
+            <button class="organic-chip-btn" data-action="open-section" data-unit-id="org_derivatives" data-section-id="acids_esters_sec">أحماض واسترات</button>
+          </div>
+        </section>
 
-      <div class="glass-card organic-roadmap fade-in">
-        <div class="organic-roadmap-title">خريطة تعلّم العضوية</div>
-        <div class="organic-roadmap-grid">
-          <button class="organic-step" data-action="open-section" data-unit-id="hydrocarbons" data-section-id="alkanes">الكانات</button>
-          <button class="organic-step" data-action="open-section" data-unit-id="hydrocarbons" data-section-id="alkenes">الكينات</button>
-          <button class="organic-step" data-action="open-section" data-unit-id="hydrocarbons" data-section-id="alkynes">الكاينات</button>
-          <button class="organic-step" data-action="open-section" data-unit-id="org_derivatives" data-section-id="alcohols_sec">الكحولات</button>
-          <button class="organic-step" data-action="open-section" data-unit-id="org_derivatives" data-section-id="carbonyl_sec">ألدهيد/كيتون</button>
-          <button class="organic-step" data-action="open-section" data-unit-id="org_derivatives" data-section-id="acids_esters_sec">أحماض/استرات</button>
-        </div>
-      </div>
+        <section class="organic-section">
+          <h2 class="organic-section-title">المجموعات الوظيفية</h2>
+          <div class="organic-group-grid">
+            ${groups.map(g => `
+              <article class="organic-group-card">
+                <h3>${g.name}</h3>
+                <div class="chem-formula">${g.formula}</div>
+                <p><strong>مثال:</strong> <span class="chem-formula">${g.example}</span></p>
+                <p><strong>أهم تفاعل:</strong> ${g.key}</p>
+                <p><strong>خطأ شائع:</strong> ${g.trap}</p>
+              </article>
+            `).join('')}
+          </div>
+        </section>
 
-      <div class="section-label">خريطة المجموعات الوظيفية</div>
-      <div class="glass-card glow-green fade-in" style="padding:14px;margin-bottom:10px">
-        <div style="margin-bottom:8px">${fgChips}</div>
-        <div class="pathway-scroll">${mapSVG}</div>
-      </div>
+        <section class="organic-section">
+          <h2 class="organic-section-title">خريطة التحويلات العضوية</h2>
+          <div class="organic-flow-map">
+            ${conversions.map(c => `
+              <article class="organic-flow-card">
+                <div class="chem-equation"><span class="chem-formula">${c.from}</span> ${eqArrow} <span class="chem-formula">${c.to}</span></div>
+                <div class="organic-flow-arrow">
+                  <span><strong>الكاشف:</strong> <span class="chem-formula">${c.reagent}</span></span>
+                  <span><strong>الشرط:</strong> ${c.condition}</span>
+                  <span><strong>النوع:</strong> ${c.type}</span>
+                </div>
+                <p class="organic-trap"><strong>فخ شائع:</strong> ${c.trap}</p>
+              </article>
+            `).join('')}
+          </div>
+        </section>
 
-      <div class="section-label">التحويلات العضوية</div>
-      <div class="glass-card fade-in" style="padding:14px;margin-bottom:10px">
-        <div class="organic-subtitle">مسار C₂ من الكربيد إلى مشتقات مهمة</div>
-        <div class="pathway-scroll">${pwSVG}</div>
-        <div class="organic-mini-cards">
-          <div class="organic-mini-card">CaC₂ → C₂H₂: توليد الكاين من الكربيد.</div>
-          <div class="organic-mini-card">C₂H₂ → C₂H₄ → C₂H₆: هدرجة تدريجية.</div>
-          <div class="organic-mini-card">C₂H₄ → C₂H₅OH: هدرة في وسط حمضي.</div>
-          <div class="organic-mini-card">C₂H₅OH → CH₃CHO → CH₃COOH: أكسدة متدرجة.</div>
-        </div>
-      </div>
+        <section class="organic-section">
+          <h2 class="organic-section-title">مسار C2 التعليمي</h2>
+          <div class="organic-c2-path">
+            ${c2Path.map((node, idx) => `
+              <article class="organic-flow-card">
+                <div class="chem-formula">${node.formula}</div>
+                <h3>${node.name}</h3>
+                <p><strong>العائلة:</strong> ${node.family}</p>
+                <p>${node.note}</p>
+              </article>
+              ${idx < c2Arrows.length ? `
+                <div class="organic-flow-arrow">
+                  <span class="chem-equation-arrow">↓</span>
+                  <span><strong>الكاشف:</strong> <span class="chem-formula">${c2Arrows[idx].reagent}</span></span>
+                  <span><strong>الشرط:</strong> ${c2Arrows[idx].condition}</span>
+                  <span><strong>النوع:</strong> ${c2Arrows[idx].type}</span>
+                </div>
+              ` : ''}
+            `).join('')}
+          </div>
+          <div class="organic-note-card">
+            <h3>ماذا يوضح المسار؟</h3>
+            <p>يوضح كيف تنتقل مركبات C2 من الألكاين إلى كحول ثم ألدهيد ثم حمض ثم إستر بطريقة منهجية.</p>
+            <h3>كيف أستخدمه في أسئلة التحويل؟</h3>
+            <p>ابدأ من المركب المعطى، حدّد المجموعة الوظيفية، ثم اختر الكاشف والشرط المناسب لكل خطوة.</p>
+            <h3>أخطاء شائعة</h3>
+            <ul>
+              ${mistakes.map(m => `<li>${m}</li>`).join('')}
+            </ul>
+          </div>
+        </section>
 
-      <div class="section-label">شروط التفاعل</div>
-      <div class="glass-card fade-in" style="padding:14px;margin-bottom:10px">
-        <div class="table-scroll">
-          <table class="chem-table">
-            <tr><th>الموقف</th><th>الشرط</th><th>لماذا؟</th></tr>
-            ${relationRows.map(r => `<tr><td>${r[0]}</td><td>${r[2]}</td><td>${r[1]} ⟶ ${r[3]}</td></tr>`).join('')}
-          </table>
-        </div>
-      </div>
+        <section class="organic-section">
+          <h2 class="organic-section-title">الكواشف والشروط</h2>
+          <div class="organic-group-grid">
+            ${reagents.map(r => `
+              <article class="organic-reagent-card">
+                <h3 class="chem-formula">${r.name}</h3>
+                <p><strong>يستخدم في:</strong> ${r.use}</p>
+                <p><strong>الشرط:</strong> ${r.condition}</p>
+                <p><strong>الناتج المتوقع:</strong> ${r.expected}</p>
+                <p><strong>خطأ شائع:</strong> ${r.trap}</p>
+              </article>
+            `).join('')}
+          </div>
+        </section>
 
-      <div class="section-label">المقارنات المهمة</div>
-      <div class="glass-card fade-in" style="padding:14px;margin-bottom:10px">
-        <div class="table-scroll">
-          <table class="chem-table">
-            <tr><th>العائلة</th><th>النمط</th><th>الفكرة</th><th>دليل عملي</th></tr>
-            ${compareRows.map(r => `<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td><td>${r[3]}</td></tr>`).join('')}
-          </table>
-        </div>
-      </div>
+        <section class="organic-section">
+          <h2 class="organic-section-title">المقارنات المهمة</h2>
+          <div class="organic-group-grid">
+            ${comparisons.map(cmp => `
+              <article class="organic-comparison-card">
+                <h3>${cmp.title}</h3>
+                <p><strong>الفرق الأساسي:</strong> ${cmp.diff}</p>
+                <p><strong>اختبار/دليل:</strong> ${cmp.test}</p>
+                <p><strong>مثال:</strong> <span class="chem-formula">${cmp.example}</span></p>
+                <p><strong>فخ امتحاني:</strong> ${cmp.trap}</p>
+              </article>
+            `).join('')}
+          </div>
+        </section>
 
-      <div class="section-label">أخطاء شائعة</div>
-      <div class="glass-card fade-in" style="padding:14px;margin-bottom:10px">
-        ${commonMistakes.map(m => `<div class="node-item"><span class="item-bullet">•</span><span>${m}</span></div>`).join('')}
-      </div>
+        <section class="organic-section">
+          <h2 class="organic-section-title">أخطاء شائعة</h2>
+          <div class="organic-note-card">
+            <ul>
+              ${mistakes.map(m => `<li>${m}</li>`).join('')}
+            </ul>
+          </div>
+        </section>
 
-      <div class="section-label">أسئلة فهم سريعة</div>
-      <div class="glass-card fade-in" style="padding:14px;margin-bottom:10px">
-        ${quickQuestions.map((q, i) => `<div class="expected-item"><span class="expected-num">س${i+1}</span><span>${q}</span></div>`).join('')}
-        <button class="btn-ghost" style="margin-top:10px" data-action="tab" data-tab="quiz">اذهب لاختبار الفهم</button>
-      </div>
+        <section class="organic-section">
+          <h2 class="organic-section-title">تفاعلات بشرح مرئي</h2>
+          <div class="organic-lessons">
+            ${lessons.map(lesson => `
+              <article class="organic-step-card">
+                <h3>${lesson.title}</h3>
+                <div class="chem-equation">${lesson.equation}</div>
+                <p><strong>الكاشف/الشرط:</strong> <span class="chem-formula">${lesson.reagent}</span></p>
+                <div class="organic-steps-list">
+                  ${lesson.steps.map(st => `
+                    <div class="organic-step-item">
+                      <h4>${st.t}</h4>
+                      <p>${st.d}</p>
+                      <p><strong>ماذا يتغير؟</strong> ${st.ch}</p>
+                    </div>
+                  `).join('')}
+                </div>
+                <p class="organic-trap"><strong>خطأ شائع:</strong> ${lesson.trap}</p>
+              </article>
+            `).join('')}
+          </div>
+        </section>
 
-      <div class="section-label">رسوم متحركة تعليمية</div>
-      ${animations.map(a => ReactionPlayer.renderLessonCard(a)).join('')}
+        <section class="organic-section">
+          <h2 class="organic-section-title">تدريب سريع</h2>
+          <div class="organic-activity-card" data-activity="seq1" data-correct="a,b,c,d">
+            <h3>رتّب خطوات التحويل</h3>
+            <p>حوّل <span class="chem-formula">${C.formula('C2H4')}</span> إلى <span class="chem-formula">${C.formula('CH3COOH')}</span>.</p>
+            <div class="organic-grid-2">
+              <button class="organic-chip-btn" data-action="organic-seq-toggle" data-step-key="a">إضافة ماء (${C.formula('H2O/H2SO4')})</button>
+              <button class="organic-chip-btn" data-action="organic-seq-toggle" data-step-key="c">أكسدة أولى (${C.formula('K2Cr2O7')})</button>
+              <button class="organic-chip-btn" data-action="organic-seq-toggle" data-step-key="b">تكوين ${C.formula('C2H5OH')}</button>
+              <button class="organic-chip-btn" data-action="organic-seq-toggle" data-step-key="d">أكسدة ثانية إلى الحمض</button>
+            </div>
+            <div class="organic-activity-actions">
+              <button class="organic-chip-btn" data-action="organic-seq-check">تحقق</button>
+              <button class="organic-chip-btn" data-action="organic-seq-reset">إعادة</button>
+            </div>
+            <p class="organic-activity-feedback" data-organic-feedback="seq1">اختر الترتيب ثم اضغط تحقق.</p>
+            <p class="organic-activity-feedback muted" data-organic-selected="seq1"></p>
+          </div>
 
-      <div class="glass-card fade-in" style="padding:12px;margin-top:10px">
-        <button class="home-quick-btn" style="width:100%" data-action="open-periodic-filter" data-filter="transition">السلسلة الانتقالية</button>
+          <div class="organic-activity-card" data-activity="reagent1" data-correct="b">
+            <h3>اختر الكاشف المناسب</h3>
+            <p>التحويل: <span class="chem-formula">${C.formula('C2H4')}</span> ${eqArrow} <span class="chem-formula">${C.formula('C2H5OH')}</span></p>
+            <div class="organic-grid-2">
+              ${reagentChoices.map(ch => `<button class="organic-chip-btn" data-action="organic-reagent-select" data-choice-key="${ch.key}">${ch.label}</button>`).join('')}
+            </div>
+            <div class="organic-activity-actions">
+              <button class="organic-chip-btn" data-action="organic-reagent-check">تأكيد الإجابة</button>
+              <button class="organic-chip-btn" data-action="organic-reagent-reset">إعادة</button>
+            </div>
+            <p class="organic-activity-feedback" data-organic-feedback="reagent1">اختر كاشفًا ثم أكد الإجابة.</p>
+          </div>
+        </section>
       </div>
     `;
   },
 
   periodic(S) {
     return PeriodicTable.render(S || {});
+  },
+
+  examCenterBlocked() {
+    return `
+      <div class="section-label">مركز الامتحانات</div>
+      <div class="glass-card exam-blocked-card fade-in">
+        <div class="exam-blocked-title">مركز الامتحانات قيد التطوير</div>
+        <div class="exam-blocked-text">نعمل على بناء مركز تدريبي يضم أسئلة من النماذج الاسترشادية وامتحانات الأعوام السابقة في الكيمياء، مع مراجعة الإجابات وتحليل الأخطاء.</div>
+        <div class="exam-blocked-text">سيتم تفعيله بعد الأنتهاء من تحليل الأسئلة والإجابات للنماذج والتأكد من دقتها قبل إتاحتها للطلاب.</div>
+        <button class="btn-primary" data-action="go-hash" data-hash="#home">العودة للرئيسية</button>
+      </div>
+    `;
+  },
+
+  examCenter(model = {}) {
+    const summary = model.analyticsSummary || { attempted: 0, accuracy: 0 };
+    const sourceFiles = model.sourceFiles || [];
+    const officialList = model.officialList || [];
+    const mistakes = model.mistakes || [];
+
+    const cardButtons = (model.cards || []).map(card => `
+      <button class="exam-card-btn" data-action="go-hash" data-hash="${card.hash}">
+        <div class="exam-card-title">${card.title}</div>
+        <div class="exam-card-desc">${card.desc}</div>
+      </button>
+    `).join('');
+
+    const sourceCount = sourceFiles.length;
+    const unreadablePagesCount = sourceFiles.reduce((acc, f) => acc + ((f.unreadablePages || []).length), 0);
+
+    return `
+      <div class="section-label">مركز الامتحانات</div>
+
+      <div class="glass-card exam-center-head fade-in">
+        <div class="exam-center-title">مركز الامتحانات</div>
+        <div class="exam-center-subtitle">تدريب امتحاني منظم: أسئلة رسمية وممارسة آمنة مع تتبع أخطائك.</div>
+        <div class="exam-source-meta" style="margin:0 0 8px 0;border:1px solid var(--border);border-radius:8px;padding:6px 8px;background:rgba(255,255,255,0.03)">
+          تنبيه: تم تحميل ${sourceCount} ملف مصدر • صفحات غير مقروءة: ${unreadablePagesCount}
+        </div>
+        <div class="exam-center-stats">
+          <div class="exam-stat-box">
+            <div class="exam-stat-value">${model.totalQuestions || 0}</div>
+            <div class="exam-stat-label">إجمالي الأسئلة</div>
+          </div>
+          <div class="exam-stat-box">
+            <div class="exam-stat-value">${model.officialQuestions || 0}</div>
+            <div class="exam-stat-label">أسئلة رسمية</div>
+          </div>
+          <div class="exam-stat-box">
+            <div class="exam-stat-value">${model.syntheticQuestions || 0}</div>
+            <div class="exam-stat-label">أسئلة تدريبية</div>
+          </div>
+        </div>
+        <div class="exam-center-stats" style="margin-top:6px">
+          <div class="exam-stat-box">
+            <div class="exam-stat-value">${model.safeAutoGraded || 0}</div>
+            <div class="exam-stat-label">أسئلة آمنة للتصحيح</div>
+          </div>
+          <div class="exam-stat-box">
+            <div class="exam-stat-value">${model.needsManualReview || 0}</div>
+            <div class="exam-stat-label">أسئلة تحتاج مراجعة</div>
+          </div>
+          <div class="exam-stat-box">
+            <div class="exam-stat-value">${model.readiness || 0}%</div>
+            <div class="exam-stat-label">نسبة الجاهزية</div>
+          </div>
+        </div>
+        <div class="exam-source-meta" style="margin-top:8px">محاولاتك المسجلة: ${summary.attempted || 0} • دقة الحل: ${summary.accuracy || 0}% • أخطاء شائعة: ${mistakes.length}</div>
+      </div>
+
+      <div class="exam-center-grid fade-in">
+        ${cardButtons}
+      </div>
+
+      ${model.loading ? '<div class="glass-card laws-empty">جاري تحميل بيانات الامتحانات...</div>' : ''}
+      ${model.error ? `<div class="glass-card laws-empty">${model.error}</div>` : ''}
+
+      <div class="section-label">نماذج الوزارة 2026 (عرض سريع)</div>
+      <div class="exam-list fade-in">
+        ${officialList.map(q => `
+          <article class="exam-question-row">
+            <div class="exam-question-meta">
+              <span class="exam-badge">سؤال رسمي</span>
+              <span class="exam-badge">${q.chapter}</span>
+              <span class="exam-badge">${q.difficulty}</span>
+              ${q.needsManualReview ? '<span class="exam-badge">يحتاج مراجعة</span>' : ''}
+            </div>
+            <div class="exam-question-text">${q.displayQuestion || q.question}</div>
+            <button class="exam-open-btn" data-action="open-question" data-question-id="${q.id}">فتح السؤال</button>
+          </article>
+        `).join('')}
+      </div>
+    `;
+  },
+
+  examTraining(model = {}) {
+    const chapters = model.chapters || [];
+    const skills = model.skills || [];
+    const difficulties = model.difficulties || [];
+    const traps = model.traps || [];
+
+    return `
+      <div class="section-label">تدريب حسب الباب</div>
+
+      <div class="glass-card exam-training-head fade-in">
+        <div class="exam-center-title">اختر باب التدريب</div>
+        <div class="exam-center-subtitle">يتم عرض الأسئلة الآمنة للتصحيح فقط.</div>
+      </div>
+
+      <div class="exam-chip-row fade-in">
+        ${chapters.map(ch => `
+          <button class="exam-chip ${model.chapter === ch.key ? 'active' : ''}" data-action="exam-open-chapter" data-chapter="${ch.key}">${ch.label}</button>
+        `).join('')}
+      </div>
+
+      <div class="glass-card exam-filter-card fade-in">
+        <div class="exam-filter-grid">
+          <label>المهارة
+            <select data-action="exam-filter-input" data-filter-key="skill">
+              <option value="">الكل</option>
+              ${skills.map(s => `<option value="${s}" ${model.selectedSkill === s ? 'selected' : ''}>${s}</option>`).join('')}
+            </select>
+          </label>
+          <label>الصعوبة
+            <select data-action="exam-filter-input" data-filter-key="difficulty">
+              <option value="">الكل</option>
+              ${difficulties.map(d => `<option value="${d}" ${model.selectedDifficulty === d ? 'selected' : ''}>${d}</option>`).join('')}
+            </select>
+          </label>
+          <label>نوع الفخ
+            <select data-action="exam-filter-input" data-filter-key="trap">
+              <option value="">الكل</option>
+              ${traps.map(t => `<option value="${t}" ${model.selectedTrap === t ? 'selected' : ''}>${t}</option>`).join('')}
+            </select>
+          </label>
+        </div>
+        <div class="exam-filter-actions">
+          <button class="exam-open-btn" data-action="exam-clear-filters">مسح الفلاتر</button>
+          <button class="qp-confirm-btn" data-action="exam-start-training">ابدأ التدريب (${model.matchedCount || 0})</button>
+        </div>
+      </div>
+
+      <div class="glass-card laws-empty">إجمالي الأسئلة المتاحة للتدريب: ${model.matchedCount || 0} سؤال</div>
+    `;
+  },
+
+  examWorkedExamples(model = {}) {
+    const items = model.items || [];
+    const focusedId = model.focusedId || '';
+    return `
+      <div class="section-label">أمثلة محلولة</div>
+      <div class="exam-list fade-in">
+        ${items.map(ex => `
+          <article class="glass-card exam-worked-card ${focusedId === ex.id ? 'is-focused' : ''}">
+            <div class="exam-question-meta">
+              <span class="exam-badge">${ex.topic || 'عام'}</span>
+              <span class="exam-badge">${ex.id}</span>
+            </div>
+            <div class="exam-worked-title">${ex.title}</div>
+            <div class="exam-worked-q">${ex.question}</div>
+            <div class="exam-worked-given">${(ex.given || []).join(' • ')}</div>
+            <div class="qp-example-steps">
+              ${(ex.steps || []).map((st, i) => `<div class="qp-example-step">${i + 1}) ${st}</div>`).join('')}
+            </div>
+            <div class="exam-worked-final">الإجابة النهائية: <span class="formula-ltr">${ex.finalAnswer || ''}</span></div>
+            <div class="exam-worked-final">فحص سريع: ${ex.sanityCheck || ''}</div>
+            <div class="exam-worked-final">خطأ شائع: ${ex.commonMistake || ''}</div>
+            <div class="qp-actions">
+              ${(ex.lawRefs || []).map(ref => `<button class="qp-law-btn" data-action="exam-review-law" data-law-ref="${ref}">مراجعة القانون: <span class="formula-ltr">${ref}</span></button>`).join('')}
+              ${(ex.relatedQuestionIds || []).slice(0, 2).map(id => `<button class="exam-open-btn" data-action="open-question" data-question-id="${id}">فتح سؤال مرتبط</button>`).join('')}
+            </div>
+          </article>
+        `).join('')}
+      </div>
+    `;
+  },
+
+  examMistakes(model = {}) {
+    const items = model.mistakes || [];
+    return `
+      <div class="section-label">أخطائي الشائعة</div>
+      <div class="exam-list fade-in">
+        ${items.map(m => `
+          <article class="exam-question-row">
+            <div class="exam-question-meta">
+              <span class="exam-badge">${m.chapter || 'غير محدد'}</span>
+              <span class="exam-badge">${m.topic || 'عام'}</span>
+              <span class="exam-badge">التكرار: ${m.count || 1}</span>
+            </div>
+            <div class="exam-question-text">السؤال ${m.questionId}${m.questionText ? ` • ${m.questionText}` : ''}</div>
+            <div class="qp-actions">
+              <button class="exam-open-btn" data-action="exam-retry-mistake" data-question-id="${m.questionId}">إعادة المحاولة</button>
+              ${(m.lawRefs || []).slice(0, 1).map(ref => `<button class="qp-law-btn" data-action="exam-review-law" data-law-ref="${ref}">مراجعة القانون</button>`).join('')}
+              ${m.workedExampleRef ? `<button class="exam-open-btn" data-action="exam-open-related-worked" data-example-id="${m.workedExampleRef}">مثال محلول مرتبط</button>` : ''}
+              ${((m.trapTags || [])[0]) ? `<button class="qp-law-btn" data-action="go-hash" data-hash="#exam-training">تدريب على نفس الفخ</button>` : ''}
+            </div>
+          </article>
+        `).join('')}
+        ${items.length === 0 ? '<div class="glass-card laws-empty">لا توجد أخطاء مسجلة بعد.</div>' : ''}
+      </div>
+    `;
+  },
+
+  examAnalytics(model = {}) {
+    const s = model.summary || { attempted: 0, correct: 0, accuracy: 0 };
+    const recent = model.recent || [];
+    return `
+      <div class="section-label">إحصائياتي</div>
+      <div class="glass-card exam-center-head fade-in">
+        <div class="exam-center-title">ملخص الأداء</div>
+        <div class="exam-center-stats">
+          <div class="exam-stat-box"><div class="exam-stat-value">${s.attempted || 0}</div><div class="exam-stat-label">إجمالي المحاولات</div></div>
+          <div class="exam-stat-box"><div class="exam-stat-value">${s.accuracy || 0}%</div><div class="exam-stat-label">الدقة</div></div>
+          <div class="exam-stat-box"><div class="exam-stat-value">${s.averageTimeSec || 0}s</div><div class="exam-stat-label">متوسط الزمن</div></div>
+        </div>
+        <div class="exam-analytics-kpis">
+          <div>أضعف باب: ${s.weakestChapter || 'لا توجد بيانات كافية'}</div>
+          <div>أكثر فخ متكرر: ${s.mostCommonTrap || 'لا توجد بيانات كافية'}</div>
+          <div>التوصية: ${s.weakestChapter ? `ابدأ تدريبًا مركزًا على ${s.weakestChapter}` : 'أجب عن 10 أسئلة إضافية لإظهار توصية أدق.'}</div>
+        </div>
+      </div>
+
+      <div class="section-label">آخر المحاولات</div>
+      <div class="exam-list fade-in">
+        ${recent.map(r => `
+          <div class="exam-question-row">
+            <div class="exam-question-meta">
+              <span class="exam-badge">${r.chapter || 'غير محدد'}</span>
+              <span class="exam-badge">${r.topic || 'عام'}</span>
+              <span class="exam-badge">${r.correct ? 'صحيح' : 'خطأ'}</span>
+            </div>
+            <div class="exam-question-text">${r.questionId} • الزمن: ${r.timeSpentSec || '-'} ثانية</div>
+          </div>
+        `).join('')}
+        ${recent.length === 0 ? '<div class="glass-card laws-empty">لا توجد محاولات مسجلة بعد.</div>' : ''}
+      </div>
+    `;
+  },
+
+  examMockResult(model = {}) {
+    const s = model.summary || { attempted: 0, correct: 0, accuracy: 0 };
+    return `
+      <div class="section-label">نتيجة الامتحان</div>
+      <div class="glass-card exam-center-head fade-in">
+        <div class="exam-center-title">ملخص الامتحان التجريبي</div>
+        <div class="exam-center-stats">
+          <div class="exam-stat-box"><div class="exam-stat-value">${s.attempted || 0}</div><div class="exam-stat-label">محاولات</div></div>
+          <div class="exam-stat-box"><div class="exam-stat-value">${s.correct || 0}</div><div class="exam-stat-label">إجابات صحيحة</div></div>
+          <div class="exam-stat-box"><div class="exam-stat-value">${s.accuracy || 0}%</div><div class="exam-stat-label">الدقة</div></div>
+        </div>
+        ${model.note ? `<div class="laws-empty" style="margin-top:8px">${model.note}</div>` : ''}
+        <div class="qp-actions" style="margin-top:10px">
+          <button class="exam-open-btn" data-action="go-hash" data-hash="#exam-mistakes">مراجعة الأخطاء الشائعة</button>
+          <button class="exam-open-btn" data-action="go-hash" data-hash="#exam-center">العودة إلى مركز الامتحانات</button>
+        </div>
+      </div>
+    `;
+  },
+
+  renderQuestionVisualAid(aid) {
+    if (!aid || typeof aid !== 'object') return '';
+
+    const type = String(aid.type || '').toLowerCase();
+    if (!type) return '';
+
+    if (type === 'image') {
+      const src = String(aid.imageUrl || '').trim();
+      if (!src) return '';
+      return `
+        <section class="qp-aid-card">
+          <div class="qp-aid-title">${aid.titleAr || 'معطيات السؤال'}</div>
+          <img class="qp-aid-image" src="${src}" alt="${aid.altAr || 'صورة توضيحية'}" loading="lazy">
+        </section>
+      `;
+    }
+
+    if (type === 'table') {
+      const headers = Array.isArray(aid.headers) ? aid.headers : [];
+      const rows = Array.isArray(aid.rows) ? aid.rows : [];
+      if (!rows.length) return '';
+      return `
+        <section class="qp-aid-card">
+          <div class="qp-aid-title">${aid.titleAr || 'جدول المعطيات'}</div>
+          <div class="qp-aid-table-wrap">
+            <table class="qp-aid-table">
+              ${headers.length ? `<tr>${headers.map(h => `<th>${h}</th>`).join('')}</tr>` : ''}
+              ${rows.map(r => `<tr>${r.map(cell => `<td>${cell}</td>`).join('')}</tr>`).join('')}
+            </table>
+          </div>
+        </section>
+      `;
+    }
+
+    if (type === 'line-chart-equilibrium') {
+      const chartW = 300;
+      const chartH = 170;
+      const m = 28;
+      const xMax = 10;
+      const yMax = 10;
+      const series = Array.isArray(aid.series) ? aid.series : [];
+      const toPoint = (p) => {
+        const xVal = Number(p?.x || 0);
+        const yVal = Number(p?.y || 0);
+        const x = m + ((Math.max(0, Math.min(xMax, xVal)) / xMax) * (chartW - (m * 2)));
+        const y = chartH - m - ((Math.max(0, Math.min(yMax, yVal)) / yMax) * (chartH - (m * 2)));
+        return `${x.toFixed(1)},${y.toFixed(1)}`;
+      };
+      const lines = series.map(s => {
+        const points = (Array.isArray(s.points) ? s.points : []).map(toPoint).join(' ');
+        return `<polyline class="qp-aid-line" points="${points}" stroke="${s.color || '#8fb3ff'}" />`;
+      }).join('');
+      const legends = series.map(s => `
+        <span class="qp-aid-legend-item">
+          <span class="qp-aid-legend-dot" style="background:${s.color || '#8fb3ff'}"></span>
+          <span>${s.name || ''}</span>
+        </span>
+      `).join('');
+      const eqTime = Number(aid.equilibriumTime);
+      const eqX = Number.isFinite(eqTime) ? (m + ((Math.max(0, Math.min(xMax, eqTime)) / xMax) * (chartW - (m * 2)))) : null;
+      return `
+        <section class="qp-aid-card">
+          <div class="qp-aid-title">${aid.titleAr || 'منحنى السؤال'}</div>
+          <svg class="qp-aid-chart" viewBox="0 0 ${chartW} ${chartH}" xmlns="http://www.w3.org/2000/svg" aria-label="${aid.titleAr || 'منحنى'}">
+            <line x1="${m}" y1="${m}" x2="${m}" y2="${chartH - m}" class="qp-aid-axis" />
+            <line x1="${m}" y1="${chartH - m}" x2="${chartW - m}" y2="${chartH - m}" class="qp-aid-axis" />
+            <line x1="${m}" y1="${chartH - m - ((chartH - (m * 2)) * 0.4)}" x2="${chartW - m}" y2="${chartH - m - ((chartH - (m * 2)) * 0.4)}" class="qp-aid-grid" />
+            <line x1="${m}" y1="${chartH - m - ((chartH - (m * 2)) * 0.6)}" x2="${chartW - m}" y2="${chartH - m - ((chartH - (m * 2)) * 0.6)}" class="qp-aid-grid" />
+            ${eqX !== null ? `<line x1="${eqX}" y1="${m}" x2="${eqX}" y2="${chartH - m}" class="qp-aid-eq-line" />` : ''}
+            ${lines}
+            <text x="${chartW - m}" y="${chartH - 8}" text-anchor="end" class="qp-aid-label">${aid.xLabelAr || 'الزمن'}</text>
+            <text x="${8}" y="${m - 8}" class="qp-aid-label">${aid.yLabelAr || 'التركيز'}</text>
+            ${eqX !== null ? `<text x="${eqX + 4}" y="${m + 10}" class="qp-aid-eq-text">منطقة الاتزان</text>` : ''}
+          </svg>
+          <div class="qp-aid-legend">${legends}</div>
+          <div class="qp-aid-note">${aid.captionAr || 'معطيات بصرية مساعدة لفهم السؤال.'}</div>
+        </section>
+      `;
+    }
+
+    return '';
+  },
+
+  questionPlayer(vm) {
+    if (!vm) {
+      return '<div class="glass-card laws-empty">لا توجد بيانات سؤال متاحة.</div>';
+    }
+
+    const canConfirm = vm.selectedIndex >= 0 && !vm.confirmed;
+    const sourceBadge = vm.sourceType === 'official'
+      ? '<span class="search-kind-badge is-law">سؤال رسمي</span>'
+      : '<span class="search-kind-badge is-worked-example">سؤال تدريبي</span>';
+
+    let feedback = '';
+    if (vm.confirmed) {
+      if (!vm.canGrade) {
+        feedback = '<div class="qp-feedback">هذا السؤال مستخرج من نموذج رسمي، لكنه يحتاج مراجعة قبل التصحيح الآلي.</div>';
+      } else {
+        feedback = `<div class="qp-feedback ${vm.isCorrect ? 'ok' : 'bad'}">${vm.isCorrect ? 'إجابة صحيحة' : 'إجابة غير صحيحة'}</div>`;
+      }
+    }
+
+    const explanationBlock = vm.confirmed
+      ? `<div class="qp-example">
+          <div class="qp-example-title">شرح الإجابة</div>
+          <div class="qp-example-summary">${vm.explanation || 'لا يوجد شرح متاح الآن.'}</div>
+          ${(vm.trapTags || []).length ? `<div class="qp-example-step">فخ شائع: ${(vm.trapTags || []).join(' • ')}</div>` : ''}
+         </div>`
+      : '';
+
+    const workedPrimary = vm.workedExample
+      ? `<div class="qp-example">
+          <div class="qp-example-title">مثال محلول مرتبط: ${vm.workedExample.title || ''}</div>
+          <div class="qp-example-summary">${vm.workedExample.question || ''}</div>
+          <div class="qp-example-steps">${(vm.workedExample.steps || []).map((st, i) => `<div class="qp-example-step">${i + 1}) ${st}</div>`).join('')}</div>
+          <div class="exam-worked-final">الإجابة النهائية: <span class="formula-ltr">${vm.workedExample.finalAnswer || ''}</span></div>
+        </div>`
+      : '';
+
+    const relatedWorked = (vm.relatedWorked || []).filter(ex => !vm.workedExample || ex.id !== vm.workedExample.id);
+    const visualAid = this.renderQuestionVisualAid(vm.visualAid);
+
+    return `
+      <div class="qp-wrap">
+        <div class="glass-card qp-head fade-in">
+          <div class="qp-title">السؤال ${vm.questionNumber} من ${vm.totalQuestions}</div>
+          <div class="qp-meta">
+            ${sourceBadge}
+            ${!vm.canGrade ? '<span class="search-kind-badge is-worked-example">إجابة غير مؤكدة</span>' : ''}
+            <span>${vm.chapter}</span>
+            <span>•</span>
+            <span>${vm.topic}</span>
+            <span>•</span>
+            <span>${vm.skill}</span>
+            <span>•</span>
+            <span>${vm.difficulty}</span>
+            <span>•</span>
+            <span>${vm.marks} درجة</span>
+          </div>
+          <div class="exam-source-ref">المصدر: ${vm.sourceRef || 'غير محدد'}</div>
+          ${vm.needsManualReview ? '<div class="qp-feedback" style="margin-top:8px">هذا السؤال مستخرج من نموذج رسمي، لكنه يحتاج مراجعة قبل التصحيح الآلي.</div>' : ''}
+        </div>
+
+        <article class="glass-card qp-question-card fade-in">
+          <div class="qp-stem">${vm.displayQuestion || vm.question}</div>
+          ${visualAid}
+          <div class="qp-choice-list">
+            ${vm.choices.map(choice => `
+              <button class="qp-choice-btn ${choice.status}" data-action="exam-select-choice" data-choice-index="${choice.index}" ${vm.confirmed ? 'disabled' : ''}>${choice.text}</button>
+            `).join('')}
+          </div>
+
+          <div class="qp-actions">
+            <button class="qp-confirm-btn" data-action="exam-confirm-answer" ${canConfirm ? '' : 'disabled'}>${vm.canGrade ? 'تأكيد الإجابة' : 'تسجيل كمراجعة'}</button>
+            ${(vm.lawRefs || []).map(ref => `<button class="qp-law-btn" data-action="exam-review-law" data-law-ref="${ref}">مراجعة القانون: <span class="formula-ltr">${ref}</span></button>`).join('')}
+            ${vm.hasNext ? '<button class="exam-open-btn" data-action="exam-next-question">السؤال التالي</button>' : ''}
+            <button class="exam-open-btn" data-action="exam-train-same-chapter">تدريب على نفس الباب</button>
+            <button class="qp-back-btn" data-action="go-hash" data-hash="#exam-center">العودة إلى مركز الامتحانات</button>
+          </div>
+        </article>
+
+        ${feedback}
+        ${explanationBlock}
+        ${workedPrimary}
+
+        ${relatedWorked.map(ex => `
+          <div class="qp-example">
+            <div class="qp-example-title">مثال إضافي: ${ex.title}</div>
+            <div class="qp-example-summary">${ex.question || ''}</div>
+            <button class="exam-open-btn" data-action="exam-open-related-worked" data-example-id="${ex.id}">فتح المثال</button>
+          </div>
+        `).join('')}
+      </div>
+    `;
+  },
+
+  laws(S) {
+    const state = S || { query: '', category: 'all', focusLawId: null };
+    const q = state.query || '';
+    const category = state.category || 'all';
+    const laws = LawsData.filterLaws(q, category);
+    const focusLawId = state.focusLawId || '';
+    const categoryOrder = LawsData.categories.filter(c => c.key !== 'all');
+
+    const categoryIntro = {
+      'acids-bases': 'مفاهيم التأين والثوابت Ka وKb تساعدك على فهم قوة الحمض أو القاعدة بدل الحفظ المباشر.',
+      'ph-poh': 'هذه العلاقات تربط بين تركيز +H و -OH وتحدد طبيعة المحلول بسرعة.',
+      electrolysis: 'قوانين فاراداي تربط التيار والزمن بكمية الكهرباء ثم بالكتلة المترسبة.',
+      ksp: 'حاصل الإذابة يحدد الذوبانية والترسيب من خلال المعادلة الأيونية الصحيحة.',
+      'mass-percent': 'تحويلات بين كتلة العنصر وكتلة العينة لفهم تركيب المواد.',
+      titration: 'علاقة المعايرة تستخدم عند نقطة التكافؤ لمقارنة مكافئات الحمض والقاعدة.',
+      'electrochemical-cells': 'قوانين فرق الجهد توضح اتجاه التفاعل في الخلايا الجلفانية.',
+      moles: 'قوانين المولات تربط بين الكتلة والحجم وعدد الجسيمات والتركيز المولاري.',
+    };
+
+    const lawGuides = {
+      law_strong_weak_electrolytes: {
+        formulas: [
+          '[H+] = Cacid × n(H+)',
+          '[H3O+] = α × Ca = √(Ka × Ca)',
+          'Ka = α² × Ca',
+          'α = √(Ka / Ca)',
+          'Kb = α² × Cb',
+          'Ka = (α² × Ca) / (1 - α)  عندما α > 5%',
+        ],
+        steps: [
+          'اكتب المعطيات: نوع المادة (حمض/قاعدة) والتركيز.',
+          'حدد هل المادة قوية أم ضعيفة من نص السؤال.',
+          'اختر العلاقة المناسبة لـ Ka أو Kb أو α.',
+          'عوّض بالقيم واحسب التركيز أو درجة التأين.',
+          'راجع منطق الناتج: قيمة α يجب أن تكون أصغر من 1.',
+        ],
+        example: 'مثال سريع: حمض ضعيف تركيزه Ca = 0.1 M و Ka = 1×10^-5 ⇒ [H3O+] ≈ √(Ka×Ca).',
+      },
+      law_ph_poh_kw: {
+        formulas: [
+          'Kw = [H+] [OH-] = 10^-14',
+          'pH + pOH = 14',
+          'pH = -log[H3O+]',
+          'pOH = -log[OH-]',
+        ],
+        steps: [
+          'حدد المعطى: pH أو pOH أو تركيز H+ أو OH-.',
+          'استخدم اللوغاريتم للتحويل بين pH والتركيز إذا لزم.',
+          'استخدم العلاقة pH + pOH = 14 للحصول على القيمة المجهولة.',
+          'حدد نوع المحلول من القيمة النهائية.',
+          'تحقق أن الناتج ضمن المدى 0 إلى 14 في مسائل المنهج القياسية.',
+        ],
+        example: 'مثال سريع: إذا كان pH = 3.5 إذن pOH = 10.5 والمحلول حمضي.',
+      },
+      law_faraday_electrolysis: {
+        formulas: [
+          'Q = I × t',
+          'Q / 96500 = m / Equivalent Mass',
+          'Equivalent Mass = Atomic Mass / Z',
+          'Density = Mass / Volume',
+        ],
+        steps: [
+          'حوّل الزمن إلى ثانية أولًا.',
+          'احسب كمية الكهرباء: Q = I×t.',
+          'حوّل Q إلى مولات إلكترونات باستخدام 96500.',
+          'اربط مولات الإلكترونات بالكتلة المترسبة أو الكثافة حسب المطلوب.',
+          'اكتب الوحدة النهائية بوضوح: C أو g أو mol.',
+        ],
+        example: 'مثال سريع: تيار 2A لمدة 600s ⇒ Q = 1200 C ثم نستخدم علاقة فاراداي للكتلة.',
+      },
+      law_ksp_general: {
+        formulas: [
+          'Ksp = [A^b+]^a [B^a-]^b',
+          'أحادي + أحادي: Ksp = x²',
+          'أحادي + ثنائي: Ksp = 4x³',
+          'ثلاثي + أحادي: Ksp = 27x⁴',
+          'ثنائي + ثلاثي: Ksp = 108x⁵',
+        ],
+        steps: [
+          'اكتب معادلة التفكك الأيوني للملح أولًا.',
+          'عبّر عن تركيز كل أيون بدلالة x أو التركيز المعطى.',
+          'عوّض في قانون Ksp مع مراعاة الأسس.',
+          'احسب x (الذوبانية) من العلاقة المناسبة.',
+          'راجع أن الوحدات متسقة قبل النتيجة النهائية.',
+        ],
+        example: 'مثال سريع: ملح 1:1 إذا Ksp = 1×10^-8 ⇒ x = √Ksp = 1×10^-4 M.',
+      },
+      law_mass_percent: {
+        formulas: [
+          '% بالكتلة = (كتلة الجزء / كتلة الكل) × 100',
+          'كتلة العنصر = (% العنصر × كتلة العينة) / 100',
+        ],
+        steps: [
+          'حدد هل المطلوب نسبة مئوية أم كتلة عنصر.',
+          'اكتب الكتلة الكلية للعينة أو الكتلة المولية للمركب.',
+          'عوّض بالقانون المناسب مباشرة.',
+          'احسب وتأكد أن النتيجة منطقية.',
+          'في المركبات: مجموع النسب المئوية للعناصر = 100%.',
+        ],
+        example: 'مثال سريع: عينة 20g تحتوي 5g عنصر ⇒ % العنصر = (5/20)×100 = 25%.',
+      },
+      law_titration: {
+        formulas: ['(Ma × Va)/na = (Mb × Vb)/nb'],
+        steps: [
+          'اكتب المعطيات: التركيزات والأحجام وقيم n.',
+          'وحّد وحدات الحجم (غالبًا mL للطرفين أو L للطرفين).',
+          'عوّض في علاقة المعايرة عند نقطة التكافؤ.',
+          'احسب المجهول جبريًا.',
+          'راجع أن الإجابة بوحدة تركيز أو حجم صحيحة.',
+        ],
+        example: 'مثال سريع: عند معرفة Ma وVa وna وVb وnb يمكن حساب Mb مباشرة.',
+      },
+      law_ecell: {
+        formulas: [
+          'E_cell = E°ox(anode) + E°red(cathode)',
+          'E_cell = E°red(cathode) - E°red(anode)',
+        ],
+        steps: [
+          'حدد الأنود والكاثود من نص المسألة.',
+          'اكتب الجهود القياسية بالشكل المطلوب (أكسدة/اختزال).',
+          'استخدم صيغة واحدة متسقة بدون خلط الإشارات.',
+          'احسب E_cell ثم حدد إن كانت موجبة أم لا.',
+          'القيمة الموجبة تعني خلية جلفانية تلقائية.',
+        ],
+        example: 'مثال سريع: E°red(cathode)=0.80 و E°red(anode)=0.34 ⇒ E_cell=0.46 V.',
+      },
+      law_moles: {
+        formulas: [
+          'n = m / M',
+          'n = V(gas) / 22.4 L',
+          'n = N / NA',
+          'n = Volume(L) × Molarity',
+        ],
+        steps: [
+          'حدد نوع المعطيات: كتلة/حجم غاز/عدد جسيمات/مولارية.',
+          'اختر العلاقة المناسبة للمولات.',
+          'حوّل الوحدات قبل التعويض (mL إلى L عند الحاجة).',
+          'احسب n ثم استخدمها لباقي المسألة.',
+          'راجع الأرقام العلمية خاصة مع عدد أفوجادرو.',
+        ],
+        example: 'مثال سريع: 11.2L غاز عند STP ⇒ n = 11.2/22.4 = 0.5 mol.',
+      },
+    };
+
+    const kspCards = [
+      { type: 'تفكك أحادي + أحادي', law: 'Ksp = x²', xLaw: 'x = √Ksp', example: 'مثل AgCl' },
+      { type: 'تفكك ثنائي + ثنائي', law: 'Ksp = x²', xLaw: 'x = √Ksp', example: 'مثل PbSO4' },
+      { type: 'تفكك أحادي + ثنائي', law: 'Ksp = 4x³', xLaw: 'x = ³√(Ksp/4)', example: 'مثل CaF2' },
+      { type: 'تفكك ثلاثي + أحادي', law: 'Ksp = 27x⁴', xLaw: 'x = ⁴√(Ksp/27)', example: 'مثل Al(OH)3' },
+      { type: 'تفكك ثنائي + ثلاثي', law: 'Ksp = 108x⁵', xLaw: 'x = ⁵√(Ksp/108)', example: 'مثل Ca3(PO4)2' },
+    ];
+
+    const renderPhScale = () => `
+      <div class="law-visual-block">
+        <div class="law-visual-title">علاقات pH الأساسية</div>
+        <div class="law-formula-grid">
+          <div class="law-formula-ltr law-formula-box">pH + pOH = 14</div>
+          <div class="law-formula-ltr law-formula-box">Kw = [H+] [OH-] = 10^-14</div>
+        </div>
+        <div class="ph-scale">
+          ${Array.from({ length: 15 }, (_, i) => {
+            const cls = i < 7 ? 'acidic' : i === 7 ? 'neutral' : 'basic';
+            return `<span class="ph-cell ${cls}">${i}</span>`;
+          }).join('')}
+        </div>
+        <div class="ph-scale-labels">
+          <span>حمضي (0 → 6)</span>
+          <span>متعادل (7)</span>
+          <span>قلوي (8 → 14)</span>
+        </div>
+      </div>
+    `;
+
+    const renderFaradayFlow = () => `
+      <div class="law-visual-block">
+        <div class="law-visual-title">تسلسل الحل في التحليل الكهربي</div>
+        <div class="faraday-flow">
+          <span class="faraday-node">تيار + زمن</span>
+          <span class="faraday-arrow">←</span>
+          <span class="faraday-node">كمية كهرباء Q</span>
+          <span class="faraday-arrow">←</span>
+          <span class="faraday-node">مولات إلكترونات</span>
+          <span class="faraday-arrow">←</span>
+          <span class="faraday-node">كتلة مترسبة</span>
+        </div>
+      </div>
+    `;
+
+    const renderKspCards = () => `
+      <div class="law-visual-block">
+        <div class="law-visual-title">أنماط Ksp المختصرة</div>
+        <div class="ksp-grid">
+          ${kspCards.map(item => `
+            <div class="ksp-card">
+              <div class="ksp-type">${item.type}</div>
+              <div class="law-formula-ltr ksp-law">${item.law}</div>
+              <div class="law-formula-ltr ksp-law">${item.xLaw}</div>
+              <div class="ksp-example">${item.example}</div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `;
+
+    const renderLawCard = (l, withCategoryHeader = false) => {
+      const guide = lawGuides[l.id] || {};
+      const formulas = guide.formulas || [l.formula, ...(l.lines || [])];
+      const steps = guide.steps || [
+        'اكتب المعطيات من السؤال.',
+        'وحّد الوحدات المطلوبة.',
+        'عوّض في القانون المناسب.',
+        'احسب الناتج ثم راجع الوحدة.',
+      ];
+      const quickExample = guide.example || '';
+
+      return `
+        <article class="glass-card law-card fade-in ${focusLawId === l.id ? 'law-card-focus' : ''}" data-law-id="${l.id}">
+          <div class="law-card-head">
+            <h3 class="law-title">${l.title}</h3>
+            <span class="law-cat">${LawsData.categoryLabel(l.category)}</span>
+          </div>
+          ${withCategoryHeader ? `<div class="law-section law-category-inline">${categoryIntro[l.category] || ''}</div>` : ''}
+
+          <div class="law-section">
+            <div class="law-label">الصيغة الأساسية</div>
+            <div class="law-formula-stack">
+              ${formulas.map(line => `<div class="law-formula-ltr law-formula-box">${line}</div>`).join('')}
+            </div>
+          </div>
+
+          <div class="law-section">
+            <div class="law-label">معنى الرموز</div>
+            <div class="law-text">${l.symbols}</div>
+          </div>
+
+          <div class="law-section">
+            <div class="law-label">متى أستخدمه؟</div>
+            <div class="law-text">${l.whenToUse}</div>
+          </div>
+
+          <div class="law-section">
+            <div class="law-label">طريقة الاستخدام</div>
+            <div class="law-steps">
+              ${steps.map((step, idx) => `
+                <div class="law-step-item">
+                  <span class="law-step-num">${idx + 1}</span>
+                  <span class="law-text">${step}</span>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+
+          ${quickExample ? `
+            <div class="law-section">
+              <div class="law-label">مثال سريع</div>
+              <div class="law-example">${quickExample}</div>
+            </div>
+          ` : ''}
+
+          ${l.id === 'law_ph_poh_kw' ? renderPhScale() : ''}
+          ${l.id === 'law_faraday_electrolysis' ? renderFaradayFlow() : ''}
+          ${l.id === 'law_ksp_general' ? renderKspCards() : ''}
+
+          <div class="law-section">
+            <div class="law-label">ملاحظات مهمة</div>
+            <div class="law-text">${l.notes}</div>
+          </div>
+
+          <div class="law-section">
+            <div class="law-label">أخطاء شائعة</div>
+            <div class="law-text">${l.mistakes}</div>
+          </div>
+        </article>
+      `;
+    };
+
+    const groupedHtml = categoryOrder
+      .filter(c => category === 'all' || c.key === category)
+      .map(c => {
+        const items = laws.filter(l => l.category === c.key);
+        if (!items.length) return '';
+        return `
+          <section class="laws-category-block">
+            <div class="glass-card laws-category-intro">
+              <div class="laws-category-title">${c.label}</div>
+              <div class="laws-category-text">${categoryIntro[c.key] || ''}</div>
+            </div>
+            <div class="laws-list">
+              ${items.map(l => renderLawCard(l)).join('')}
+            </div>
+          </section>
+        `;
+      })
+      .join('');
+
+    return `
+      <div class="section-label">مرجع القوانين</div>
+      <div class="glass-card laws-head fade-in">
+        <div class="laws-title">قوانين الكيمياء</div>
+        <div class="laws-subtitle">مرجع سريع للقوانين والوحدات وطريقة الاستخدام</div>
+        <div class="search-box laws-search-box">
+          <input class="search-input" type="search" data-action="laws-search-input" placeholder="ابحث: pH, Ksp, Ka, Kb, E_cell, mol..." value="${q}" autocomplete="off"/>
+          <span class="search-icon">🔎</span>
+          <button class="laws-clear-btn" data-action="laws-clear-search">مسح</button>
+        </div>
+        <div class="laws-chip-row">
+          ${LawsData.categories.map(c => `<button class="laws-chip ${category === c.key ? 'active' : ''}" data-action="laws-category" data-category="${c.key}">${c.label}</button>`).join('')}
+        </div>
+      </div>
+
+      ${laws.length ? groupedHtml : '<div class="glass-card laws-empty">لا توجد نتائج مطابقة. جرّب كلمة أو رمزًا آخر.</div>'}
+    `;
   },
 
   /* — SEARCH — */
@@ -586,9 +1487,20 @@ const Renderer = {
     const resHtml = results.length === 0
       ? '<div class="search-hint">😕 لا نتائج — جرب كلمة مختلفة</div>'
       : results.map(r => `
-          <div class="search-result" data-action="jump-to" data-unit-id="${r.uid}" data-section-id="${r.sid}">
+          <div class="search-result" ${r.kind === 'law'
+            ? `data-action="open-law" data-law-id="${r.lawId}" data-law-category="${r.lawCategory}"`
+            : r.kind === 'exam-question'
+              ? `data-action="open-question" data-question-id="${r.examQuestionId}"`
+              : r.kind === 'worked-example'
+                ? `data-action="open-worked-example" data-example-id="${r.workedExampleId}" data-question-id="${r.examQuestionId || ''}"`
+                : `data-action="jump-to" data-unit-id="${r.uid}" data-section-id="${r.sid}"`}>
             <div class="sr-title" style="color:${r.clr}">${r.nodeTitle}</div>
-            <div class="sr-path">${r.unitTitle} ← ${r.secTitle}</div>
+            <div class="sr-path">
+              <span class="search-kind-badge ${r.kind === 'law' ? 'is-law' : r.kind === 'exam-question' ? 'is-exam-question' : r.kind === 'worked-example' ? 'is-worked-example' : ''}">
+                ${r.kind === 'law' ? 'قانون' : r.kind === 'exam-question' ? 'سؤال' : r.kind === 'worked-example' ? 'مثال محلول' : 'درس'}
+              </span>
+              ${r.unitTitle} ← ${r.secTitle}
+            </div>
             ${r.matchItems.map(it => {
               const ql = q.toLowerCase();
               const safe = it.replace(/</g,'&lt;');
@@ -639,14 +1551,18 @@ const Renderer = {
     const qLevel = q.difficulty || q.level || 'متوسط';
     const levelColor = qLevel === 'سهل' ? 'var(--neon-green)' : qLevel === 'متوسط' ? 'var(--neon-amber)' : 'var(--neon-red)';
     const pct = Math.round(S.idx / route.length * 100);
-    const optsHtml = q.opts.map((o, i) => {
+    const orderMap = (S.choiceOrders && Array.isArray(S.choiceOrders[String(qIdx)]) && S.choiceOrders[String(qIdx)].length === q.opts.length)
+      ? S.choiceOrders[String(qIdx)]
+      : q.opts.map((_, idx) => idx);
+    const optsHtml = orderMap.map((originalIdx, visibleIdx) => {
+      const o = q.opts[originalIdx];
       let cls = '';
       if (S.answered) {
-        if (i === q.ans) cls = 'correct';
-        else if (i === S.chosen && i !== q.ans) cls = 'wrong';
+        if (originalIdx === q.ans) cls = 'correct';
+        else if (originalIdx === S.chosen && originalIdx !== q.ans) cls = 'wrong';
         else cls = 'revealed';
       }
-      return `<button class="quiz-opt ${cls}" data-action="answer-quiz" data-index="${i}" ${S.answered?'disabled':''}>${o}</button>`;
+      return `<button class="quiz-opt ${cls}" data-action="answer-quiz" data-index="${visibleIdx}" ${S.answered?'disabled':''}>${o}</button>`;
     }).join('');
 
     return `

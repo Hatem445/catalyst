@@ -1,0 +1,2989 @@
+{
+  "version": "phase17.1-v1",
+  "generatedAt": "2026-05-21T18:58:46.447690Z",
+  "strategy": "official-first-from-local-pdfs",
+  "files": [
+    {
+      "file": "Chemistry_AR_Model_1_2026.pdf",
+      "model": 1,
+      "totalPages": 11,
+      "parsedQuestionBlocks": 47,
+      "extractedQuestions": 20,
+      "unreadablePages": [],
+      "unreadableQuestions": [
+        {
+          "qnum": 1,
+          "page": 1,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 2,
+          "page": 1,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 3,
+          "page": 1,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 7,
+          "page": 2,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 8,
+          "page": 2,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 9,
+          "page": 2,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 11,
+          "page": 2,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 13,
+          "page": 3,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 14,
+          "page": 3,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 2,
+          "page": 3,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 15,
+          "page": 4,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 16,
+          "page": 4,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 17,
+          "page": 4,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 18,
+          "page": 4,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 19,
+          "page": 4,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 20,
+          "page": 5,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 25,
+          "page": 6,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 28,
+          "page": 7,
+          "reason": "empty-stem"
+        },
+        {
+          "qnum": 29,
+          "page": 7,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 31,
+          "page": 7,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 35,
+          "page": 8,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 36,
+          "page": 8,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 37,
+          "page": 8,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 38,
+          "page": 9,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 39,
+          "page": 9,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 43,
+          "page": 10,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 45,
+          "page": 11,
+          "reason": "no-4-options"
+        }
+      ]
+    },
+    {
+      "file": "Chemistry_AR_Model_2_2026.pdf",
+      "model": 2,
+      "totalPages": 9,
+      "parsedQuestionBlocks": 49,
+      "extractedQuestions": 14,
+      "unreadablePages": [],
+      "unreadableQuestions": [
+        {
+          "qnum": 1,
+          "page": 1,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 5,
+          "page": 1,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 6,
+          "page": 1,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 8,
+          "page": 2,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 9,
+          "page": 2,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 11,
+          "page": 2,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 11,
+          "page": 2,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 12,
+          "page": 2,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 16,
+          "page": 3,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 17,
+          "page": 3,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 18,
+          "page": 3,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 21,
+          "page": 4,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 22,
+          "page": 4,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 23,
+          "page": 4,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 24,
+          "page": 5,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 25,
+          "page": 5,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 26,
+          "page": 5,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 27,
+          "page": 5,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 28,
+          "page": 5,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 29,
+          "page": 5,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 31,
+          "page": 6,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 32,
+          "page": 6,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 34,
+          "page": 6,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 35,
+          "page": 6,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 36,
+          "page": 6,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 37,
+          "page": 6,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 38,
+          "page": 7,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 41,
+          "page": 7,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 42,
+          "page": 8,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 44,
+          "page": 8,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 45,
+          "page": 9,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 46,
+          "page": 9,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 1,
+          "page": 9,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 2,
+          "page": 9,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 3,
+          "page": 9,
+          "reason": "no-4-options"
+        }
+      ]
+    },
+    {
+      "file": "Chemistry_AR_Model_3_2026.pdf",
+      "model": 3,
+      "totalPages": 10,
+      "parsedQuestionBlocks": 49,
+      "extractedQuestions": 13,
+      "unreadablePages": [],
+      "unreadableQuestions": [
+        {
+          "qnum": 2,
+          "page": 1,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 3,
+          "page": 1,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 5,
+          "page": 1,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 6,
+          "page": 2,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 7,
+          "page": 2,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 8,
+          "page": 2,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 9,
+          "page": 2,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 1,
+          "page": 2,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 2,
+          "page": 2,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 3,
+          "page": 2,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 11,
+          "page": 3,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 12,
+          "page": 3,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 14,
+          "page": 3,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 16,
+          "page": 4,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 17,
+          "page": 4,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 18,
+          "page": 4,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 19,
+          "page": 4,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 21,
+          "page": 5,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 21,
+          "page": 5,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 22,
+          "page": 5,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 24,
+          "page": 5,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 27,
+          "page": 6,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 29,
+          "page": 6,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 31,
+          "page": 7,
+          "reason": "empty-stem"
+        },
+        {
+          "qnum": 33,
+          "page": 7,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 34,
+          "page": 7,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 35,
+          "page": 8,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 36,
+          "page": 8,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 37,
+          "page": 8,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 38,
+          "page": 8,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 39,
+          "page": 8,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 41,
+          "page": 8,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 43,
+          "page": 9,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 44,
+          "page": 9,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 54,
+          "page": 10,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 46,
+          "page": 10,
+          "reason": "no-4-options"
+        }
+      ]
+    },
+    {
+      "file": "Chemistry_AR_Model_4_2026.pdf",
+      "model": 4,
+      "totalPages": 9,
+      "parsedQuestionBlocks": 47,
+      "extractedQuestions": 20,
+      "unreadablePages": [],
+      "unreadableQuestions": [
+        {
+          "qnum": 2,
+          "page": 1,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 3,
+          "page": 1,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 5,
+          "page": 1,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 8,
+          "page": 2,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 9,
+          "page": 2,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 12,
+          "page": 2,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 14,
+          "page": 3,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 15,
+          "page": 3,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 16,
+          "page": 3,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 19,
+          "page": 4,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 21,
+          "page": 4,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 23,
+          "page": 4,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 24,
+          "page": 5,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 25,
+          "page": 5,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 31,
+          "page": 6,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 31,
+          "page": 6,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 32,
+          "page": 6,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 35,
+          "page": 7,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 36,
+          "page": 7,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 37,
+          "page": 7,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 38,
+          "page": 7,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 41,
+          "page": 7,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 41,
+          "page": 8,
+          "reason": "empty-stem"
+        },
+        {
+          "qnum": 42,
+          "page": 8,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 45,
+          "page": 9,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 1,
+          "page": 9,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 2,
+          "page": 9,
+          "reason": "no-4-options"
+        }
+      ]
+    },
+    {
+      "file": "Chemistry_AR_Model_5_2026.pdf",
+      "model": 5,
+      "totalPages": 9,
+      "parsedQuestionBlocks": 52,
+      "extractedQuestions": 12,
+      "unreadablePages": [],
+      "unreadableQuestions": [
+        {
+          "qnum": 1,
+          "page": 1,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 2,
+          "page": 1,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 3,
+          "page": 1,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 5,
+          "page": 1,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 6,
+          "page": 2,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 7,
+          "page": 2,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 8,
+          "page": 2,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 11,
+          "page": 3,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 12,
+          "page": 3,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 13,
+          "page": 3,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 14,
+          "page": 3,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 15,
+          "page": 3,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 1,
+          "page": 3,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 2,
+          "page": 3,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 3,
+          "page": 3,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 4,
+          "page": 3,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 16,
+          "page": 4,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 17,
+          "page": 4,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 19,
+          "page": 4,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 21,
+          "page": 5,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 22,
+          "page": 5,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 24,
+          "page": 5,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 26,
+          "page": 5,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 27,
+          "page": 6,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 29,
+          "page": 6,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 31,
+          "page": 6,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 32,
+          "page": 6,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 33,
+          "page": 7,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 34,
+          "page": 7,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 35,
+          "page": 7,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 39,
+          "page": 7,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 42,
+          "page": 8,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 14,
+          "page": 8,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 43,
+          "page": 8,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 54,
+          "page": 9,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 1,
+          "page": 9,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 2,
+          "page": 9,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 3,
+          "page": 9,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 4,
+          "page": 9,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 46,
+          "page": 9,
+          "reason": "no-4-options"
+        }
+      ]
+    },
+    {
+      "file": "Chemistry_AR_Model_6_2026.pdf",
+      "model": 6,
+      "totalPages": 11,
+      "parsedQuestionBlocks": 50,
+      "extractedQuestions": 7,
+      "unreadablePages": [],
+      "unreadableQuestions": [
+        {
+          "qnum": 1,
+          "page": 1,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 2,
+          "page": 1,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 3,
+          "page": 1,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 4,
+          "page": 1,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 5,
+          "page": 1,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 6,
+          "page": 2,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 8,
+          "page": 2,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 9,
+          "page": 2,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 11,
+          "page": 3,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 11,
+          "page": 3,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 13,
+          "page": 3,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 14,
+          "page": 4,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 15,
+          "page": 4,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 16,
+          "page": 4,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 17,
+          "page": 4,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 18,
+          "page": 4,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 19,
+          "page": 5,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 21,
+          "page": 5,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 21,
+          "page": 5,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 24,
+          "page": 5,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 25,
+          "page": 6,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 26,
+          "page": 6,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 27,
+          "page": 6,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 28,
+          "page": 6,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 29,
+          "page": 6,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 31,
+          "page": 7,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 31,
+          "page": 7,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 33,
+          "page": 7,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 34,
+          "page": 7,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 36,
+          "page": 8,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 37,
+          "page": 8,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 39,
+          "page": 9,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 41,
+          "page": 9,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 41,
+          "page": 9,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 42,
+          "page": 9,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 43,
+          "page": 10,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 44,
+          "page": 10,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 45,
+          "page": 11,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 46,
+          "page": 11,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 1,
+          "page": 11,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 2,
+          "page": 11,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 3,
+          "page": 11,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 4,
+          "page": 11,
+          "reason": "no-4-options"
+        }
+      ]
+    },
+    {
+      "file": "Chemistry_AR_Model_7_2026.pdf",
+      "model": 7,
+      "totalPages": 11,
+      "parsedQuestionBlocks": 48,
+      "extractedQuestions": 12,
+      "unreadablePages": [],
+      "unreadableQuestions": [
+        {
+          "qnum": 1,
+          "page": 1,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 3,
+          "page": 1,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 4,
+          "page": 1,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 5,
+          "page": 1,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 6,
+          "page": 2,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 7,
+          "page": 2,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 8,
+          "page": 2,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 9,
+          "page": 2,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 11,
+          "page": 3,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 14,
+          "page": 4,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 15,
+          "page": 4,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 17,
+          "page": 4,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 18,
+          "page": 4,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 19,
+          "page": 5,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 21,
+          "page": 5,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 21,
+          "page": 5,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 22,
+          "page": 5,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 23,
+          "page": 6,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 1,
+          "page": 6,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 2,
+          "page": 6,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 24,
+          "page": 6,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 25,
+          "page": 6,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 26,
+          "page": 6,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 27,
+          "page": 6,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 28,
+          "page": 7,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 29,
+          "page": 7,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 31,
+          "page": 7,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 33,
+          "page": 8,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 34,
+          "page": 8,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 35,
+          "page": 8,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 37,
+          "page": 9,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 38,
+          "page": 9,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 41,
+          "page": 9,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 42,
+          "page": 10,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 43,
+          "page": 10,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 45,
+          "page": 11,
+          "reason": "no-4-options"
+        }
+      ]
+    },
+    {
+      "file": "Chemistry_AR_Model_8_2026.pdf",
+      "model": 8,
+      "totalPages": 9,
+      "parsedQuestionBlocks": 46,
+      "extractedQuestions": 10,
+      "unreadablePages": [],
+      "unreadableQuestions": [
+        {
+          "qnum": 1,
+          "page": 1,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 2,
+          "page": 1,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 3,
+          "page": 1,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 4,
+          "page": 1,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 5,
+          "page": 2,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 7,
+          "page": 2,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 9,
+          "page": 2,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 11,
+          "page": 3,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 12,
+          "page": 3,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 14,
+          "page": 3,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 15,
+          "page": 4,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 16,
+          "page": 4,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 17,
+          "page": 4,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 18,
+          "page": 4,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 19,
+          "page": 4,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 21,
+          "page": 4,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 23,
+          "page": 5,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 24,
+          "page": 5,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 25,
+          "page": 5,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 26,
+          "page": 5,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 28,
+          "page": 6,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 29,
+          "page": 6,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 31,
+          "page": 6,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 31,
+          "page": 6,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 32,
+          "page": 6,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 34,
+          "page": 7,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 35,
+          "page": 7,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 36,
+          "page": 7,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 37,
+          "page": 7,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 38,
+          "page": 7,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 39,
+          "page": 8,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 41,
+          "page": 8,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 41,
+          "page": 8,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 42,
+          "page": 8,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 44,
+          "page": 8,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 46,
+          "page": 9,
+          "reason": "no-4-options"
+        }
+      ]
+    },
+    {
+      "file": "Chemistry_AR_Model_9_2026.pdf",
+      "model": 9,
+      "totalPages": 10,
+      "parsedQuestionBlocks": 54,
+      "extractedQuestions": 15,
+      "unreadablePages": [],
+      "unreadableQuestions": [
+        {
+          "qnum": 1,
+          "page": 1,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 2,
+          "page": 1,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 3,
+          "page": 1,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 5,
+          "page": 2,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 8,
+          "page": 2,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 9,
+          "page": 2,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 12,
+          "page": 3,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 13,
+          "page": 3,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 15,
+          "page": 4,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 16,
+          "page": 4,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 17,
+          "page": 4,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 18,
+          "page": 4,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 19,
+          "page": 4,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 21,
+          "page": 4,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 2,
+          "page": 4,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 2,
+          "page": 4,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 2,
+          "page": 4,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 21,
+          "page": 5,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 24,
+          "page": 5,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 26,
+          "page": 5,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 31,
+          "page": 6,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 23,
+          "page": 7,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 33,
+          "page": 7,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 34,
+          "page": 7,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 35,
+          "page": 7,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 36,
+          "page": 8,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 37,
+          "page": 8,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 38,
+          "page": 8,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 39,
+          "page": 9,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 41,
+          "page": 9,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 41,
+          "page": 9,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 44,
+          "page": 10,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 45,
+          "page": 10,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 1,
+          "page": 10,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 2,
+          "page": 10,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 46,
+          "page": 10,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 1,
+          "page": 10,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 2,
+          "page": 10,
+          "reason": "no-4-options"
+        },
+        {
+          "qnum": 3,
+          "page": 10,
+          "reason": "no-4-options"
+        }
+      ]
+    }
+  ],
+  "questionSourceIndex": {
+    "off2026_m01_q04_01": {
+      "pdf": "Chemistry_AR_Model_1_2026.pdf",
+      "model": 1,
+      "page": 1,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m01_q05_02": {
+      "pdf": "Chemistry_AR_Model_1_2026.pdf",
+      "model": 1,
+      "page": 1,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m01_q06_03": {
+      "pdf": "Chemistry_AR_Model_1_2026.pdf",
+      "model": 1,
+      "page": 2,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m01_q11_04": {
+      "pdf": "Chemistry_AR_Model_1_2026.pdf",
+      "model": 1,
+      "page": 3,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m01_q21_05": {
+      "pdf": "Chemistry_AR_Model_1_2026.pdf",
+      "model": 1,
+      "page": 3,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m01_q21_06": {
+      "pdf": "Chemistry_AR_Model_1_2026.pdf",
+      "model": 1,
+      "page": 5,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m01_q22_07": {
+      "pdf": "Chemistry_AR_Model_1_2026.pdf",
+      "model": 1,
+      "page": 5,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m01_q23_08": {
+      "pdf": "Chemistry_AR_Model_1_2026.pdf",
+      "model": 1,
+      "page": 5,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m01_q24_09": {
+      "pdf": "Chemistry_AR_Model_1_2026.pdf",
+      "model": 1,
+      "page": 6,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m01_q26_10": {
+      "pdf": "Chemistry_AR_Model_1_2026.pdf",
+      "model": 1,
+      "page": 6,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m01_q27_11": {
+      "pdf": "Chemistry_AR_Model_1_2026.pdf",
+      "model": 1,
+      "page": 6,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m01_q31_12": {
+      "pdf": "Chemistry_AR_Model_1_2026.pdf",
+      "model": 1,
+      "page": 7,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m01_q32_13": {
+      "pdf": "Chemistry_AR_Model_1_2026.pdf",
+      "model": 1,
+      "page": 8,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m01_q33_14": {
+      "pdf": "Chemistry_AR_Model_1_2026.pdf",
+      "model": 1,
+      "page": 8,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m01_q34_15": {
+      "pdf": "Chemistry_AR_Model_1_2026.pdf",
+      "model": 1,
+      "page": 8,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m01_q41_16": {
+      "pdf": "Chemistry_AR_Model_1_2026.pdf",
+      "model": 1,
+      "page": 9,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m01_q41_17": {
+      "pdf": "Chemistry_AR_Model_1_2026.pdf",
+      "model": 1,
+      "page": 10,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m01_q42_18": {
+      "pdf": "Chemistry_AR_Model_1_2026.pdf",
+      "model": 1,
+      "page": 10,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m01_q44_19": {
+      "pdf": "Chemistry_AR_Model_1_2026.pdf",
+      "model": 1,
+      "page": 10,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m01_q46_20": {
+      "pdf": "Chemistry_AR_Model_1_2026.pdf",
+      "model": 1,
+      "page": 11,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m02_q02_01": {
+      "pdf": "Chemistry_AR_Model_2_2026.pdf",
+      "model": 2,
+      "page": 1,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m02_q03_02": {
+      "pdf": "Chemistry_AR_Model_2_2026.pdf",
+      "model": 2,
+      "page": 1,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m02_q04_03": {
+      "pdf": "Chemistry_AR_Model_2_2026.pdf",
+      "model": 2,
+      "page": 1,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m02_q07_04": {
+      "pdf": "Chemistry_AR_Model_2_2026.pdf",
+      "model": 2,
+      "page": 1,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m02_q13_05": {
+      "pdf": "Chemistry_AR_Model_2_2026.pdf",
+      "model": 2,
+      "page": 3,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m02_q14_06": {
+      "pdf": "Chemistry_AR_Model_2_2026.pdf",
+      "model": 2,
+      "page": 3,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m02_q19_07": {
+      "pdf": "Chemistry_AR_Model_2_2026.pdf",
+      "model": 2,
+      "page": 4,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m02_q21_08": {
+      "pdf": "Chemistry_AR_Model_2_2026.pdf",
+      "model": 2,
+      "page": 4,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m02_q31_09": {
+      "pdf": "Chemistry_AR_Model_2_2026.pdf",
+      "model": 2,
+      "page": 5,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m02_q33_10": {
+      "pdf": "Chemistry_AR_Model_2_2026.pdf",
+      "model": 2,
+      "page": 6,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m02_q39_11": {
+      "pdf": "Chemistry_AR_Model_2_2026.pdf",
+      "model": 2,
+      "page": 7,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m02_q41_12": {
+      "pdf": "Chemistry_AR_Model_2_2026.pdf",
+      "model": 2,
+      "page": 7,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m02_q43_13": {
+      "pdf": "Chemistry_AR_Model_2_2026.pdf",
+      "model": 2,
+      "page": 8,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m02_q04_14": {
+      "pdf": "Chemistry_AR_Model_2_2026.pdf",
+      "model": 2,
+      "page": 9,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m03_q01_01": {
+      "pdf": "Chemistry_AR_Model_3_2026.pdf",
+      "model": 3,
+      "page": 1,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m03_q04_02": {
+      "pdf": "Chemistry_AR_Model_3_2026.pdf",
+      "model": 3,
+      "page": 1,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m03_q11_03": {
+      "pdf": "Chemistry_AR_Model_3_2026.pdf",
+      "model": 3,
+      "page": 3,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m03_q13_04": {
+      "pdf": "Chemistry_AR_Model_3_2026.pdf",
+      "model": 3,
+      "page": 3,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m03_q15_05": {
+      "pdf": "Chemistry_AR_Model_3_2026.pdf",
+      "model": 3,
+      "page": 3,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m03_q23_06": {
+      "pdf": "Chemistry_AR_Model_3_2026.pdf",
+      "model": 3,
+      "page": 5,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m03_q25_07": {
+      "pdf": "Chemistry_AR_Model_3_2026.pdf",
+      "model": 3,
+      "page": 6,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m03_q26_08": {
+      "pdf": "Chemistry_AR_Model_3_2026.pdf",
+      "model": 3,
+      "page": 6,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m03_q28_09": {
+      "pdf": "Chemistry_AR_Model_3_2026.pdf",
+      "model": 3,
+      "page": 6,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m03_q31_10": {
+      "pdf": "Chemistry_AR_Model_3_2026.pdf",
+      "model": 3,
+      "page": 7,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m03_q32_11": {
+      "pdf": "Chemistry_AR_Model_3_2026.pdf",
+      "model": 3,
+      "page": 7,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m03_q41_12": {
+      "pdf": "Chemistry_AR_Model_3_2026.pdf",
+      "model": 3,
+      "page": 9,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m03_q42_13": {
+      "pdf": "Chemistry_AR_Model_3_2026.pdf",
+      "model": 3,
+      "page": 9,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m04_q01_01": {
+      "pdf": "Chemistry_AR_Model_4_2026.pdf",
+      "model": 4,
+      "page": 1,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m04_q04_02": {
+      "pdf": "Chemistry_AR_Model_4_2026.pdf",
+      "model": 4,
+      "page": 1,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m04_q06_03": {
+      "pdf": "Chemistry_AR_Model_4_2026.pdf",
+      "model": 4,
+      "page": 1,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m04_q07_04": {
+      "pdf": "Chemistry_AR_Model_4_2026.pdf",
+      "model": 4,
+      "page": 2,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m04_q11_05": {
+      "pdf": "Chemistry_AR_Model_4_2026.pdf",
+      "model": 4,
+      "page": 2,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m04_q11_06": {
+      "pdf": "Chemistry_AR_Model_4_2026.pdf",
+      "model": 4,
+      "page": 2,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m04_q13_07": {
+      "pdf": "Chemistry_AR_Model_4_2026.pdf",
+      "model": 4,
+      "page": 3,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m04_q17_08": {
+      "pdf": "Chemistry_AR_Model_4_2026.pdf",
+      "model": 4,
+      "page": 3,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m04_q18_09": {
+      "pdf": "Chemistry_AR_Model_4_2026.pdf",
+      "model": 4,
+      "page": 3,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m04_q21_10": {
+      "pdf": "Chemistry_AR_Model_4_2026.pdf",
+      "model": 4,
+      "page": 4,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m04_q22_11": {
+      "pdf": "Chemistry_AR_Model_4_2026.pdf",
+      "model": 4,
+      "page": 4,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m04_q26_12": {
+      "pdf": "Chemistry_AR_Model_4_2026.pdf",
+      "model": 4,
+      "page": 5,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m04_q27_13": {
+      "pdf": "Chemistry_AR_Model_4_2026.pdf",
+      "model": 4,
+      "page": 5,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m04_q28_14": {
+      "pdf": "Chemistry_AR_Model_4_2026.pdf",
+      "model": 4,
+      "page": 5,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m04_q29_15": {
+      "pdf": "Chemistry_AR_Model_4_2026.pdf",
+      "model": 4,
+      "page": 5,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m04_q33_16": {
+      "pdf": "Chemistry_AR_Model_4_2026.pdf",
+      "model": 4,
+      "page": 6,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m04_q34_17": {
+      "pdf": "Chemistry_AR_Model_4_2026.pdf",
+      "model": 4,
+      "page": 6,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m04_q39_18": {
+      "pdf": "Chemistry_AR_Model_4_2026.pdf",
+      "model": 4,
+      "page": 7,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m04_q43_19": {
+      "pdf": "Chemistry_AR_Model_4_2026.pdf",
+      "model": 4,
+      "page": 8,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m04_q44_20": {
+      "pdf": "Chemistry_AR_Model_4_2026.pdf",
+      "model": 4,
+      "page": 8,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m05_q04_01": {
+      "pdf": "Chemistry_AR_Model_5_2026.pdf",
+      "model": 5,
+      "page": 1,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m05_q09_02": {
+      "pdf": "Chemistry_AR_Model_5_2026.pdf",
+      "model": 5,
+      "page": 2,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m05_q12_03": {
+      "pdf": "Chemistry_AR_Model_5_2026.pdf",
+      "model": 5,
+      "page": 2,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m05_q18_04": {
+      "pdf": "Chemistry_AR_Model_5_2026.pdf",
+      "model": 5,
+      "page": 4,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m05_q22_05": {
+      "pdf": "Chemistry_AR_Model_5_2026.pdf",
+      "model": 5,
+      "page": 4,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m05_q23_06": {
+      "pdf": "Chemistry_AR_Model_5_2026.pdf",
+      "model": 5,
+      "page": 5,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m05_q25_07": {
+      "pdf": "Chemistry_AR_Model_5_2026.pdf",
+      "model": 5,
+      "page": 5,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m05_q28_08": {
+      "pdf": "Chemistry_AR_Model_5_2026.pdf",
+      "model": 5,
+      "page": 6,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m05_q32_09": {
+      "pdf": "Chemistry_AR_Model_5_2026.pdf",
+      "model": 5,
+      "page": 6,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m05_q36_10": {
+      "pdf": "Chemistry_AR_Model_5_2026.pdf",
+      "model": 5,
+      "page": 7,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m05_q42_11": {
+      "pdf": "Chemistry_AR_Model_5_2026.pdf",
+      "model": 5,
+      "page": 8,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m05_q44_12": {
+      "pdf": "Chemistry_AR_Model_5_2026.pdf",
+      "model": 5,
+      "page": 8,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m06_q07_01": {
+      "pdf": "Chemistry_AR_Model_6_2026.pdf",
+      "model": 6,
+      "page": 2,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m06_q12_02": {
+      "pdf": "Chemistry_AR_Model_6_2026.pdf",
+      "model": 6,
+      "page": 3,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m06_q22_03": {
+      "pdf": "Chemistry_AR_Model_6_2026.pdf",
+      "model": 6,
+      "page": 5,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m06_q23_04": {
+      "pdf": "Chemistry_AR_Model_6_2026.pdf",
+      "model": 6,
+      "page": 5,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m06_q32_05": {
+      "pdf": "Chemistry_AR_Model_6_2026.pdf",
+      "model": 6,
+      "page": 7,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m06_q35_06": {
+      "pdf": "Chemistry_AR_Model_6_2026.pdf",
+      "model": 6,
+      "page": 8,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m06_q38_07": {
+      "pdf": "Chemistry_AR_Model_6_2026.pdf",
+      "model": 6,
+      "page": 8,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m07_q02_01": {
+      "pdf": "Chemistry_AR_Model_7_2026.pdf",
+      "model": 7,
+      "page": 1,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m07_q11_02": {
+      "pdf": "Chemistry_AR_Model_7_2026.pdf",
+      "model": 7,
+      "page": 3,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m07_q12_03": {
+      "pdf": "Chemistry_AR_Model_7_2026.pdf",
+      "model": 7,
+      "page": 3,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m07_q13_04": {
+      "pdf": "Chemistry_AR_Model_7_2026.pdf",
+      "model": 7,
+      "page": 3,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m07_q16_05": {
+      "pdf": "Chemistry_AR_Model_7_2026.pdf",
+      "model": 7,
+      "page": 4,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m07_q31_06": {
+      "pdf": "Chemistry_AR_Model_7_2026.pdf",
+      "model": 7,
+      "page": 7,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m07_q32_07": {
+      "pdf": "Chemistry_AR_Model_7_2026.pdf",
+      "model": 7,
+      "page": 7,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m07_q36_08": {
+      "pdf": "Chemistry_AR_Model_7_2026.pdf",
+      "model": 7,
+      "page": 8,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m07_q39_09": {
+      "pdf": "Chemistry_AR_Model_7_2026.pdf",
+      "model": 7,
+      "page": 9,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m07_q41_10": {
+      "pdf": "Chemistry_AR_Model_7_2026.pdf",
+      "model": 7,
+      "page": 10,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m07_q44_11": {
+      "pdf": "Chemistry_AR_Model_7_2026.pdf",
+      "model": 7,
+      "page": 10,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m07_q46_12": {
+      "pdf": "Chemistry_AR_Model_7_2026.pdf",
+      "model": 7,
+      "page": 11,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m08_q06_01": {
+      "pdf": "Chemistry_AR_Model_8_2026.pdf",
+      "model": 8,
+      "page": 2,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m08_q08_02": {
+      "pdf": "Chemistry_AR_Model_8_2026.pdf",
+      "model": 8,
+      "page": 2,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m08_q11_03": {
+      "pdf": "Chemistry_AR_Model_8_2026.pdf",
+      "model": 8,
+      "page": 3,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m08_q13_04": {
+      "pdf": "Chemistry_AR_Model_8_2026.pdf",
+      "model": 8,
+      "page": 3,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m08_q21_05": {
+      "pdf": "Chemistry_AR_Model_8_2026.pdf",
+      "model": 8,
+      "page": 5,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m08_q22_06": {
+      "pdf": "Chemistry_AR_Model_8_2026.pdf",
+      "model": 8,
+      "page": 5,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m08_q27_07": {
+      "pdf": "Chemistry_AR_Model_8_2026.pdf",
+      "model": 8,
+      "page": 5,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m08_q33_08": {
+      "pdf": "Chemistry_AR_Model_8_2026.pdf",
+      "model": 8,
+      "page": 7,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m08_q43_09": {
+      "pdf": "Chemistry_AR_Model_8_2026.pdf",
+      "model": 8,
+      "page": 8,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m08_q45_10": {
+      "pdf": "Chemistry_AR_Model_8_2026.pdf",
+      "model": 8,
+      "page": 9,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m09_q04_01": {
+      "pdf": "Chemistry_AR_Model_9_2026.pdf",
+      "model": 9,
+      "page": 1,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m09_q06_02": {
+      "pdf": "Chemistry_AR_Model_9_2026.pdf",
+      "model": 9,
+      "page": 2,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m09_q07_03": {
+      "pdf": "Chemistry_AR_Model_9_2026.pdf",
+      "model": 9,
+      "page": 2,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m09_q11_04": {
+      "pdf": "Chemistry_AR_Model_9_2026.pdf",
+      "model": 9,
+      "page": 3,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m09_q11_05": {
+      "pdf": "Chemistry_AR_Model_9_2026.pdf",
+      "model": 9,
+      "page": 3,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m09_q14_06": {
+      "pdf": "Chemistry_AR_Model_9_2026.pdf",
+      "model": 9,
+      "page": 3,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m09_q22_07": {
+      "pdf": "Chemistry_AR_Model_9_2026.pdf",
+      "model": 9,
+      "page": 5,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m09_q23_08": {
+      "pdf": "Chemistry_AR_Model_9_2026.pdf",
+      "model": 9,
+      "page": 5,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m09_q25_09": {
+      "pdf": "Chemistry_AR_Model_9_2026.pdf",
+      "model": 9,
+      "page": 5,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m09_q28_10": {
+      "pdf": "Chemistry_AR_Model_9_2026.pdf",
+      "model": 9,
+      "page": 6,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m09_q29_11": {
+      "pdf": "Chemistry_AR_Model_9_2026.pdf",
+      "model": 9,
+      "page": 6,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m09_q31_12": {
+      "pdf": "Chemistry_AR_Model_9_2026.pdf",
+      "model": 9,
+      "page": 6,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m09_q02_13": {
+      "pdf": "Chemistry_AR_Model_9_2026.pdf",
+      "model": 9,
+      "page": 8,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m09_q42_14": {
+      "pdf": "Chemistry_AR_Model_9_2026.pdf",
+      "model": 9,
+      "page": 9,
+      "official": true,
+      "answerVerified": false
+    },
+    "off2026_m09_q43_15": {
+      "pdf": "Chemistry_AR_Model_9_2026.pdf",
+      "model": 9,
+      "page": 10,
+      "official": true,
+      "answerVerified": false
+    },
+    "syn2026_electro_001": {
+      "pdf": null,
+      "model": null,
+      "page": null,
+      "official": false,
+      "answerVerified": true
+    },
+    "syn2026_electro_002": {
+      "pdf": null,
+      "model": null,
+      "page": null,
+      "official": false,
+      "answerVerified": true
+    },
+    "syn2026_electro_003": {
+      "pdf": null,
+      "model": null,
+      "page": null,
+      "official": false,
+      "answerVerified": true
+    },
+    "syn2026_electro_004": {
+      "pdf": null,
+      "model": null,
+      "page": null,
+      "official": false,
+      "answerVerified": true
+    },
+    "syn2026_analytical_005": {
+      "pdf": null,
+      "model": null,
+      "page": null,
+      "official": false,
+      "answerVerified": true
+    },
+    "syn2026_transition_006": {
+      "pdf": null,
+      "model": null,
+      "page": null,
+      "official": false,
+      "answerVerified": true
+    },
+    "syn2026_transition_007": {
+      "pdf": null,
+      "model": null,
+      "page": null,
+      "official": false,
+      "answerVerified": true
+    },
+    "syn2026_organic_008": {
+      "pdf": null,
+      "model": null,
+      "page": null,
+      "official": false,
+      "answerVerified": true
+    },
+    "syn2026_ionic_009": {
+      "pdf": null,
+      "model": null,
+      "page": null,
+      "official": false,
+      "answerVerified": true
+    },
+    "syn2026_electro_010": {
+      "pdf": null,
+      "model": null,
+      "page": null,
+      "official": false,
+      "answerVerified": true
+    },
+    "syn2026_analytical_011": {
+      "pdf": null,
+      "model": null,
+      "page": null,
+      "official": false,
+      "answerVerified": true
+    },
+    "syn2026_transition_012": {
+      "pdf": null,
+      "model": null,
+      "page": null,
+      "official": false,
+      "answerVerified": true
+    },
+    "syn2026_mixed_013": {
+      "pdf": null,
+      "model": null,
+      "page": null,
+      "official": false,
+      "answerVerified": true
+    },
+    "syn2026_organic_014": {
+      "pdf": null,
+      "model": null,
+      "page": null,
+      "official": false,
+      "answerVerified": true
+    },
+    "syn2026_ionic_015": {
+      "pdf": null,
+      "model": null,
+      "page": null,
+      "official": false,
+      "answerVerified": true
+    },
+    "syn2026_electro_016": {
+      "pdf": null,
+      "model": null,
+      "page": null,
+      "official": false,
+      "answerVerified": true
+    },
+    "syn2026_analytical_017": {
+      "pdf": null,
+      "model": null,
+      "page": null,
+      "official": false,
+      "answerVerified": true
+    },
+    "syn2026_transition_018": {
+      "pdf": null,
+      "model": null,
+      "page": null,
+      "official": false,
+      "answerVerified": true
+    },
+    "syn2026_mixed_019": {
+      "pdf": null,
+      "model": null,
+      "page": null,
+      "official": false,
+      "answerVerified": true
+    },
+    "syn2026_organic_020": {
+      "pdf": null,
+      "model": null,
+      "page": null,
+      "official": false,
+      "answerVerified": true
+    },
+    "syn2026_ionic_021": {
+      "pdf": null,
+      "model": null,
+      "page": null,
+      "official": false,
+      "answerVerified": true
+    },
+    "syn2026_electro_022": {
+      "pdf": null,
+      "model": null,
+      "page": null,
+      "official": false,
+      "answerVerified": true
+    },
+    "syn2026_analytical_023": {
+      "pdf": null,
+      "model": null,
+      "page": null,
+      "official": false,
+      "answerVerified": true
+    },
+    "syn2026_transition_024": {
+      "pdf": null,
+      "model": null,
+      "page": null,
+      "official": false,
+      "answerVerified": true
+    },
+    "syn2026_mixed_025": {
+      "pdf": null,
+      "model": null,
+      "page": null,
+      "official": false,
+      "answerVerified": true
+    },
+    "syn2026_organic_026": {
+      "pdf": null,
+      "model": null,
+      "page": null,
+      "official": false,
+      "answerVerified": true
+    },
+    "syn2026_ionic_027": {
+      "pdf": null,
+      "model": null,
+      "page": null,
+      "official": false,
+      "answerVerified": true
+    },
+    "syn2026_electro_028": {
+      "pdf": null,
+      "model": null,
+      "page": null,
+      "official": false,
+      "answerVerified": true
+    },
+    "syn2026_analytical_029": {
+      "pdf": null,
+      "model": null,
+      "page": null,
+      "official": false,
+      "answerVerified": true
+    },
+    "syn2026_transition_030": {
+      "pdf": null,
+      "model": null,
+      "page": null,
+      "official": false,
+      "answerVerified": true
+    },
+    "syn2026_mixed_031": {
+      "pdf": null,
+      "model": null,
+      "page": null,
+      "official": false,
+      "answerVerified": true
+    },
+    "syn2026_organic_032": {
+      "pdf": null,
+      "model": null,
+      "page": null,
+      "official": false,
+      "answerVerified": true
+    },
+    "syn2026_ionic_033": {
+      "pdf": null,
+      "model": null,
+      "page": null,
+      "official": false,
+      "answerVerified": true
+    },
+    "syn2026_electro_034": {
+      "pdf": null,
+      "model": null,
+      "page": null,
+      "official": false,
+      "answerVerified": true
+    },
+    "syn2026_analytical_035": {
+      "pdf": null,
+      "model": null,
+      "page": null,
+      "official": false,
+      "answerVerified": true
+    },
+    "syn2026_transition_036": {
+      "pdf": null,
+      "model": null,
+      "page": null,
+      "official": false,
+      "answerVerified": true
+    },
+    "syn2026_mixed_037": {
+      "pdf": null,
+      "model": null,
+      "page": null,
+      "official": false,
+      "answerVerified": true
+    },
+    "syn2026_organic_038": {
+      "pdf": null,
+      "model": null,
+      "page": null,
+      "official": false,
+      "answerVerified": true
+    },
+    "syn2026_ionic_039": {
+      "pdf": null,
+      "model": null,
+      "page": null,
+      "official": false,
+      "answerVerified": true
+    },
+    "syn2026_electro_040": {
+      "pdf": null,
+      "model": null,
+      "page": null,
+      "official": false,
+      "answerVerified": true
+    },
+    "syn2026_analytical_041": {
+      "pdf": null,
+      "model": null,
+      "page": null,
+      "official": false,
+      "answerVerified": true
+    },
+    "syn2026_transition_042": {
+      "pdf": null,
+      "model": null,
+      "page": null,
+      "official": false,
+      "answerVerified": true
+    },
+    "syn2026_mixed_043": {
+      "pdf": null,
+      "model": null,
+      "page": null,
+      "official": false,
+      "answerVerified": true
+    },
+    "syn2026_organic_044": {
+      "pdf": null,
+      "model": null,
+      "page": null,
+      "official": false,
+      "answerVerified": true
+    },
+    "syn2026_ionic_045": {
+      "pdf": null,
+      "model": null,
+      "page": null,
+      "official": false,
+      "answerVerified": true
+    },
+    "syn2026_electro_046": {
+      "pdf": null,
+      "model": null,
+      "page": null,
+      "official": false,
+      "answerVerified": true
+    },
+    "syn2026_analytical_047": {
+      "pdf": null,
+      "model": null,
+      "page": null,
+      "official": false,
+      "answerVerified": true
+    },
+    "syn2026_transition_048": {
+      "pdf": null,
+      "model": null,
+      "page": null,
+      "official": false,
+      "answerVerified": true
+    },
+    "syn2026_mixed_049": {
+      "pdf": null,
+      "model": null,
+      "page": null,
+      "official": false,
+      "answerVerified": true
+    },
+    "syn2026_organic_050": {
+      "pdf": null,
+      "model": null,
+      "page": null,
+      "official": false,
+      "answerVerified": true
+    },
+    "syn2026_ionic_051": {
+      "pdf": null,
+      "model": null,
+      "page": null,
+      "official": false,
+      "answerVerified": true
+    },
+    "syn2026_electro_052": {
+      "pdf": null,
+      "model": null,
+      "page": null,
+      "official": false,
+      "answerVerified": true
+    },
+    "syn2026_analytical_053": {
+      "pdf": null,
+      "model": null,
+      "page": null,
+      "official": false,
+      "answerVerified": true
+    },
+    "syn2026_transition_054": {
+      "pdf": null,
+      "model": null,
+      "page": null,
+      "official": false,
+      "answerVerified": true
+    },
+    "syn2026_mixed_055": {
+      "pdf": null,
+      "model": null,
+      "page": null,
+      "official": false,
+      "answerVerified": true
+    },
+    "syn2026_organic_056": {
+      "pdf": null,
+      "model": null,
+      "page": null,
+      "official": false,
+      "answerVerified": true
+    },
+    "syn2026_ionic_057": {
+      "pdf": null,
+      "model": null,
+      "page": null,
+      "official": false,
+      "answerVerified": true
+    },
+    "syn2026_electro_058": {
+      "pdf": null,
+      "model": null,
+      "page": null,
+      "official": false,
+      "answerVerified": true
+    },
+    "syn2026_analytical_059": {
+      "pdf": null,
+      "model": null,
+      "page": null,
+      "official": false,
+      "answerVerified": true
+    },
+    "syn2026_transition_060": {
+      "pdf": null,
+      "model": null,
+      "page": null,
+      "official": false,
+      "answerVerified": true
+    }
+  },
+  "syntheticAdded": 60,
+  "summary": {
+    "officialQuestionCount": 123,
+    "practiceGeneratedCount": 60,
+    "totalQuestions": 183,
+    "chapterCounts": {
+      "مهارات مختلطة ورسوم بيانية": 26,
+      "الكيمياء العضوية": 49,
+      "التحليل الكيميائي": 24,
+      "الكيمياء الكهربية": 29,
+      "الاتزان والاتزان الأيوني": 36,
+      "العناصر الانتقالية والحديد": 19
+    }
+  }
+}

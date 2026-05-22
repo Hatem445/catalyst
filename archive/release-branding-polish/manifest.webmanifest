@@ -1,0 +1,20 @@
+﻿{
+  "name": "Chemistry MindMap Pro",
+  "short_name": "ChemMind",
+  "description": "تطبيق كيمياء تفاعلي بخرائط ذهنية ومراجعة ذكية",
+  "lang": "ar",
+  "dir": "rtl",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#070b14",
+  "theme_color": "#070b14",
+  "icons": [
+    {
+      "src": "assets/images/catalyst_logo_reference.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

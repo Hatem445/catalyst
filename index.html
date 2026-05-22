@@ -6,8 +6,8 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="theme-color" content="#070b14">
-<title>⚗️ كيمياء — خرائط ذهنية</title>
-<meta name="description" content="تطبيق كيمياء تفاعلي بخرائط ذهنية ومراجعة ذكية">
+<title>CATALYST | Chemistry Learning PWA</title>
+<meta name="description" content="Catalyst Chemistry PWA: visual chemistry learning with laws, periodic table, and interactive practice.">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="assets/images/catalyst_logo_reference.png" type="image/png">
 <link rel="apple-touch-icon" href="assets/images/catalyst_logo_reference.png">
@@ -15,14 +15,30 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/app.css">
+<link rel="stylesheet" href="assets/css/exams.css">
 </head>
 <body data-theme="dark">
 <div id="app">
   <!-- TOPBAR -->
   <div id="topbar">
     <button class="topbar-btn" id="btn-back" data-action="back" style="display:none" aria-label="رجوع">←</button>
-    <div id="topbar-logo">⚗️ Chemistry MindMap Pro</div>
-    <button class="topbar-btn" id="btn-install" data-action="install-app" style="display:none" aria-label="تثبيت التطبيق">⬇️</button>
+    <div id="topbar-logo" aria-label="Catalyst brand">
+      <img src="assets/images/catalyst_logo_reference.png" alt="Catalyst" class="topbar-brand-mark">
+      <div class="topbar-brand-text">
+        <div class="topbar-brand-main">CATALYST</div>
+      </div>
+    </div>
+    <button class="topbar-btn topbar-btn-install" id="btn-install" data-action="install-app" aria-label="تثبيت التطبيق">
+      <span class="install-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" class="install-icon-svg" focusable="false">
+          <rect x="7" y="2.5" width="10" height="19" rx="2.8" ry="2.8"></rect>
+          <path d="M12 7.5v7.2"></path>
+          <path d="M9.4 12.4L12 15l2.6-2.6"></path>
+          <path d="M9 18.2h6"></path>
+        </svg>
+      </span>
+      <span class="install-text">تثبيت التطبيق</span>
+    </button>
     <button class="topbar-btn" id="btn-theme" data-action="toggle-theme" aria-label="تغيير الوضع">🌙</button>
   </div>
 
