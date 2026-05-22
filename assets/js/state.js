@@ -8,6 +8,7 @@ function createInitialState() {
     tab: 'home',
     path: [],
     searchQ: '',
+    organicSection: '',
     laws: { query: '', category: 'all', focusLawId: null },
     exam: {
       view: 'center',

@@ -42,7 +42,7 @@ function createApp(S) {
   function updateBack() {
     const btn = document.getElementById('btn-back');
     if (!btn) return;
-    btn.style.display = S.path.length > 0 ? '' : 'none';
+    btn.style.display = (S.path.length > 0 || S.tab !== 'home') ? '' : 'none';
   }
 
   function getFlashPool() {
@@ -274,7 +274,7 @@ function createApp(S) {
     }
 
     if (S.tab === 'organic') {
-      mount(Renderer.organic());
+      mount(Renderer.organic(S.organicSection || ''));
       return;
     }
 
@@ -348,6 +348,7 @@ function createApp(S) {
       }
       if (S.tab === 'organic' && t !== 'organic') ReactionPlayer.stopAll();
       S.tab = t;
+      if (t === 'organic') S.organicSection = '';
       if (t !== 'home') S.path = [];
       if (t !== 'laws') S.laws.focusLawId = null;
       render();
@@ -357,7 +358,21 @@ function createApp(S) {
       if (S.path.length > 0) {
         S.path.pop();
         render();
+        return true;
       }
+      if (S.tab === 'organic' && S.organicSection) {
+        S.organicSection = '';
+        render();
+        return true;
+      }
+      if (S.tab !== 'home') {
+        if (S.tab === 'organic') ReactionPlayer.stopAll();
+        S.tab = 'home';
+        S.path = [];
+        render();
+        return true;
+      }
+      return false;
     },
 
     openUnit(id) {
@@ -375,6 +390,13 @@ function createApp(S) {
     jumpTo(uid, sid) {
       S.tab = 'home';
       S.path = [uid, sid];
+      render();
+    },
+
+    openOrganicSection(section) {
+      S.tab = 'organic';
+      S.organicSection = section || '';
+      S.path = [];
       render();
     },
 

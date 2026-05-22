@@ -665,6 +665,7 @@ svg { display: block; }
   color: var(--text-secondary);
   background: rgba(255,255,255,0.05);
 }
+.laws-search-btn { left: 102px; }
 .laws-chip-row {
   display: flex; flex-wrap: wrap; gap: 6px;
 }
@@ -954,13 +955,19 @@ svg { display: block; }
   color: var(--text-primary);
   background: rgba(154,134,197,0.16);
 }
-.periodic-stage { padding: 10px; margin-bottom: 10px; overflow-x: auto; }
+.periodic-stage {
+  padding: 10px;
+  margin-bottom: 10px;
+  overflow-x: auto;
+  direction: ltr;
+}
 .periodic-grid {
   display: grid;
   grid-template-columns: repeat(18, minmax(48px, 1fr));
   grid-template-rows: repeat(9, minmax(54px, auto));
   gap: 4px;
   min-width: 920px;
+  direction: ltr;
 }
 .periodic-row-note {
   font-size: 10px;
@@ -1917,6 +1924,50 @@ svg { display: block; }
   background: rgba(106,184,209,0.14);
   color: var(--text-primary);
 }
+.organic-subheader-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+}
+.organic-back-btn {
+  min-height: 36px;
+  padding-inline: 12px;
+  white-space: nowrap;
+}
+.organic-index-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+.organic-index-card {
+  border: 1px solid rgba(122,153,198,0.34);
+  border-radius: 12px;
+  background: rgba(255,255,255,0.03);
+  color: var(--text-primary);
+  text-align: right;
+  padding: 12px;
+  min-height: 94px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  transition: border-color 0.2s, background 0.2s, transform 0.12s;
+}
+.organic-index-card:active {
+  transform: scale(0.985);
+  border-color: rgba(106,184,209,0.6);
+  background: rgba(106,184,209,0.12);
+}
+.organic-index-title {
+  font-size: 13px;
+  font-weight: 900;
+  line-height: 1.6;
+}
+.organic-index-desc {
+  font-size: 11px;
+  color: var(--text-secondary);
+  line-height: 1.8;
+}
 
 .organic-group-grid {
   display: grid;
@@ -2171,6 +2222,9 @@ svg { display: block; }
   .organic-section { padding: 12px; gap: 9px; }
   .organic-section-title { font-size: 15px; }
   .organic-grid-2 { grid-template-columns: 1fr; }
+  .organic-subheader-row { flex-direction: column; }
+  .organic-back-btn { width: 100%; }
+  .organic-index-grid { grid-template-columns: 1fr; }
   .organic-group-grid { grid-template-columns: 1fr; }
   .organic-chip-btn { min-height: 42px; font-size: 11px; }
   .chem-formula { font-size: 12.6px; }

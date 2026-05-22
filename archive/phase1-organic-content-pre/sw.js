@@ -1,4 +1,4 @@
-const CACHE_NAME = 'chemistry-mindmap-pro-v30';
+const CACHE_NAME = 'chemistry-mindmap-pro-v27';
 const APP_SHELL = [
   './',
   './index.html',

@@ -16,19 +16,26 @@ const App = createApp(createInitialState());
 window.App = App;
 window.toast = toast;
 let deferredInstallPrompt = null;
-let suppressHashRoute = false;
 
 function setHash(nextHash) {
   const normalized = nextHash && nextHash.startsWith('#') ? nextHash : `#${nextHash || ''}`;
-  if (window.location.hash === normalized) return;
-  suppressHashRoute = true;
+  if (window.location.hash === normalized) return false;
   window.location.hash = normalized;
-  setTimeout(() => { suppressHashRoute = false; }, 0);
+  return true;
 }
 
 function parseHashRoute() {
   const rawHash = window.location.hash || '';
-  if (!rawHash) return { type: 'home' };
+  if (!rawHash || rawHash === '#home') return { type: 'tab', tab: 'home' };
+  if (rawHash === '#organic') return { type: 'tab', tab: 'organic' };
+  if (rawHash.startsWith('#organic/')) {
+    const section = decodeURIComponent(rawHash.slice('#organic/'.length)).trim();
+    return { type: 'organic-section', section };
+  }
+  if (rawHash === '#periodic') return { type: 'tab', tab: 'periodic' };
+  if (rawHash === '#search') return { type: 'tab', tab: 'search' };
+  if (rawHash === '#quiz') return { type: 'tab', tab: 'quiz' };
+  if (rawHash === '#flash') return { type: 'tab', tab: 'flash' };
 
   if (rawHash.startsWith('#question/')) {
     const questionId = decodeURIComponent(rawHash.slice('#question/'.length));
@@ -64,9 +71,14 @@ function parseHashRoute() {
 }
 
 async function applyHashRoute() {
-  if (suppressHashRoute) return;
   const route = parseHashRoute();
   switch (route.type) {
+    case 'tab':
+      App.tab(route.tab || 'home');
+      break;
+    case 'organic-section':
+      App.openOrganicSection(route.section || '');
+      break;
     case 'exam-center':
       await App.openExamCenter(route.section || '');
       break;
@@ -100,6 +112,14 @@ async function applyHashRoute() {
     default:
       App.tab('home');
       break;
+  }
+}
+
+function navigateHash(hash, onSameHash) {
+  const changed = setHash(hash);
+  if (!changed) {
+    if (typeof onSameHash === 'function') onSameHash();
+    else applyHashRoute();
   }
 }
 
@@ -159,54 +179,49 @@ function handleDelegatedClick(event) {
 
   switch (action) {
     case 'back':
-      App.back();
+      if (App.back()) {
+        if (window.location.hash && window.location.hash !== '#home') {
+          setHash('#home');
+        }
+      } else {
+        navigateHash('#home');
+      }
       break;
     case 'toggle-theme':
       App.toggleTheme();
       break;
     case 'go-hash':
       if (target.dataset.hash) {
-        setHash(target.dataset.hash);
-        applyHashRoute();
+        navigateHash(target.dataset.hash);
       }
       break;
     case 'tab':
-      if (target.dataset.tab === 'exam-center') {
-        setHash('#exam-center');
-        App.openExamCenter();
-      } else if (target.dataset.tab) {
-        App.tab(target.dataset.tab);
-      }
+      if (!target.dataset.tab) break;
+      navigateHash(`#${target.dataset.tab}`, () => App.tab(target.dataset.tab));
       break;
     case 'open-exam-center':
-      setHash('#exam-center');
-      App.openExamCenter();
+      navigateHash('#exam-center', () => App.openExamCenter());
       break;
     case 'exam-open-chapter':
       if (target.dataset.chapter) {
-        setHash(`#exam-training?chapter=${encodeURIComponent(target.dataset.chapter)}`);
-        App.openExamTraining(target.dataset.chapter);
+        const chapter = target.dataset.chapter;
+        navigateHash(`#exam-training?chapter=${encodeURIComponent(chapter)}`, () => App.openExamTraining(chapter));
       }
       break;
     case 'exam-open-quick-mock':
-      setHash('#mock/quick');
-      App.openQuickMock();
+      navigateHash('#mock/quick', () => App.openQuickMock());
       break;
     case 'exam-open-full-mock':
-      setHash('#mock/full');
-      App.openFullMock();
+      navigateHash('#mock/full', () => App.openFullMock());
       break;
     case 'exam-open-worked':
-      setHash('#worked-examples');
-      App.openWorkedExamples();
+      navigateHash('#worked-examples', () => App.openWorkedExamples());
       break;
     case 'exam-open-mistakes':
-      setHash('#exam-mistakes');
-      App.openExamMistakes();
+      navigateHash('#exam-mistakes', () => App.openExamMistakes());
       break;
     case 'exam-open-analytics':
-      setHash('#exam-analytics');
-      App.openExamAnalytics();
+      navigateHash('#exam-analytics', () => App.openExamAnalytics());
       break;
     case 'exam-set-filter':
       App.setExamFilter(target.dataset.filterKey || '', target.dataset.filterValue || '');
@@ -245,14 +260,14 @@ function handleDelegatedClick(event) {
       break;
     case 'open-question':
       if (target.dataset.questionId) {
-        setHash(`#question/${encodeURIComponent(target.dataset.questionId)}`);
-        App.openQuestionById(target.dataset.questionId);
+        const qid = target.dataset.questionId;
+        navigateHash(`#question/${encodeURIComponent(qid)}`, () => App.openQuestionById(qid));
       }
       break;
     case 'open-worked-example':
       App.openWorkedExample(target.dataset.exampleId || '', target.dataset.questionId || '');
       if (target.dataset.questionId) {
-        setHash(`#question/${encodeURIComponent(target.dataset.questionId)}`);
+        navigateHash(`#question/${encodeURIComponent(target.dataset.questionId)}`);
       }
       break;
     case 'exam-select-choice':
@@ -270,28 +285,26 @@ function handleDelegatedClick(event) {
     case 'exam-review-law':
       if (target.dataset.lawRef) {
         const focus = encodeURIComponent(target.dataset.lawRef);
-        setHash(`#laws?focus=${focus}`);
-        App.reviewExamLaw(target.dataset.lawRef);
+        navigateHash(`#laws?focus=${focus}`, () => App.reviewExamLaw(target.dataset.lawRef));
       }
       break;
     case 'exam-open-related-worked':
       if (target.dataset.exampleId) {
-        setHash('#worked-examples');
-        App.openWorkedExamples(target.dataset.exampleId);
+        const exId = target.dataset.exampleId;
+        navigateHash('#worked-examples', () => App.openWorkedExamples(exId));
       }
       break;
     case 'exam-retry-mistake':
       if (target.dataset.questionId) {
-        setHash(`#question/${encodeURIComponent(target.dataset.questionId)}`);
-        App.openQuestionById(target.dataset.questionId);
+        const qid = target.dataset.questionId;
+        navigateHash(`#question/${encodeURIComponent(qid)}`, () => App.openQuestionById(qid));
       }
       break;
     case 'exam-open-section':
       App.openExamSection(target.dataset.section || 'official-2026');
       break;
     case 'exam-open-mock':
-      setHash('#mock/quick');
-      App.openQuickMock();
+      navigateHash('#mock/quick', () => App.openQuickMock());
       break;
     case 'exam-set-topic':
       App.setExamTopic(target.dataset.topic || 'all');
@@ -338,7 +351,19 @@ function handleDelegatedClick(event) {
     case 'laws-category':
       App.setLawsCategory(target.dataset.category || 'all');
       break;
+    case 'laws-search-submit': {
+      const lawsInput = document.querySelector('[data-action="laws-search-input"]');
+      const nextValue = lawsInput instanceof HTMLInputElement ? (lawsInput.value || '') : '';
+      const trimmed = nextValue.trim();
+      const len = Array.from(trimmed).length;
+      App.setLawsQuery(len >= 2 ? trimmed : '');
+      break;
+    }
     case 'laws-clear-search':
+      {
+        const lawsInput = document.querySelector('[data-action="laws-search-input"]');
+        if (lawsInput instanceof HTMLInputElement) lawsInput.value = '';
+      }
       App.clearLawsSearch();
       break;
     case 'start-adaptive-topic':
@@ -495,7 +520,6 @@ function handleDelegatedInput(event) {
     return;
   }
   if (target.dataset.action === 'laws-search-input') {
-    App.setLawsQuery(target.value);
     return;
   }
   if (target.dataset.action === 'exam-filter-input') {
@@ -514,7 +538,7 @@ async function registerServiceWorker() {
 
 (async function boot() {
   Search.build();
-  App.tab('home');
+  if (!window.location.hash) App.tab('home');
   document.addEventListener('click', handleDelegatedClick);
   document.addEventListener('input', handleDelegatedInput);
   document.addEventListener('change', handleDelegatedInput);
@@ -528,13 +552,19 @@ async function registerServiceWorker() {
       App.submitPeriodicSearch();
       return;
     }
+    if (e.key === 'Enter' && t instanceof HTMLInputElement && t.dataset.action === 'laws-search-input') {
+      e.preventDefault();
+      const trimmed = (t.value || '').trim();
+      const len = Array.from(trimmed).length;
+      App.setLawsQuery(len >= 2 ? trimmed : '');
+      return;
+    }
     if (e.key === '/' && document.activeElement?.tagName !== 'INPUT' && document.activeElement?.tagName !== 'SELECT') {
       e.preventDefault();
       App.tab('search');
     }
   });
 
-  window.addEventListener('popstate', () => App.back());
   window.addEventListener('hashchange', () => {
     applyHashRoute();
   });

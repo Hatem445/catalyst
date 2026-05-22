@@ -6,7 +6,6 @@ import { Progress } from './progress.js';
 import { PeriodicTable } from './periodic-table.js';
 import { LawsData } from './laws.js';
 import { ExamCenter } from './examCenter.js';
-import { OrganicData } from './organic-data.js';
 
 const MindMap = {
   // Renders an organic conversion SVG pathway
@@ -251,6 +250,7 @@ const Renderer = {
         <div class="home-path-title">راجع بسرعة</div>
         <div class="home-path-desc">مراجعة خفيفة قبل الاختبار أو بعد المذاكرة.</div>
         <div class="home-path-actions">
+          <button class="home-quick-btn" data-action="tab" data-tab="flash">البطاقات التعليمية</button>
           <button class="home-quick-btn" data-action="tab" data-tab="laws">مراجعة سريعة للقوانين</button>
           <button class="home-quick-btn" data-action="open-periodic-filter" data-filter="transition">السلسلة الانتقالية</button>
         </div>
@@ -409,7 +409,7 @@ const Renderer = {
   },
 
   /* — ORGANIC TAB (special visual) — */
-  organic(section = '') {
+  organic() {
     const C = ChemFormat;
     const eqArrow = '<span class="chem-equation-arrow">→</span>';
     const revArrow = '<span class="chem-equation-arrow">⇌</span>';
@@ -423,90 +423,143 @@ const Renderer = {
       }
       return out;
     };
-    const organic = OrganicData.build(C, eqArrow, revArrow, shuffle);
-    const {
-      families,
-      groups,
-      functionalGroups,
-      generalFormulas,
-      conversions,
-      reactions,
-      oxidationReduction,
-      c2Path,
-      c2Arrows,
-      reagents,
-      comparisons,
-      comparisonTables,
-      aromaticCompounds,
-      preparationMethods,
-      practicalTests,
-      aromaticGuide,
-      polymers,
-      commonMistakes,
-      quickFacts,
-      lessons,
-      reagentChoices,
-    } = organic;
 
-    const currentSection = ((section || '') + '').trim();
-    const sectionMeta = [
-      { key: 'families', title: 'العائلات العضوية', desc: 'تصنيف العائلات والصيغ العامة وأمثلة سريعة.' },
-      { key: 'general-formulas', title: 'الصيغ العامة', desc: 'الصيغ العامة للعائلات وكيفية قراءتها.' },
-      { key: 'functional-groups', title: 'المجموعات الوظيفية', desc: 'المجموعة الفعالة وأثرها على التفاعل.' },
-      { key: 'reactions', title: 'التحويلات والتفاعلات', desc: 'خرائط التحويل ومسار C₂ وتفاعلات أساسية.' },
-      { key: 'aromatics', title: 'مشتقات البنزين', desc: 'مركبات أروماتية وتوجيه الحلقة.' },
-      { key: 'tests', title: 'التمييز العملي', desc: 'طرق التمييز والمقارنات الامتحانية.' },
-      { key: 'polymers', title: 'البلمرة', desc: 'معلومات البلمرة والاستخدامات الشائعة.' },
-      { key: 'redox', title: 'قابلية الأكسدة والاختزال', desc: 'ما يُؤكسد وما يُختزل مع أمثلة.' },
-      { key: 'reagents', title: 'الكواشف والشروط', desc: 'الكاشف المناسب والشرط المتوقع.' },
-      { key: 'mistakes', title: 'أخطاء شائعة', desc: 'أخطاء متكررة وحقائق سريعة للمراجعة.' },
-      { key: 'practice', title: 'تدريب سريع', desc: 'أنشطة تفاعلية قصيرة للتثبيت.' },
+    const groups = [
+      { name:'الهيدروكربونات', formula:'C' + C.sub('n') + 'H' + C.sub('2n+2 / 2n / 2n-2'), example:C.formula('C2H4') + ' (إيثين)', key:'تفاعلات الإضافة/الإحلال', trap:'الخلط بين المشبع وغير المشبع.' },
+      { name:'هاليدات الألكيل', formula:'R-X', example:C.formula('C2H5Cl'), key:'إحلال نوكليوفيلي إلى كحولات', trap:'نسيان نوع الوسط NaOH(aq).' },
+      { name:'الكحولات', formula:'R-OH', example:C.formula('C2H5OH'), key:'أكسدة أو نزع ماء', trap:'الخلط بين أكسدة الكحول الأولي والثانوي.' },
+      { name:'الألدهيدات', formula:'R-CHO', example:C.formula('CH3CHO'), key:'أكسدة إلى أحماض كربوكسيلية', trap:'اعتبارها كيتونات في الاختبارات.' },
+      { name:'الكيتونات', formula:'R-CO-R', example:C.formula('CH3COCH3'), key:'تفاعلات إضافة على C=O', trap:'إعطاء اختبار تولنز موجب بالخطأ.' },
+      { name:'الأحماض الكربوكسيلية', formula:'R-COOH', example:C.formula('CH3COOH'), key:'أسترة مع الكحولات', trap:'نسيان أن الأسترة تفاعل عكسي.' },
+      { name:'الإسترات', formula:'R-COO-R', example:C.formula('CH3COOC2H5'), key:'تحلل مائي/تصبن', trap:'اعتبار الإستر حمضيًا مثل الحمض.' },
+      { name:'الأمينات', formula:'R-NH' + C.sub('2'), example:C.formula('C2H5NH2'), key:'خواص قاعدية وتكوين أملاح', trap:'الخلط بين الأمين والأميد.' },
     ];
 
-    const header = (title, desc) => `
-      <section class="organic-section organic-subheader">
-        <div class="organic-subheader-row">
-          <div>
-            <h2 class="organic-section-title">${title}</h2>
-            <p class="organic-section-sub">${desc}</p>
-          </div>
-          <button class="organic-chip-btn organic-back-btn" data-action="go-hash" data-hash="#organic">العودة لفهرس العضوية</button>
-        </div>
-      </section>
-    `;
+    const conversions = [
+      { from:'Alkane', to:'Alkene', reagent:'حفز حراري / نزع H' + C.sub('2'), condition:'Δ + عامل حفاز مناسب', type:'حذف', trap:'اعتبارها إضافة.' },
+      { from:'Alkene', to:'Alcohol', reagent:C.formula('H2O / H2SO4'), condition:'وسط حمضي', type:'إضافة', trap:'نسيان شرط الحمض.' },
+      { from:'Alcohol', to:'Aldehyde', reagent:C.formula('K2Cr2O7 / H2SO4'), condition:'أكسدة أولية', type:'أكسدة', trap:'الاستمرار للأكسدة الثانية دون قصد.' },
+      { from:'Aldehyde', to:'Carboxylic acid', reagent:'[O]', condition:'تسخين أطول', type:'أكسدة', trap:'الخلط بين النواتج الوسيطة والنهائية.' },
+      { from:'Carboxylic acid + Alcohol', to:'Ester + H' + C.sub('2') + 'O', reagent:C.formula('H2SO4(conc)'), condition:'تسخين + سحب ماء', type:'أسترة', trap:'نسيان أنها عكسية (⇌).' },
+      { from:'Haloalkane', to:'Alcohol', reagent:'NaOH(aq)', condition:'تسخين معتدل', type:'إحلال', trap:'استخدام NaOH كحولي بالخطأ.' },
+      { from:C.formula('C2H4'), to:C.formula('C2H5OH'), reagent:C.formula('H2O / H2SO4'), condition:'Hydration', type:'إضافة ماء', trap:'الخلط مع الهدرجة.' },
+      { from:C.formula('C2H5OH'), to:C.formula('CH3COOH'), reagent:C.formula('K2Cr2O7 / H2SO4'), condition:'أكسدة متدرجة', type:'أكسدة', trap:'نسيان خطوة CH' + C.sub('3') + 'CHO الوسيطة.' },
+      { from:'Benzene', to:'مشتقات بنزين', reagent:'Cl' + C.sub('2') + ' / FeCl' + C.sub('3'), condition:'استبدال عطري', type:'إحلال', trap:'اعتبار البنزين يدخل إضافة مباشرة.' },
+    ];
 
-    const blocks = {
-      'families': `
+    const c2Path = [
+      { formula:C.formula('CaC2'), name:'كربيد الكالسيوم', family:'مركب غير عضوي', note:'بداية سلسلة C2.' },
+      { formula:C.formula('C2H2'), name:'إيثاين', family:'ألكاين', note:'يتكون بإضافة الماء إلى الكربيد.' },
+      { formula:C.formula('C2H4'), name:'إيثين', family:'ألكين', note:'ناتج هدرجة أولى.' },
+      { formula:C.formula('C2H5OH'), name:'إيثانول', family:'كحول أولي', note:'ناتج إضافة الماء للإيثين.' },
+      { formula:C.formula('CH3CHO'), name:'إيثانال', family:'ألدهيد', note:'ناتج الأكسدة الأولى.' },
+      { formula:C.formula('CH3COOH'), name:'حمض إيثانويك', family:'حمض كربوكسيلي', note:'ناتج الأكسدة الثانية.' },
+      { formula:C.formula('CH3COOC2H5'), name:'إيثيل إيثانوات', family:'إستر', note:'ناتج الأسترة مع الإيثانول.' },
+    ];
+    const c2Arrows = [
+      { reagent:C.formula('H2O'), condition:'وسط مائي', type:'تحلل مائي للكربيد' },
+      { reagent:C.formula('H2 / Ni'), condition:'هدرجة', type:'اختزال جزئي' },
+      { reagent:C.formula('H2O / H2SO4'), condition:'إضافة ماء', type:'Hydration' },
+      { reagent:'[O]', condition:'أكسدة أولى', type:'إلى ألدهيد' },
+      { reagent:'[O]', condition:'أكسدة ثانية', type:'إلى حمض' },
+      { reagent:'+' + C.formula(' C2H5OH / H2SO4 conc'), condition:'تسخين', type:'أسترة عكسية' },
+    ];
+
+    const reagents = [
+      { name:C.formula('H2 / Ni'), use:'هدرجة الروابط المزدوجة/الثلاثية', condition:'تسخين معتدل + حفاز نيكل', expected:'ألكين/ألكاين → ألكان', trap:'نسيان الحفاز Ni.' },
+      { name:C.formula('H2O / H2SO4'), use:'إضافة ماء للألكينات', condition:'وسط حمضي', expected:'ألكين → كحول', trap:'كتابة NaOH بدل الحمض.' },
+      { name:C.formula('Br2'), use:'اختبار/إضافة على C=C', condition:'وسط خامل', expected:'زوال لون البروم + ناتج إضافة', trap:'تطبيقه على الألكان بدون UV.' },
+      { name:C.formula('KMnO4'), use:'أكسدة لطيفة أو اختبار عدم التشبع', condition:'ظروف مناسبة للتفاعل', expected:'نواتج مؤكسدة / زوال لون', trap:'خلط النواتج مع الديكرومات.' },
+      { name:C.formula('K2Cr2O7'), use:'أكسدة كحولات أولية', condition:C.formula('H2SO4') + ' + تسخين', expected:'كحول → ألدهيد/حمض', trap:'عدم التفرقة بين الأكسدة الأولى والثانية.' },
+      { name:C.formula('H2SO4 conc'), use:'حفز الأسترة/نزع ماء', condition:'مركز + تسخين', expected:'تكوين إستر أو ألكين', trap:'نسيان دوره كساحب ماء.' },
+      { name:'NaOH(aq)', use:'إحلال هاليد الألكيل', condition:'وسط مائي', expected:'هاليد ألكيل → كحول', trap:'استخدام الوسط الكحولي بدل المائي.' },
+      { name:'Acidified dichromate', use:'أكسدة عضوية قياسية', condition:'وسط حمضي', expected:'نتائج أكسدة متوقعة', trap:'الخلط مع ' + C.formula('KMnO4') + ' في نفس المسألة.' },
+    ];
+
+    const comparisons = [
+      { title:'ألكان vs ألكين', diff:'الألكان مشبع (σ فقط) بينما الألكين يحتوي رابطة π.', test:'Br' + C.sub('2') + ' يزول لونه مع الألكين.', example:C.formula('C2H6') + ' مقابل ' + C.formula('C2H4'), trap:'توقع إضافة مباشرة للألكان.' },
+      { title:'كحول أولي vs كحول ثانوي', diff:'الأولي يتأكسد إلى ألدهيد ثم حمض، الثانوي إلى كيتون.', test:'ناتج الأكسدة يحدد النوع.', example:C.formula('C2H5OH') + ' مقابل ' + C.formula('CH3CHOHCH3'), trap:'اعتبار الناتج النهائي واحد.' },
+      { title:'ألدهيد vs كيتون', diff:'الألدهيد طرفي أسهل أكسدة.', test:'تولنز موجب للألدهيد غالبًا.', example:C.formula('CH3CHO') + ' مقابل ' + C.formula('CH3COCH3'), trap:'إعطاء الكيتون نفس اختبار الألدهيد.' },
+      { title:'حمض كربوكسيلي vs إستر', diff:'الحمض أكثر حمضية، الإستر أقل قطبية نسبيًا.', test:'الحمض يتفاعل مع البيكربونات.', example:C.formula('CH3COOH') + ' مقابل ' + C.formula('CH3COOC2H5'), trap:'الخلط في الرائحة والخواص.' },
+      { title:'إضافة vs إحلال', diff:'الإضافة تفتح π، الإحلال يستبدل مجموعة.', test:'نوع الركيزة يحدد النمط.', example:'ألكين + Br' + C.sub('2') + ' (إضافة) / ' + C.formula('CH4 + Cl2') + ' (إحلال)', trap:'تطبيق نفس القاعدة على جميع العائلات.' },
+      { title:'أكسدة vs اختزال', diff:'الأكسدة غالبًا زيادة O أو نقص H، الاختزال العكس.', test:'تتبع عدد روابط C-H/C-O.', example:C.formula('C2H5OH → CH3CHO') + ' (أكسدة)', trap:'عكس المصطلحين في الكتابة.' },
+    ];
+
+    const mistakes = [
+      'الخلط بين ' + C.formula('C2H2') + ' و ' + C.formula('C2H4') + ' في مسار C2.',
+      'نسيان شروط الهدرجة ' + C.formula('H2 / Ni') + '.',
+      'الخلط بين الأكسدة الأولى والثانية للكحولات الأولية.',
+      'نسيان أن الأسترة تفاعل عكسي ' + revArrow + '.',
+      'كتابة القوانين بدون صيغة صحيحة للشحنات مثل ' + C.charge('Fe', '3+') + '.',
+    ];
+
+    const lessons = [
+      {
+        title:'إضافة البروم إلى الإيثين',
+        equation:C.formula('C2H4') + ' + ' + C.formula('Br2') + ' ' + eqArrow + ' ' + C.formula('C2H4Br2'),
+        reagent:C.formula('Br2') + ' في وسط خامل',
+        steps:[
+          { t:'المتفاعلات', d:'إيثين + بروم', ch:'الرابطة المزدوجة هي الموقع النشط.' },
+          { t:'إبراز التغير', d:'كسر π وتكوين روابط C-Br', ch:'المنتج يصبح مشبعًا.' },
+          { t:'الخلاصة', d:'إضافة عبر الرابطة المزدوجة', ch:'اختبار زوال لون البروم.' },
+        ],
+        trap:'نسيان أن الألكانات لا تعطي نفس السلوك بدون شروط خاصة.',
+      },
+      {
+        title:'أكسدة الإيثانول إلى إيثانال ثم حمض إيثانويك',
+        equation:C.formula('C2H5OH') + ' ' + eqArrow + ' ' + C.formula('CH3CHO') + ' ' + eqArrow + ' ' + C.formula('CH3COOH'),
+        reagent:C.formula('K2Cr2O7 / H2SO4'),
+        steps:[
+          { t:'خطوة 1', d:'أكسدة الكحول الأولي', ch:'يتكوّن الإيثانال كوسيط.' },
+          { t:'خطوة 2', d:'أكسدة إضافية', ch:'الإيثانال يتحول إلى حمض.' },
+          { t:'فهم الشرط', d:'زمن التسخين يتحكم في النتيجة', ch:'تقطير مبكر للتوقف عند الألدهيد.' },
+        ],
+        trap:'الخلط بين الناتج الوسيط والنهائي.',
+      },
+      {
+        title:'الأسترة: حمض + كحول',
+        equation:C.formula('CH3COOH') + ' + ' + C.formula('C2H5OH') + ' ' + revArrow + ' ' + C.formula('CH3COOC2H5') + ' + ' + C.formula('H2O'),
+        reagent:C.formula('H2SO4 conc') + ' + تسخين',
+        steps:[
+          { t:'تجهيز المجموعات', d:'-COOH و -OH', ch:'التحام وظيفي لتكوين الإستر.' },
+          { t:'تكون الماء', d:C.formula('H2O') + ' يغادر', ch:'سحب الماء يوجه الاتزان للنواتج.' },
+          { t:'الخلاصة', d:'تفاعل عكسي محفز', ch:'يرمز له بسهم اتزان.' },
+        ],
+        trap:'اعتبار الأسترة تفاعلًا غير عكسي.',
+      },
+      {
+        title:'إضافة الماء إلى الإيثين',
+        equation:C.formula('C2H4') + ' + ' + C.formula('H2O') + ' ' + eqArrow + ' ' + C.formula('C2H5OH'),
+        reagent:C.formula('H2SO4') + ' (وسط حمضي)',
+        steps:[
+          { t:'المتفاعلات', d:'إيثين + ماء', ch:'الرابطة المزدوجة تستقبل الإضافة.' },
+          { t:'الشرط', d:'وجود حفز حمضي', ch:'بدونه لا يتم التحويل بكفاءة.' },
+          { t:'الناتج', d:'إيثانول', ch:'تطبيق أساسي في أسئلة التحويل.' },
+        ],
+        trap:'الخلط بينها وبين الهدرجة بـ ' + C.formula('H2 / Ni') + '.',
+      },
+    ];
+
+    const reagentChoices = shuffle([
+      { key: 'a', label: C.formula('H2/Ni') },
+      { key: 'b', label: C.formula('H2O/H2SO4') },
+      { key: 'c', label: C.formula('Br2') },
+      { key: 'd', label: 'NaOH(aq)' },
+    ]);
+
+    return `
+      <div class="organic-page">
         <section class="organic-section">
-          <h2 class="organic-section-title">العائلات العضوية</h2>
-          <div class="organic-group-grid">
-            ${families.map(f => `
-              <article class="organic-group-card">
-                <h3>${f.title}</h3>
-                <div class="chem-formula">${f.formula}</div>
-                <p><strong>الفرع:</strong> ${f.branch}</p>
-                <p>${f.notes}</p>
-                <p><strong>أمثلة:</strong> ${f.samples.map(s => `<span class="chem-formula">${s}</span>`).join('، ')}</p>
-              </article>
-            `).join('')}
+          <h2 class="organic-section-title">مدخل سريع للعضوية</h2>
+          <p class="organic-section-sub">ركز على منطق التحويل: المجموعة الوظيفية + الكاشف + الشرط + اتجاه السهم.</p>
+          <div class="organic-grid-2">
+            <button class="organic-chip-btn" data-action="open-section" data-unit-id="hydrocarbons" data-section-id="alkenes">ابدأ من الكينات</button>
+            <button class="organic-chip-btn" data-action="open-section" data-unit-id="org_derivatives" data-section-id="alcohols_sec">راجع الكحولات</button>
+            <button class="organic-chip-btn" data-action="open-section" data-unit-id="org_derivatives" data-section-id="carbonyl_sec">تمييز ألدهيد/كيتون</button>
+            <button class="organic-chip-btn" data-action="open-section" data-unit-id="org_derivatives" data-section-id="acids_esters_sec">أحماض واسترات</button>
           </div>
         </section>
-      `,
-      'general-formulas': `
-        <section class="organic-section">
-          <h2 class="organic-section-title">الصيغ العامة</h2>
-          <div class="organic-group-grid">
-            ${generalFormulas.map(g => `
-              <article class="organic-group-card">
-                <h3>${g.family}</h3>
-                <div class="chem-formula">${g.formula}</div>
-                <p>${g.note}</p>
-              </article>
-            `).join('')}
-          </div>
-        </section>
-      `,
-      'functional-groups': `
+
         <section class="organic-section">
           <h2 class="organic-section-title">المجموعات الوظيفية</h2>
           <div class="organic-group-grid">
@@ -521,21 +574,7 @@ const Renderer = {
             `).join('')}
           </div>
         </section>
-        <section class="organic-section">
-          <h2 class="organic-section-title">المجموعات الفعالة</h2>
-          <div class="organic-group-grid">
-            ${functionalGroups.map(g => `
-              <article class="organic-group-card">
-                <h3>${g.name}</h3>
-                <div class="chem-formula">${g.symbol}</div>
-                <p><strong>توجد في:</strong> ${g.presentIn}</p>
-                <p><strong>الأكسدة/الاختزال:</strong> ${g.oxidation}</p>
-              </article>
-            `).join('')}
-          </div>
-        </section>
-      `,
-      'reactions': `
+
         <section class="organic-section">
           <h2 class="organic-section-title">خريطة التحويلات العضوية</h2>
           <div class="organic-flow-map">
@@ -552,21 +591,9 @@ const Renderer = {
             `).join('')}
           </div>
         </section>
+
         <section class="organic-section">
-          <h2 class="organic-section-title">التحويلات والتفاعلات</h2>
-          <div class="organic-group-grid">
-            ${reactions.map(r => `
-              <article class="organic-step-card">
-                <h3>${r.title}</h3>
-                <div class="chem-equation">${r.equation}</div>
-                <p><strong>نوع التفاعل:</strong> ${r.type}</p>
-                <p><strong>الشرط:</strong> ${r.condition}</p>
-              </article>
-            `).join('')}
-          </div>
-        </section>
-        <section class="organic-section">
-          <h2 class="organic-section-title">مسار C₂ التعليمي</h2>
+          <h2 class="organic-section-title">مسار C2 التعليمي</h2>
           <div class="organic-c2-path">
             ${c2Path.map((node, idx) => `
               <article class="organic-flow-card">
@@ -585,7 +612,57 @@ const Renderer = {
               ` : ''}
             `).join('')}
           </div>
+          <div class="organic-note-card">
+            <h3>ماذا يوضح المسار؟</h3>
+            <p>يوضح كيف تنتقل مركبات C2 من الألكاين إلى كحول ثم ألدهيد ثم حمض ثم إستر بطريقة منهجية.</p>
+            <h3>كيف أستخدمه في أسئلة التحويل؟</h3>
+            <p>ابدأ من المركب المعطى، حدّد المجموعة الوظيفية، ثم اختر الكاشف والشرط المناسب لكل خطوة.</p>
+            <h3>أخطاء شائعة</h3>
+            <ul>
+              ${mistakes.map(m => `<li>${m}</li>`).join('')}
+            </ul>
+          </div>
         </section>
+
+        <section class="organic-section">
+          <h2 class="organic-section-title">الكواشف والشروط</h2>
+          <div class="organic-group-grid">
+            ${reagents.map(r => `
+              <article class="organic-reagent-card">
+                <h3 class="chem-formula">${r.name}</h3>
+                <p><strong>يستخدم في:</strong> ${r.use}</p>
+                <p><strong>الشرط:</strong> ${r.condition}</p>
+                <p><strong>الناتج المتوقع:</strong> ${r.expected}</p>
+                <p><strong>خطأ شائع:</strong> ${r.trap}</p>
+              </article>
+            `).join('')}
+          </div>
+        </section>
+
+        <section class="organic-section">
+          <h2 class="organic-section-title">المقارنات المهمة</h2>
+          <div class="organic-group-grid">
+            ${comparisons.map(cmp => `
+              <article class="organic-comparison-card">
+                <h3>${cmp.title}</h3>
+                <p><strong>الفرق الأساسي:</strong> ${cmp.diff}</p>
+                <p><strong>اختبار/دليل:</strong> ${cmp.test}</p>
+                <p><strong>مثال:</strong> <span class="chem-formula">${cmp.example}</span></p>
+                <p><strong>فخ امتحاني:</strong> ${cmp.trap}</p>
+              </article>
+            `).join('')}
+          </div>
+        </section>
+
+        <section class="organic-section">
+          <h2 class="organic-section-title">أخطاء شائعة</h2>
+          <div class="organic-note-card">
+            <ul>
+              ${mistakes.map(m => `<li>${m}</li>`).join('')}
+            </ul>
+          </div>
+        </section>
+
         <section class="organic-section">
           <h2 class="organic-section-title">تفاعلات بشرح مرئي</h2>
           <div class="organic-lessons">
@@ -608,127 +685,7 @@ const Renderer = {
             `).join('')}
           </div>
         </section>
-      `,
-      'aromatics': `
-        <section class="organic-section">
-          <h2 class="organic-section-title">مشتقات البنزين</h2>
-          <div class="organic-group-grid">
-            ${aromaticCompounds.map(item => `
-              <article class="organic-group-card">
-                <h3>${item.name}</h3>
-                <div class="chem-formula">${item.formula}</div>
-                <p>${item.note}</p>
-              </article>
-            `).join('')}
-          </div>
-          <div class="organic-note-card">
-            <h3>المجموعات الموجهة (ملخص)</h3>
-            <ul>
-              ${aromaticGuide.map(item => `<li><strong>${item.name}</strong>: ${item.note}</li>`).join('')}
-            </ul>
-          </div>
-        </section>
-      `,
-      'tests': `
-        <section class="organic-section">
-          <h2 class="organic-section-title">التمييز العملي</h2>
-          <div class="organic-group-grid">
-            ${practicalTests.map(test => `
-              <article class="organic-step-card">
-                <h3>${test.title}</h3>
-                ${test.rows.map(row => `
-                  <div class="organic-note-card" style="margin-top:8px">
-                    <p><strong>طريقة التمييز:</strong> ${row.test}</p>
-                    ${row.alcohol ? `<p><strong>الكحول:</strong> ${row.alcohol}</p>` : ''}
-                    ${row.ether ? `<p><strong>الإيثر:</strong> ${row.ether}</p>` : ''}
-                    ${row.first ? `<p><strong>الأول:</strong> ${row.first}</p>` : ''}
-                    ${row.second ? `<p><strong>الثاني:</strong> ${row.second}</p>` : ''}
-                    ${row.third ? `<p><strong>الثالث:</strong> ${row.third}</p>` : ''}
-                  </div>
-                `).join('')}
-              </article>
-            `).join('')}
-          </div>
-        </section>
-        <section class="organic-section">
-          <h2 class="organic-section-title">المقارنات المهمة</h2>
-          <div class="organic-group-grid">
-            ${(comparisonTables || comparisons).map(cmp => `
-              <article class="organic-comparison-card">
-                <h3>${cmp.title}</h3>
-                <p><strong>الفرق الأساسي:</strong> ${cmp.diff}</p>
-                <p><strong>اختبار/دليل:</strong> ${cmp.test}</p>
-                <p><strong>مثال:</strong> <span class="chem-formula">${cmp.example}</span></p>
-                <p><strong>فخ امتحاني:</strong> ${cmp.trap}</p>
-              </article>
-            `).join('')}
-          </div>
-        </section>
-      `,
-      'polymers': `
-        <section class="organic-section">
-          <h2 class="organic-section-title">البلمرة</h2>
-          <div class="organic-group-grid">
-            ${polymers.map(p => `
-              <article class="organic-reagent-card">
-                <h3>${p.polymer}</h3>
-                <p><strong>المونومر:</strong> ${p.monomer}</p>
-                <p><strong>النوع:</strong> ${p.type}</p>
-                <p><strong>الاستخدامات:</strong> ${p.uses}</p>
-              </article>
-            `).join('')}
-          </div>
-        </section>
-      `,
-      'redox': `
-        <section class="organic-section">
-          <h2 class="organic-section-title">قابلية الأكسدة والاختزال</h2>
-          <div class="organic-group-grid">
-            ${oxidationReduction.map(item => `
-              <article class="organic-comparison-card">
-                <h3>${item.species}</h3>
-                <p><strong>الأكسدة:</strong> ${item.oxidation}</p>
-                <p><strong>الاختزال:</strong> ${item.reduction}</p>
-              </article>
-            `).join('')}
-          </div>
-        </section>
-      `,
-      'reagents': `
-        <section class="organic-section">
-          <h2 class="organic-section-title">الكواشف والشروط</h2>
-          <div class="organic-group-grid">
-            ${reagents.map(r => `
-              <article class="organic-reagent-card">
-                <h3 class="chem-formula">${r.name}</h3>
-                <p><strong>يستخدم في:</strong> ${r.use}</p>
-                <p><strong>الشرط:</strong> ${r.condition}</p>
-                <p><strong>الناتج المتوقع:</strong> ${r.expected}</p>
-                <p><strong>خطأ شائع:</strong> ${r.trap}</p>
-              </article>
-            `).join('')}
-          </div>
-        </section>
-      `,
-      'mistakes': `
-        <section class="organic-section">
-          <h2 class="organic-section-title">أخطاء شائعة</h2>
-          <div class="organic-note-card">
-            <ul>
-              ${commonMistakes.map(m => `<li>${m}</li>`).join('')}
-            </ul>
-          </div>
-        </section>
-        <section class="organic-section">
-          <h2 class="organic-section-title">حقائق سريعة</h2>
-          <div class="organic-note-card">
-            <ul>
-              ${quickFacts.map(f => `<li>${f}</li>`).join('')}
-            </ul>
-          </div>
-        </section>
-      `,
-      'practice': `
+
         <section class="organic-section">
           <h2 class="organic-section-title">تدريب سريع</h2>
           <div class="organic-activity-card" data-activity="seq1" data-correct="a,b,c,d">
@@ -761,45 +718,6 @@ const Renderer = {
             <p class="organic-activity-feedback" data-organic-feedback="reagent1">اختر كاشفًا ثم أكد الإجابة.</p>
           </div>
         </section>
-      `,
-    };
-
-    if (!currentSection) {
-      return `
-        <div class="organic-page">
-          <section class="organic-section">
-            <h2 class="organic-section-title">فهرس الكيمياء العضوية</h2>
-            <p class="organic-section-sub">اختر جزئية واحدة للدراسة في كل مرة لعرض مركز وواضح على الموبايل.</p>
-            <div class="organic-index-grid">
-              ${sectionMeta.map(item => `
-                <button class="organic-index-card" data-action="go-hash" data-hash="#organic/${item.key}">
-                  <span class="organic-index-title">${item.title}</span>
-                  <span class="organic-index-desc">${item.desc}</span>
-                </button>
-              `).join('')}
-            </div>
-          </section>
-        </div>
-      `;
-    }
-
-    const meta = sectionMeta.find(x => x.key === currentSection);
-    if (!meta || !blocks[currentSection]) {
-      return `
-        <div class="organic-page">
-          <section class="organic-section">
-            <h2 class="organic-section-title">هذه الجزئية غير متاحة</h2>
-            <p class="organic-section-sub">الرجاء العودة لفهرس العضوية واختيار جزئية من القائمة.</p>
-            <button class="organic-chip-btn organic-back-btn" data-action="go-hash" data-hash="#organic">العودة لفهرس العضوية</button>
-          </section>
-        </div>
-      `;
-    }
-
-    return `
-      <div class="organic-page">
-        ${header(meta.title, meta.desc)}
-        ${blocks[currentSection]}
       </div>
     `;
   },
@@ -812,9 +730,8 @@ const Renderer = {
     return `
       <div class="section-label">مركز الامتحانات</div>
       <div class="glass-card exam-blocked-card fade-in">
-        <div class="exam-blocked-title">مركز الامتحانات قيد التطوير</div>
-        <div class="exam-blocked-text">نعمل على بناء مركز تدريبي يضم أسئلة من النماذج الاسترشادية وامتحانات الأعوام السابقة في الكيمياء، مع مراجعة الإجابات وتحليل الأخطاء.</div>
-        <div class="exam-blocked-text">سيتم تفعيله بعد الأنتهاء من تحليل الأسئلة والإجابات للنماذج والتأكد من دقتها قبل إتاحتها للطلاب.</div>
+        <div class="exam-blocked-title">مركز الامتحانات</div>
+        <div class="exam-blocked-text">مركز الامتحانات قيد التطوير حالياً، وسيتم إتاحته بعد مراجعة الأسئلة والإجابات.</div>
         <button class="btn-primary" data-action="go-hash" data-hash="#home">العودة للرئيسية</button>
       </div>
     `;
@@ -1544,7 +1461,6 @@ const Renderer = {
         <div class="search-box laws-search-box">
           <input class="search-input" type="search" data-action="laws-search-input" placeholder="ابحث: pH, Ksp, Ka, Kb, E_cell, mol..." value="${q}" autocomplete="off"/>
           <span class="search-icon">🔎</span>
-          <button class="laws-clear-btn laws-search-btn" data-action="laws-search-submit">بحث</button>
           <button class="laws-clear-btn" data-action="laws-clear-search">مسح</button>
         </div>
         <div class="laws-chip-row">
@@ -1625,6 +1541,7 @@ const Renderer = {
             <div class="quiz-prog-bar"><div class="quiz-prog-fill" style="width:${pct}%"></div></div>
           </div>
           <button class="btn-primary" data-action="restart-quiz">🔄 إعادة الاختبار</button>
+          <button class="btn-ghost" data-action="tab" data-tab="flash">🃏 مراجعة بالبطاقات</button>
         </div>`;
     }
 
